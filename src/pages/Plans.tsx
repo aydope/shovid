@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 
 const rows: Array<[string, (id: PlanId) => string | boolean]> = [
   ["Member discount", (id) => `${plans[id].discount}%`], ["Points per $1", (id) => `${plans[id].points}x`],
-  ["Free shipping from", (id) => (plans[id].freeShipAt ? `$${plans[id].freeShipAt}` : "Always")], ["Free alterations", (id) => (plans[id].alterations > 50 ? "Unlimited" : String(plans[id].alterations))],
+  ["Free shipping from", (id) => (plans[id].freeShipAt ? `$${plans[id].freeShipAt}` : "Always")], ["Free repairs", (id) => (plans[id].alterations > 50 ? "Unlimited" : String(plans[id].alterations))],
   ["Support", (id) => plans[id].support], ["Early access to sales", (id) => plans[id].early], ["Private styling session", (id) => plans[id].styling],
 ];
 

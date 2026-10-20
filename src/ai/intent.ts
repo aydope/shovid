@@ -10,14 +10,14 @@ const data: Record<Intent, string[]> = {
   returns: ["what is your return policy", "can I return an item", "how do I get a refund", "exchange a product", "send back my order", "return window", "is returning free", "refund time"],
   shipping: ["do you ship internationally", "how much is shipping", "delivery time", "free shipping threshold", "do you ship to germany", "how long does delivery take", "shipping cost to europe"],
   size_help: ["help me choose a size", "what size should I get", "does it run small", "size chart", "how does it fit", "measurements guide", "between sizes", "true to size"],
-  recommend: ["recommend a coat", "show me sneakers", "I need a jacket under 500", "find a black sweater", "suggest something for winter", "what trousers do you have", "looking for a dress", "best sellers", "show me something cheaper", "what shoes do you have", "ideas for an outfit"],
+  recommend: ["recommend a running shoe", "show me sneakers", "I need trail shoes under 250", "find black high tops", "suggest something for the city", "what court shoes do you have", "looking for lifestyle sneakers", "best sellers", "show me something cheaper", "what shoes do you have", "ideas for a new pair"],
   discount: ["any discounts today", "is there a sale", "coupon code", "promo code", "do you have offers", "what promotions are running", "cheap deals", "special offer"],
   membership: ["tell me about membership", "gold plan benefits", "how to upgrade my plan", "what does noir include", "subscription plans", "cancel my subscription", "member perks", "my plan"],
   points: ["how many points do I have", "how do rewards work", "redeem points", "loyalty points balance", "earn points", "my rewards"],
   human: ["talk to a human", "speak to an agent", "contact support", "I need customer service", "connect me with an advisor", "call someone", "real person"],
   cart: ["what is in my bag", "show my cart", "add it to my bag", "add the first one to cart", "checkout", "how much is my cart", "my basket total"],
   gift: ["gift card", "gift ideas", "buy a present", "gift wrapping", "something for my wife", "birthday present"],
-  care: ["how to wash a hoodie", "care instructions", "how to clean sneakers", "can I machine wash fleece", "remove wrinkles from hoodie", "store my sneakers", "how do I care for my sneakers"],
+  care: ["how to wash my sneakers", "care instructions", "how to clean sneakers", "can I machine wash sneakers", "remove odor from shoes", "store my sneakers", "how do I clean white sneakers"],
   payment: ["which payment methods", "can I pay by card", "bank transfer details", "is checkout secure", "do you accept apple pay", "payment options"],
 };
 

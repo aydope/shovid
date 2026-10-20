@@ -17,7 +17,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" PaperProps={{ sx: { alignSelf: "flex-start", mt: 10 } }}>
       <form onSubmit={submit} className="flex items-center gap-3 border-b border-sand p-5">
         <Search size={18} />
-        <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search coats, knitwear, tailoring" aria-label="Search products" className="flex-1 bg-transparent outline-none" />
+        <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search running, trail, court" aria-label="Search products" className="flex-1 bg-transparent outline-none" />
         <kbd className="text-[10px] uppercase tracking-widest text-ink/50">Esc</kbd>
       </form>
       <ul>

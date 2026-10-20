@@ -10,12 +10,12 @@ import { img, likesFor, products, reviewsFor, sizes, type Review } from "@/data"
 import { useCart } from "@/store";
 import { cn, money } from "@/lib/utils";
 
-const details = [["Details", "Made in Portugal and finished by hand. Includes a garment bag and care card."], ["Shipping", "Free insured delivery over $500. EU in 2 to 4 days, worldwide in 4 to 8."], ["Care", "Dry clean or hand wash cold. Dry flat and store on a wide hanger."]];
+const details = [["Details", "Made in Portugal and finished by hand. Includes a dust bag, spare laces and a care card."], ["Shipping", "Free insured delivery over $500. EU in 2 to 4 days, worldwide in 4 to 8."], ["Care", "Brush off dirt, clean with a damp cloth and air dry away from heat. Use shoe trees to hold the shape."]];
 
 export default function Product() {
   const { id } = useParams();
   const { add, wish, toggleWish } = useCart();
-  const [size, setSize] = useState("M");
+  const [size, setSize] = useState("42");
   const [shot, setShot] = useState(0);
   const [added, setAdded] = useState<Review[]>([]);
   const [liked, setLiked] = useState<string[]>([]);
@@ -54,7 +54,7 @@ export default function Product() {
           <div className="mt-4 flex items-center gap-3 text-sm"><Rating value={average} precision={0.1} readOnly size="small" /> {average.toFixed(1)} ({reviews.length} reviews) <span className="flex items-center gap-1 text-ink/50"><Heart size={14} /> {likesFor(product)}</span></div>
           <p className="mt-6 text-3xl font-semibold">{money(product.price)}</p>
           <p className="mt-4 text-ink/60">{product.note}.</p>
-          <p className="mt-8 text-sm font-medium">Size</p>
+          <p className="mt-8 text-sm font-medium">Size (EU)</p>
           <div className="mt-3 flex gap-2">{sizes.map((s) => <button key={s} onClick={() => setSize(s)} className={cn("h-12 w-12 cursor-pointer rounded-2xl border text-sm transition", size === s ? "border-ink bg-ink text-white" : "border-sand hover:border-ink")}>{s}</button>)}</div>
           <FitMeter id={product.id} />
           <div className="mt-8 flex gap-3"><Button className="flex-1" variant="gold" onClick={() => add(product)}>Add to bag</Button><Button variant="outline" size="icon" onClick={() => toggleWish(product.id)} aria-label="Save to wishlist"><Heart size={18} className={cn(wish.includes(product.id) && "fill-oxblood text-oxblood")} /></Button></div>

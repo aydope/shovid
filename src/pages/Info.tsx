@@ -17,10 +17,10 @@ function InfoPage({ title, lead, sections, children }: { title: string; lead: st
 }
 
 export const About = () => (
-  <InfoPage title="About Shovid" lead="A clothing house built around fewer, better garments." sections={[
-    ["Our story", "Shovid started as a three person tailoring studio and grew by word of mouth. We still cut every pattern in house."],
-    ["Materials", "We source wool, cashmere, silk and linen from mills we have visited, and publish the origin of each fabric."],
-    ["Responsibility", "Small production runs reduce waste. Every garment can be mended by us for life."],
+  <InfoPage title="About Shovid" lead="A footwear house built around fewer, better sneakers." sections={[
+    ["Our story", "Shovid started as a three person footwear studio and grew by word of mouth. We still last every pair in house."],
+    ["Materials", "We source leather, suede and recycled mesh from suppliers we have visited, and publish the origin of each material."],
+    ["Responsibility", "Small production runs reduce waste. Every pair can be resoled and repaired by us for life."],
   ]} />
 );
 
@@ -28,16 +28,16 @@ export const Shipping = () => (
   <InfoPage title="Shipping and returns" lead="Insured delivery worldwide, with free returns for 30 days." sections={[
     ["Delivery times", "EU orders arrive in 2 to 4 working days. International orders take 4 to 8 working days."],
     ["Shipping cost", "Free on orders over $150. Otherwise a flat $15 within the EU and $30 elsewhere."],
-    ["Returns", "Unworn items with tags can be returned within 30 days for a full refund to the original payment method."],
+    ["Returns", "Unworn shoes in their original box can be returned within 30 days for a full refund to the original payment method."],
   ]} />
 );
 
 export const SizeGuide = () => (
-  <InfoPage title="Size guide" lead="Measurements are in centimetres, taken on the body." sections={[["Between sizes?", "Choose the smaller size for knitwear and the larger size for tailoring."]]}>
+  <InfoPage title="Size guide" lead="Stand on a sheet of paper, mark your longest toe and heel, and measure the distance in centimetres." sections={[["Between sizes?", "Choose the larger size for running shoes and your usual size for lifestyle sneakers."]]}>
     <div className="mb-12 overflow-x-auto">
       <table className="w-full min-w-[420px] text-left text-sm">
-        <thead><tr className="border-b border-ink text-xs uppercase tracking-widest">{["Size", "Chest", "Waist", "Hip"].map((h) => <th key={h} className="py-3">{h}</th>)}</tr></thead>
-        <tbody>{[["XS", 84, 68, 90], ["S", 92, 76, 96], ["M", 100, 84, 102], ["L", 108, 92, 108], ["XL", 116, 100, 114]].map((r) => <tr key={r[0]} className="border-b border-sand">{r.map((c, i) => <td key={i} className="py-3">{c}</td>)}</tr>)}</tbody>
+        <thead><tr className="border-b border-ink text-xs uppercase tracking-widest">{["EU", "US", "UK", "Foot length"].map((h) => <th key={h} className="py-3">{h}</th>)}</tr></thead>
+        <tbody>{[["40", "7", "6", "25.0 cm"], ["41", "8", "7", "25.7 cm"], ["42", "9", "8", "26.3 cm"], ["43", "10", "9", "27.0 cm"], ["44", "11", "10", "27.7 cm"], ["45", "12", "11", "28.3 cm"]].map((r) => <tr key={r[0]} className="border-b border-sand">{r.map((c, i) => <td key={i} className="py-3">{c}</td>)}</tr>)}</tbody>
       </table>
     </div>
   </InfoPage>
@@ -58,9 +58,9 @@ export const Terms = () => (
 );
 
 const faqs: Section[] = [
-  ["How do I choose my size?", "Use the size guide and measure a garment you already own. Our advisors can also help by email."],
+  ["How do I choose my size?", "Use the size guide and measure your foot. Our advisors can also help by email."],
   ["Can I change or cancel an order?", "Yes, within two hours of purchase. After that we will have started preparing it."],
-  ["Do you offer alterations?", "Hemming and sleeve adjustments are free on tailoring for the first 60 days."],
+  ["Do you offer repairs?", "Defects are repaired free for 60 days, and resoling is included with Gold and Noir."],
   ["Which payment methods are accepted?", "Cards, Apple Pay and bank transfer once payments are enabled on the store."],
 ];
 

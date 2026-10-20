@@ -1,8 +1,6 @@
-export type Kind = "hoodie" | "sneaker";
 type Pool = string[][];
 type Loader = () => Promise<Pool>;
 
-const label: Record<Kind, string> = { hoodie: "Hoodie", sneaker: "Sneakers" };
 const pexelsKey = import.meta.env.VITE_PEXELS_KEY as string | undefined;
 
 const memo = new Map<string, Promise<Pool>>();
@@ -14,7 +12,7 @@ const once = (id: string, fn: Loader): Loader => () => {
   return run;
 };
 
-// Pexels (optional, free key): best quality curated photos. Used first when VITE_PEXELS_KEY is set.
+// Pexels (optional, free key): curated photos, used first when VITE_PEXELS_KEY is set.
 const pexels = (query: string) => once(`pexels:${query}`, async () => {
   if (!pexelsKey) return [];
   const res = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=30&orientation=portrait`, { headers: { Authorization: pexelsKey } });
@@ -23,15 +21,15 @@ const pexels = (query: string) => once(`pexels:${query}`, async () => {
   return json.photos.map((p) => [p.src.large]);
 });
 
-// DummyJSON (public, no key): clean product shots. Filtered to sporty shoes only.
-const dummy = (slug: string, match: RegExp) => once(`dummy:${slug}`, async () => {
+// DummyJSON (public, no key): clean product shots, filtered to sporty shoes only.
+const dummy = (slug: string, match: RegExp, skip: RegExp) => once(`dummy:${slug}`, async () => {
   const res = await fetch(`https://dummyjson.com/products/category/${slug}?select=title,thumbnail,images&limit=20`);
   if (!res.ok) throw new Error(`DummyJSON ${slug}`);
   const json = (await res.json()) as { products: Array<{ title: string; thumbnail: string; images?: string[] }> };
-  return json.products.filter((p) => match.test(p.title)).map((p) => (p.images?.length ? p.images : [p.thumbnail]));
+  return json.products.filter((p) => match.test(p.title) && !skip.test(p.title)).map((p) => (p.images?.length ? p.images : [p.thumbnail]));
 });
 
-// Wikimedia Commons search (public, CORS enabled, no key): real photos, quality varies.
+// Wikimedia Commons search (public, CORS enabled, no key): real photos, quality varies. Only a fallback.
 const commons = (term: string) => once(`commons:${term}`, async () => {
   const q = encodeURIComponent(`filetype:bitmap ${term}`);
   const res = await fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=30&prop=imageinfo&iiprop=url%7Cmime%7Csize&iiurlwidth=800&format=json&origin=*`);
@@ -44,30 +42,23 @@ const commons = (term: string) => once(`commons:${term}`, async () => {
     .map((i) => [i.thumburl]);
 });
 
-const sporty = /sport|sneaker|nike|puma|jordan|trainer|run/i;
+const primary: Loader[] = [pexels("sneakers"), pexels("running shoes"), dummy("mens-shoes", /sport|sneaker|nike|puma|jordan|trainer|run/i, /cleat|heel|slipper|sandal/i)];
+const fallback: Loader[] = [commons("sneakers"), commons("running shoes")];
+const MIN_POOL = 12;
+let pool: Pool = [];
 
-const loaders: Record<Kind, Loader[]> = {
-  hoodie: [pexels("hoodie"), commons("hoodie"), commons("hooded sweatshirt")],
-  sneaker: [pexels("sneakers"), dummy("mens-shoes", sporty), commons("sneakers"), commons("running shoes")],
-};
-
-const pools: Partial<Record<Kind, Pool>> = {};
+const gather = async (loaders: Loader[]) => (await Promise.allSettled(loaders.map((load) => load()))).flatMap((r) => (r.status === "fulfilled" ? r.value : []));
 
 export async function loadImages(timeoutMs = 4000) {
-  const kinds = Object.keys(loaders) as Kind[];
-  const work = Promise.all(kinds.map(async (kind) => {
-    const settled = await Promise.allSettled(loaders[kind].map((load) => load()));
-    const merged = settled.flatMap((r) => (r.status === "fulfilled" ? r.value : []));
-    if (merged.length) pools[kind] = merged;
-  }));
+  const main = gather(primary).then((m) => { pool = m; return m; });
+  const work = Promise.all([main, gather(fallback)]).then(([m, extra]) => { if (m.length < MIN_POOL) pool = [...m, ...extra]; });
   await Promise.race([work, new Promise((resolve) => setTimeout(resolve, timeoutMs))]);
 }
 
-export function photo(kind: Kind, rank: number, shot: number, _seed: number, w: number, h: number) {
-  const pool = pools[kind];
-  if (pool?.length) {
+export function photo(rank: number, shot: number, w: number, h: number) {
+  if (pool.length) {
     const item = pool[rank % pool.length];
     return item[shot % item.length];
   }
-  return `https://placehold.co/${w}x${h}/efe9dc/6b6257/png?text=${encodeURIComponent(label[kind])}`;
+  return `https://placehold.co/${w}x${h}/efe9dc/6b6257/png?text=Sneakers`;
 }

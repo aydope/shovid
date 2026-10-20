@@ -32,7 +32,7 @@ export function AdminOverview() {
         </Panel>
         <Panel title="Top products">{seed.slice(0, 5).map((p, i) => <div key={p.id} className="flex items-center gap-3 py-2"><span className="w-4 text-xs text-ink/40">{i + 1}</span><img src={img(p.id, 80, 80)} alt="" className="h-10 w-10 rounded-xl object-cover" /><p className="flex-1 truncate text-sm">{p.name}</p><p className="text-sm font-medium">{money(p.price)}</p></div>)}</Panel>
       </div>
-      <Panel title="Recent activity" className="mt-4">{["New order SH-10482 from Amara Voss", "Review awaiting approval on Lumen Wool Overcoat", "Noir Leather Trench is running low", "Coupon WELCOME10 used 14 times today"].map((a) => <p key={a} className="border-b border-sand py-3 text-sm last:border-0">{a}</p>)}</Panel>
+      <Panel title="Recent activity" className="mt-4">{["New order SH-10482 from Amara Voss", "Review awaiting approval on Nova Runner", "Atelier Leather Sneaker is running low", "Coupon WELCOME10 used 14 times today"].map((a) => <p key={a} className="border-b border-sand py-3 text-sm last:border-0">{a}</p>)}</Panel>
     </>
   );
 }
@@ -60,13 +60,13 @@ export function AdminOrders() {
 export function AdminProducts() {
   const toast = useToast();
   const [rows, setRows] = useState<Array<Product & { live: boolean }>>(seed.map((p) => ({ ...p, live: true })));
-  const [draft, setDraft] = useState({ name: "", price: "", category: "Heavyweight" as Category });
+  const [draft, setDraft] = useState({ name: "", price: "", category: "Lifestyle" as Category });
   const add = (e: FormEvent) => {
     e.preventDefault();
     const price = Number(draft.price);
     if (!draft.name.trim() || !(price > 0)) { toast("Enter a name and a valid price", "error"); return; }
     setRows((r) => [{ id: `p${100 + r.length}`, name: draft.name.trim(), price, category: draft.category, tone: "#6c4bff", stock: 10, note: "New product", live: false }, ...r]);
-    setDraft({ name: "", price: "", category: "Heavyweight" });
+    setDraft({ name: "", price: "", category: "Lifestyle" });
     toast("Product added as draft");
   };
   return (

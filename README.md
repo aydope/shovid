@@ -12,7 +12,7 @@ Demo accounts (stored in localStorage only): admin@shovid.example / Admin123!  a
 
 If the dev server shows "Invalid hook call" after dependencies change: stop it, delete node_modules/.vite, run `npm ls react react-dom` (there must be a single version of each), then `npm run dev -- --force`.
 
-Images: the catalogue is hoodies and sneakers only. Photos load when the app starts (4 second limit). With a free Pexels key in `VITE_PEXELS_KEY` they come from Pexels searches for `hoodie` and `sneakers`. Without a key, sneakers use sporty shoes from DummyJSON plus Wikimedia Commons search, and hoodies use Wikimedia Commons search, so quality varies. A labelled placeholder from placehold.co is shown if no source is reachable. Edit `src/images.ts` to change sources.
+Images: the catalogue is sneakers only. Photos load when the app starts (4 second limit). With a free Pexels key in `VITE_PEXELS_KEY` they come from Pexels searches for `sneakers` and `running shoes`. Without a key, sporty shoes from DummyJSON are used first and Wikimedia Commons search fills the gaps, so quality varies and some images repeat. A labelled placeholder from placehold.co is shown if no source is reachable. Edit `src/images.ts` to change sources.
 
 ## Scripts
 

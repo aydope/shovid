@@ -55,7 +55,7 @@ function GiftPicker() {
     <div className="max-w-xl rounded-3xl bg-white p-8 ring-1 ring-sand">
       <p className="text-sm font-medium">Choose an amount</p>
       <div className="mt-4 flex flex-wrap gap-3">{[50, 100, 250, 500].map((a) => <button key={a} onClick={() => setAmount(a)} className={`cursor-pointer rounded-full border px-6 py-3 text-sm ${amount === a ? "border-ink bg-ink text-white" : "border-sand"}`}>{money(a)}</button>)}</div>
-      <Button className="mt-6 w-full" variant="gold" onClick={() => add({ id: `gift-${amount}`, name: `Gift card ${money(amount)}`, category: "Heavyweight", price: amount, tone: "#6c4bff", stock: 999, note: "Digital gift card" })}>Add gift card to bag</Button>
+      <Button className="mt-6 w-full" variant="gold" onClick={() => add({ id: `gift-${amount}`, name: `Gift card ${money(amount)}`, category: "Lifestyle", price: amount, tone: "#6c4bff", stock: 999, note: "Digital gift card" })}>Add gift card to bag</Button>
     </div>
   );
 }
@@ -70,9 +70,9 @@ export const Stores = () => (
   </Landing>
 );
 
-export const Sustainability = () => <Landing eyebrow="Responsibility" title="Made to be kept" lead="Small runs, natural fibres and repairs for life." from="#14c8a0" to="#6c4bff" features={[[Leaf, "Natural fibres", "92% of our range is wool, silk, linen or cotton."], [Recycle, "Repair program", "Free mending for the life of every garment."], [Users, "Fair production", "Family-run workshops within 40 km of our atelier."]]} />;
+export const Sustainability = () => <Landing eyebrow="Responsibility" title="Made to be kept" lead="Small runs, premium materials and repairs for life." from="#14c8a0" to="#6c4bff" features={[[Leaf, "Premium materials", "92% of our uppers are leather, suede or recycled mesh."], [Recycle, "Repair program", "Free resoling and cleaning for the life of every pair."], [Users, "Fair production", "Family-run workshops within 40 km of our atelier."]]} />;
 
-const roles = [["Pattern Cutter", "Porto", "Full time"], ["Client Advisor", "Berlin", "Full time"], ["Frontend Engineer", "Remote", "Full time"], ["Visual Merchandiser", "Paris", "Part time"]];
+const roles = [["Footwear Designer", "Porto", "Full time"], ["Client Advisor", "Berlin", "Full time"], ["Frontend Engineer", "Remote", "Full time"], ["Visual Merchandiser", "Paris", "Part time"]];
 
 export const Careers = () => (
   <Landing eyebrow="Join us" title="Build Shovid with us" lead="A small team making clothing and software with care." from="#ff3b6b" to="#6c4bff">

@@ -1,6 +1,6 @@
-import { photo, type Kind } from "./images";
+import { photo } from "./images";
 
-export type Category = "Zip Hoodies" | "Pullovers" | "Oversized" | "Heavyweight" | "Sneakers";
+export type Category = "Running" | "Lifestyle" | "High Tops" | "Trail" | "Court";
 
 export interface Product {
   id: string;
@@ -23,17 +23,17 @@ export interface Order {
 }
 
 const base: Product[] = [
-  { id: "p1", name: "Lumen Zip Hoodie", category: "Zip Hoodies", price: 140, tone: "#2b2723", stock: 14, note: "Heavyweight brushed fleece" },
-  { id: "p2", name: "Aurelia Pullover Hoodie", category: "Pullovers", price: 120, tone: "#b08d57", stock: 32, note: "Soft loopback cotton" },
-  { id: "p3", name: "Verona Oversized Hoodie", category: "Oversized", price: 130, tone: "#5b1a1a", stock: 21, note: "Dropped shoulder, boxy cut" },
-  { id: "p4", name: "Sable Heavyweight Hoodie", category: "Heavyweight", price: 150, tone: "#d8cbb2", stock: 48, note: "480gsm organic cotton" },
-  { id: "p5", name: "Noir Zip Hoodie", category: "Zip Hoodies", price: 160, tone: "#0e0d0b", stock: 6, note: "Full zip, metal hardware" },
-  { id: "p6", name: "Ivoire Pullover Hoodie", category: "Pullovers", price: 115, tone: "#efe6d4", stock: 27, note: "Brushed back, kangaroo pocket" },
-  { id: "p7", name: "Meridian Oversized Hoodie", category: "Oversized", price: 135, tone: "#3a3f3a", stock: 11, note: "Washed finish, relaxed fit" },
-  { id: "p8", name: "Atelier Heavyweight Hoodie", category: "Heavyweight", price: 125, tone: "#f0ebe0", stock: 120, note: "Double layer hood" },
+  { id: "p1", name: "Nova Runner", category: "Running", price: 180, tone: "#f1ede4", stock: 14, note: "Responsive foam, breathable mesh" },
+  { id: "p2", name: "Pulse Racer", category: "Running", price: 210, tone: "#1f3a5f", stock: 32, note: "Carbon plate, race day weight" },
+  { id: "p3", name: "Aero Glide", category: "Running", price: 195, tone: "#b5485d", stock: 21, note: "Max cushion daily trainer" },
+  { id: "p4", name: "Stride Elite", category: "Running", price: 240, tone: "#222222", stock: 48, note: "Knit upper, rocker sole" },
+  { id: "p5", name: "Atelier Leather Sneaker", category: "Lifestyle", price: 220, tone: "#4a2c1d", stock: 6, note: "Full grain leather, cup sole" },
+  { id: "p6", name: "Linden Suede Sneaker", category: "Lifestyle", price: 200, tone: "#9a6b3f", stock: 27, note: "Italian suede, cushioned insole" },
+  { id: "p7", name: "Coast Canvas Low", category: "Lifestyle", price: 130, tone: "#2d4a6b", stock: 11, note: "Organic canvas, vulcanised sole" },
+  { id: "p8", name: "Ivoire Minimal", category: "Lifestyle", price: 175, tone: "#efe6d4", stock: 120, note: "Clean leather, tonal stitching" },
 ];
 
-export const categories: Array<"All" | Category> = ["All", "Zip Hoodies", "Pullovers", "Oversized", "Heavyweight", "Sneakers"];
+export const categories: Array<"All" | Category> = ["All", "Running", "Lifestyle", "High Tops", "Trail", "Court"];
 
 export const orders: Order[] = [
   { id: "SH-10482", customer: "Amara Voss", total: 1820, status: "Processing", date: "2026-10-18" },
@@ -49,28 +49,18 @@ export const weeklyRevenue = [
 ];
 
 const extra: Array<[string, Category, number, string, string]> = [
-  ["Cassel Camel Zip Hoodie", "Zip Hoodies", 145, "#a67c52", "Warm sand, ribbed cuffs"],
-  ["Orsay Quilted Hoodie", "Zip Hoodies", 155, "#33392f", "Quilted panels, matte finish"],
-  ["Hale Sherpa Zip Hoodie", "Zip Hoodies", 170, "#4a3426", "Sherpa lined hood"],
-  ["Pallas Pullover Hoodie", "Pullovers", 125, "#cdbfa6", "Garment dyed fleece"],
-  ["Rhone Cable Pullover Hoodie", "Pullovers", 130, "#e9e1cf", "Chunky cable panel"],
-  ["Vesper Half-Zip Hoodie", "Pullovers", 110, "#1f1d1a", "Half zip, lightweight"],
-  ["Lysander Oversized Hoodie", "Oversized", 140, "#2a2d33", "Extra long sleeves"],
-  ["Corvin Boxy Hoodie", "Oversized", 120, "#c9bba0", "Cropped boxy fit"],
-  ["Elan Washed Hoodie", "Oversized", 115, "#3d1414", "Enzyme washed, faded"],
-  ["Marche Heavyweight Hoodie", "Heavyweight", 135, "#dfe3e6", "Structured hood"],
-  ["Linden Cotton Hoodie", "Heavyweight", 110, "#8d8a82", "Loopback terry"],
-  ["Quill Denim-Wash Hoodie", "Heavyweight", 125, "#25303d", "Indigo wash"],
-  ["Nera Runner Sneaker", "Sneakers", 190, "#6b2230", "Mesh and suede runner"],
-  ["Soleil Trail Sneaker", "Sneakers", 210, "#c28a3a", "Grippy trail outsole"],
-  ["Ardent Court Sneaker", "Sneakers", 170, "#3b2a1c", "Retro court silhouette"],
-  ["Halcyon High-Top Sneaker", "Sneakers", 185, "#b9a98f", "Padded high top"],
-  ["Rivoli Leather Sneaker", "Sneakers", 220, "#4a2c1d", "Full grain leather"],
-  ["Tulum Suede Runner", "Sneakers", 200, "#9a6b3f", "Suede and nylon runner"],
-  ["Arden Hiker Sneaker", "Sneakers", 230, "#1d1a17", "Chunky hiking sole"],
-  ["Nova Leather Sneaker", "Sneakers", 180, "#f1ede4", "Minimal court sneaker"],
-  ["Coast Canvas Sneaker", "Sneakers", 120, "#2d4a6b", "Organic canvas, rubber sole"],
-  ["Pellia Pastel Sneaker", "Sneakers", 160, "#b5485d", "Pastel leather, cushioned sole"],
+  ["Halcyon High-Top", "High Tops", 185, "#b9a98f", "Padded collar, retro profile"],
+  ["Noir High-Top", "High Tops", 210, "#0e0d0b", "Black leather, gum sole"],
+  ["Ember Mid-Top", "High Tops", 195, "#c2955a", "Suede overlays, mid cut"],
+  ["Arctic High-Top", "High Tops", 205, "#dfe3e6", "Pale leather, reinforced toe"],
+  ["Ridge Trail", "Trail", 230, "#3a3f3a", "Grippy lugs, rock plate"],
+  ["Summit Hiker", "Trail", 260, "#5b4a2e", "Waterproof membrane"],
+  ["Canyon Trail", "Trail", 245, "#a67c52", "Cushioned, all terrain"],
+  ["Forest Runner", "Trail", 225, "#2f5d50", "Light trail runner"],
+  ["Meridian Court", "Court", 170, "#f0ebe0", "Court classic, leather"],
+  ["Verona Court", "Court", 185, "#5b1a1a", "Burgundy accents"],
+  ["Sable Court", "Court", 160, "#d8cbb2", "Tennis inspired low top"],
+  ["Cassel Court Pro", "Court", 215, "#33392f", "Premium leather, extra cushioning"],
 ];
 
 export const products: Product[] = [
@@ -84,10 +74,10 @@ export interface Review { id: string; author: string; rating: number; title: str
 
 const reviewers = ["Amara V.", "Luca B.", "Mei T.", "Jonas K.", "Sofia M.", "Daniel R.", "Ines C.", "Omar H.", "Clara W.", "Theo L."];
 const reviewText: Array<[string, string]> = [
-  ["Worth every cent", "The fabric feels far heavier than the price suggests and the fit was right on my first size."],
-  ["Beautifully finished", "Inside seams are as clean as the outside. You can tell somebody cared about this one."],
-  ["Runs slightly large", "Lovely piece, but I would size down if you are between sizes. Customer service swapped it quickly."],
-  ["My new favourite", "Wore it three days in a row. Drapes well and has not creased at all."],
+  ["Worth every cent", "The build feels far better than the price suggests and the fit was right on my first size."],
+  ["Beautifully finished", "The stitching and lasting are spotless. You can tell somebody cared about this pair."],
+  ["Runs slightly large", "Lovely shoe, but go half a size down if you are between sizes. Customer service swapped them quickly."],
+  ["My new favourite", "Wore them three days in a row. Comfortable out of the box and no creasing at all."],
   ["Quiet luxury", "Understated, no logos, and it gets compliments anyway. Packaging was excellent too."],
 ];
 
@@ -102,7 +92,7 @@ export const reviewsFor = (p: Product): Review[] => {
   });
 };
 
-export const sizes = ["XS", "S", "M", "L", "XL"];
+export const sizes = ["40", "41", "42", "43", "44", "45"];
 
 export const likesFor = (p: Product) => 120 + ((Number(p.id.slice(1)) * 37) % 900);
 
@@ -112,29 +102,27 @@ export const discountFor = (p: Product) => { const n = Number(p.id.slice(1)); re
 export interface Post { slug: string; title: string; tag: string; excerpt: string; body: string[]; read: number; date: string; author: string }
 
 export const posts: Post[] = [
-  { slug: "inside-the-porto-atelier", title: "Inside the Porto atelier", tag: "Craft", read: 6, date: "2026-10-02", author: "Marta Reis", excerpt: "Twelve pattern cutters, one cutting table and a rule that no coat leaves before its third fitting.",
-    body: ["The atelier sits above a bakery, which means every fitting starts with the smell of bread. Twelve people work here, from pattern cutters to the two finishers who sew every buttonhole by hand.", "A coat begins as a paper pattern graded across five sizes. Each pattern is cut in calico first, pinned on a model and corrected until the shoulder falls cleanly.", "Only then does the wool come out. Cutting takes one afternoon and finishing takes four days. Nothing leaves before its third fitting, and nothing is rushed to hit a drop date."] },
-  { slug: "capsule-winter-wardrobe", title: "How to build a capsule winter wardrobe", tag: "Guide", read: 5, date: "2026-09-24", author: "Elena Fox", excerpt: "Seven pieces in three tones that cover office, weekend and travel without repeating an outfit.",
-    body: ["Start with a neutral base: a camel coat, a navy knit and a pair of charcoal trousers. These three carry most of your week.", "Add texture rather than colour. A ribbed roll neck and a brushed overshirt make the same trousers look different on Tuesday and Saturday.", "Finish with one accent piece. A burgundy scarf or an ivory cardigan is enough to make the whole set feel considered."] },
-  { slug: "caring-for-cashmere", title: "Caring for cashmere", tag: "Care", read: 4, date: "2026-09-12", author: "Marta Reis", excerpt: "Wash cold, dry flat and rest the garment between wears. Pilling in the first month is normal.",
-    body: ["Cashmere fibres are fine and short, so some surface fuzz in the first weeks is normal. Brush it off gently with a cashmere comb.", "Wash by hand in cold water with a wool detergent, press out the water in a towel and dry flat away from direct heat.", "Rest each knit for two days between wears. The fibres recover their shape and you will see the garment last far longer."] },
-  { slug: "why-natural-fibres", title: "Why we only use natural fibres", tag: "Materials", read: 7, date: "2026-08-30", author: "Daniel Reis", excerpt: "Wool, silk, linen and cotton age better, repair better and breathe better than blends.",
-    body: ["Natural fibres regulate temperature in a way synthetics cannot. Wool warms you when it is cold and keeps you comfortable when it is mild.", "They also repair. A moth hole in wool can be darned invisibly, while a snag in a blend tends to run.", "That is why 92% of our range is made from natural fibres, and why our repair program exists at all."] },
-  { slug: "a-day-in-paris", title: "A day in Paris with the Marais team", tag: "Stories", read: 5, date: "2026-08-14", author: "Elena Fox", excerpt: "Fittings, coffee and a very long lunch with the people behind our newest store.",
-    body: ["The Marais store opens at eleven, but the team arrives at nine to steam every garment on the rail.", "Fittings run in thirty minute slots. Our advisors keep a notebook for every regular client, from preferred sleeve length to favourite colours.", "Lunch is communal. It is the one hour when nobody talks about clothes, and somehow it is when the best ideas arrive."] },
-  { slug: "tailoring-vs-ready-to-wear", title: "Tailoring versus ready to wear", tag: "Guide", read: 6, date: "2026-07-28", author: "Daniel Reis", excerpt: "What half canvas construction actually means and when it is worth paying for.",
-    body: ["A canvas layer inside the chest of a jacket lets it mould to your body over time. Fused jackets use glue instead and stay flat.", "Half canvas gives you most of that benefit at a fair price, which is why our blazers use it.", "If you wear a jacket weekly for years, the difference becomes obvious. For occasional wear, fused construction is perfectly fine."] },
+  { slug: "inside-the-porto-last-room", title: "Inside the Porto last room", tag: "Craft", read: 6, date: "2026-10-02", author: "Marta Reis", excerpt: "Twelve people, hundreds of wooden lasts and one rule: no pair leaves before it has been walked in.",
+    body: ["The atelier sits above a bakery, so every fitting starts with the smell of bread. Twelve people work here, from pattern cutters to the two finishers who stitch every upper by hand.", "A sneaker begins as a paper pattern and a wooden last shaped to a real foot. Each design is prototyped, worn for a week and corrected until it feels right.", "Only then does the leather come out. Cutting takes an afternoon and lasting takes two days. Nothing leaves before it has been walked in, and nothing is rushed to hit a drop date."] },
+  { slug: "how-to-choose-running-shoes", title: "How to choose running shoes", tag: "Guide", read: 5, date: "2026-09-24", author: "Elena Fox", excerpt: "Cushion, drop and fit explained, plus which Shovid model suits easy miles, long runs and race day.",
+    body: ["Start with how you run. Easy miles and long runs reward cushion, while short fast sessions suit a lighter shoe with a stiffer plate.", "Fit matters more than any spec. Leave a thumb of space in front of your toes and make sure your heel does not slip when you push off.", "Many runners keep two pairs and alternate them. The foam recovers between runs and you spread the load across different parts of your feet."] },
+  { slug: "cleaning-white-sneakers", title: "Cleaning white sneakers", tag: "Care", read: 4, date: "2026-09-12", author: "Marta Reis", excerpt: "Brush, soap, air dry. The simple routine that keeps white leather and mesh looking new.",
+    body: ["Remove the laces and brush off loose dirt with a soft brush. Wash the laces separately in warm water.", "Clean leather with mild soap and a damp cloth, working in small circles. For mesh, use a soft brush and a little soapy water, never a hard scrub.", "Let the shoes air dry away from direct heat and stuff them with paper to keep their shape. A quick clean every two weeks beats a deep clean every season."] },
+  { slug: "why-we-use-full-grain-leather", title: "Why we use full grain leather", tag: "Materials", read: 7, date: "2026-08-30", author: "Daniel Reis", excerpt: "It ages better, repairs better and breathes better. A look at the tanneries behind our leather sneakers.",
+    body: ["Full grain leather keeps the strongest part of the hide intact. It develops a patina instead of cracking, which is why a good pair looks better after a year of wear.", "It also repairs. Scuffs can be polished out and soles can be replaced, while corrected grain and coated materials tend to peel.", "We buy from two audited tanneries in northern Portugal and publish the origin of every hide. That traceability is part of the price."] },
+  { slug: "a-day-at-the-resole-bench", title: "A day at the resole bench", tag: "Stories", read: 5, date: "2026-08-14", author: "Elena Fox", excerpt: "Fresh soles, new laces and a very long lunch with the cobblers who keep your shoes going.",
+    body: ["The repair bench opens at nine. By ten, the first pairs have their old soles removed and the uppers cleaned.", "Each pair gets a new sole, fresh insoles and a full polish. Members on Gold and Noir get repairs included, and everyone else gets them at cost.", "Lunch is communal. It is the one hour when nobody talks about shoes, and somehow it is when the best ideas arrive."] },
+  { slug: "court-vs-running-shoes", title: "Court shoes versus running shoes", tag: "Guide", read: 6, date: "2026-07-28", author: "Daniel Reis", excerpt: "Flat soles and lateral support against cushioning and forward roll. Which one you need and when.",
+    body: ["Court shoes have a flatter, firmer sole and side support for quick changes of direction. They also look cleaner with everyday outfits.", "Running shoes are built to roll you forward with soft foam under the heel. They are lighter, but the soft foam wears faster on city pavements.", "If you walk a lot in the city, a court shoe is the longer lasting choice. If you run, buy a running shoe and keep it for running."] },
 ];
-
-const kindOf = (category: string): Kind => (category === "Sneakers" ? "sneaker" : "hoodie");
-const rankOf = (p: Product) => products.filter((x) => kindOf(x.category) === kindOf(p.category)).findIndex((x) => x.id === p.id);
 
 export const img = (key: string, w = 600, h = 750) => {
   const [id, n] = key.split("-");
-  const p = products.find((x) => x.id === id);
-  if (!p) {
+  const rank = products.findIndex((x) => x.id === id);
+  const shot = /^\d$/.test(n ?? "") ? Number(n) : 0;
+  if (rank < 0) {
     const hash = [...key].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
-    return photo(hash % 3 === 0 ? "sneaker" : "hoodie", hash % 7, hash % 4, hash, w, h);
+    return photo(hash % 11, hash % 4, w, h);
   }
-  return photo(kindOf(p.category), rankOf(p), /^\d$/.test(n ?? "") ? Number(n) : 0, Number(p.id.slice(1)) * 13, w, h);
+  return photo(rank, shot, w, h);
 };

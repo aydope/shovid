@@ -36,7 +36,7 @@ export function CompleteLook({ product }: { product: Product }) {
   const total = picks.reduce((s, p) => s + p.price, 0);
   return (
     <section data-reveal className="mt-24 rounded-[2rem] bg-white p-6 ring-1 ring-sand md:p-10">
-      <h2 className="font-display text-3xl">Complete the look</h2>
+      <h2 className="font-display text-3xl">Build your rotation</h2>
       <div className="mt-6 flex flex-wrap items-center gap-4">
         {picks.map((p, i) => <div key={p.id} className="flex items-center gap-4">{i > 0 && <Plus className="text-ink/30" />}<Link to={`/product/${p.id}`} className="block w-28"><img src={img(p.id, 220, 280)} alt={p.name} loading="lazy" className="aspect-[4/5] rounded-2xl object-cover" /><p className="mt-1 truncate text-xs">{p.name}</p></Link></div>)}
         <div className="ml-auto text-right"><p className="text-xs text-ink/50">Bundle total</p><p className="text-2xl font-semibold">{money(total)}</p><Button size="sm" className="mt-2" variant="gold" onClick={() => picks.forEach(add)}>Add all 3</Button></div>
@@ -45,7 +45,7 @@ export function CompleteLook({ product }: { product: Product }) {
   );
 }
 
-const seedQs = [{ id: 1, q: "Is the lining removable?", a: "No, it is fully sewn in, but it can be re-lined by our atelier.", votes: 12 }, { id: 2, q: "Can I get it hemmed?", a: "Yes, hemming is free in any store within 60 days.", votes: 8 }, { id: 3, q: "Is it true to colour in the photos?", a: "Photos are taken in daylight and match closely.", votes: 5 }];
+const seedQs = [{ id: 1, q: "Is the insole removable?", a: "Yes, it lifts out so you can use your own orthotic.", votes: 12 }, { id: 2, q: "Can I get them resoled?", a: "Yes, resoling is included for Gold and Noir members and offered at cost otherwise.", votes: 8 }, { id: 3, q: "Do they run true to size?", a: "Most buyers go with their usual size. Go half a size up for running models.", votes: 5 }];
 
 export function QnA() {
   const toast = useToast();

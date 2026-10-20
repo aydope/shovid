@@ -7,7 +7,7 @@ const columns = [
   { title: "Company", links: [["About", "/about"], ["Sustainability", "/sustainability"], ["Careers", "/careers"], ["Stores", "/stores"], ["Journal", "/journal"]] },
   { title: "Members", links: [["Membership", "/membership"], ["Sign in", "/login"], ["Join", "/register"], ["Wholesale", "/wholesale"], ["Wishlist", "/wishlist"]] },
 ];
-const badges = [[RefreshCw, "30 day returns"], [Lock, "Secure checkout"], [Leaf, "Natural fibres"], [Gift, "Gift wrapping"]] as const;
+const badges = [[RefreshCw, "30 day returns"], [Lock, "Secure checkout"], [Leaf, "Premium materials"], [Gift, "Gift wrapping"]] as const;
 const social = [[Instagram, "Instagram"], [Twitter, "Twitter"], [Youtube, "YouTube"], [Facebook, "Facebook"]] as const;
 const pay = [CreditCard, Wallet, Landmark, Smartphone];
 

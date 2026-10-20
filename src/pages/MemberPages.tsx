@@ -107,7 +107,7 @@ export function MemberAddresses() {
 export function MemberRewards() {
   const { points, redeem } = useApp();
   const toast = useToast();
-  const rewards = [["$10 voucher", 500, "REWARD10"], ["Free alteration", 1200, "ALTER1"], ["$50 voucher", 2500, "REWARD50"], ["Private styling session", 4000, "STYLE1"]] as const;
+  const rewards = [["$10 voucher", 500, "REWARD10"], ["Free repair", 1200, "ALTER1"], ["$50 voucher", 2500, "REWARD50"], ["Private styling session", 4000, "STYLE1"]] as const;
   const [codes, setCodes] = useState<string[]>([]);
   const go = (name: string, cost: number, code: string) => { if (!redeem(cost)) { toast("Not enough points", "error"); return; } setCodes((c) => [...c, `${name}: ${code}`]); toast(`${name} redeemed`); };
   return (
@@ -126,7 +126,7 @@ export function MemberSubscription() {
   const [confirm, setConfirm] = useState(false);
   const left = sub ? Math.max(0, plan.alterations - sub.alterationsUsed) : 0;
   const invoices = sub ? [0, 1, 2].map((i) => ({ id: `INV-${1000 + i}`, date: new Date(new Date(sub.since).getTime() + i * (sub.cycle === "year" ? 365 : 30) * 864e5).toISOString().slice(0, 10), amount: plan.price[sub.cycle] })).filter((x) => new Date(x.date) <= new Date()) : [];
-  const unlocked: Array<[string, boolean]> = [["Member discount", plan.discount > 0], ["Free alterations", plan.alterations > 0], ["Early access to sales", plan.early], ["Private styling session", plan.styling], ["Priority support", plan.support !== "Standard"]];
+  const unlocked: Array<[string, boolean]> = [["Member discount", plan.discount > 0], ["Free repairs", plan.alterations > 0], ["Early access to sales", plan.early], ["Private styling session", plan.styling], ["Priority support", plan.support !== "Standard"]];
   return (
     <>
       <Title>Subscription</Title>
@@ -138,8 +138,8 @@ export function MemberSubscription() {
       <div className="mt-4 grid gap-4 md:grid-cols-2">
         <Panel title="Active benefits">{unlocked.map(([l, on]) => <p key={l} className={cn("flex items-center gap-2 py-1 text-sm", !on && "text-ink/40")}><Check size={15} className={on ? "text-mint" : "text-ink/20"} /> {l}</p>)}<p className="mt-2 text-sm text-ink/60">{plan.points}x points, shipping free {plan.freeShipAt ? `over $${plan.freeShipAt}` : "always"}</p></Panel>
         <Panel title="Services">
-          <p className="flex items-center gap-2 text-sm"><Scissors size={15} className="text-gold" /> Alterations left: <b>{plan.alterations > 50 ? "Unlimited" : left}</b></p>
-          <Button size="sm" className="mt-3" variant="outline" disabled={!sub || (plan.alterations < 50 && left === 0)} onClick={() => { if (bookAlteration()) toast("Alteration booked, we will email you a slot"); }}>Book an alteration</Button>
+          <p className="flex items-center gap-2 text-sm"><Scissors size={15} className="text-gold" /> Repairs left: <b>{plan.alterations > 50 ? "Unlimited" : left}</b></p>
+          <Button size="sm" className="mt-3" variant="outline" disabled={!sub || (plan.alterations < 50 && left === 0)} onClick={() => { if (bookAlteration()) toast("Repair booked, we will email you a slot"); }}>Book a repair</Button>
           {plan.styling && <div className="mt-4"><Button size="sm" variant="outline" onClick={() => toast("Styling session requested", "info")}>Request styling session</Button></div>}
         </Panel>
       </div>

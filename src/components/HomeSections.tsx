@@ -10,10 +10,10 @@ import { SaleSlider } from "@/components/SaleSlider";
 import { categories, img, likesFor, products } from "@/data";
 
 const trust = [[Truck, "Free shipping", "On orders over $150"], [RefreshCw, "Free returns", "Within 30 days"], [ShieldCheck, "Secure payment", "Encrypted checkout"], [Headphones, "Client advisors", "Reply in one day"]] as const;
-const why = [[Scissors, "Cut in house", "Every pattern graded by hand and fitted three times.", "text-gold bg-gold/10"], [Leaf, "Natural fibres", "Wool, silk, linen and cotton from mills we know.", "text-mint bg-mint/10"], [Gem, "Lifetime repair", "Mending and re-lining for the life of the garment.", "text-oxblood bg-oxblood/10"], [Truck, "Insured delivery", "Tracked worldwide shipping, 2 to 8 working days.", "text-sky bg-sky/10"], [ShieldCheck, "Secure by default", "Encrypted payments and private order data.", "text-amber bg-amber/10"], [Headphones, "Human support", "Real advisors, not chatbots, six days a week.", "text-gold bg-gold/10"]] as const;
+const why = [[Scissors, "Crafted in small runs", "Every pair is lasted by hand and walked in before it ships.", "text-gold bg-gold/10"], [Leaf, "Premium materials", "Full grain leather, suede and recycled mesh from audited suppliers.", "text-mint bg-mint/10"], [Gem, "Resole and repair", "Resoling and cleaning for the life of the shoe.", "text-oxblood bg-oxblood/10"], [Truck, "Insured delivery", "Tracked worldwide shipping, 2 to 8 working days.", "text-sky bg-sky/10"], [ShieldCheck, "Secure by default", "Encrypted payments and private order data.", "text-amber bg-amber/10"], [Headphones, "Human support", "Real advisors, not chatbots, six days a week.", "text-gold bg-gold/10"]] as const;
 const stats = [["12k+", "Members", "from-gold to-sky"], ["4.8", "Average rating", "from-oxblood to-amber"], ["30", "Day free returns", "from-mint to-sky"], ["48", "Countries", "from-amber to-oxblood"]];
 const press = ["Atelier Weekly", "The Cut Line", "Form Journal", "Mono Mag", "Thread & Co"];
-const reviews = [["Clara W.", "The coat fits like it was made for me. Delivery took three days.", "bg-gold"], ["Omar H.", "Quiet, well cut, honest materials. I stopped shopping anywhere else.", "bg-mint"], ["Ines C.", "Alterations were free and the tailor called me personally.", "bg-oxblood"]];
+const reviews = [["Clara W.", "The sneakers fit true to size and feel great from day one. Delivery took three days.", "bg-gold"], ["Omar H.", "Clean design and honest materials. I stopped shopping anywhere else.", "bg-mint"], ["Ines C.", "The repair was free and the cobbler called me personally.", "bg-oxblood"]];
 
 export function Hero() {
   const stack = products.slice(0, 3);
@@ -25,8 +25,8 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
         <div>
           <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-medium shadow-sm ring-1 ring-sand"><span className="h-2 w-2 rounded-full bg-mint" /> Autumn Winter 2026 is here</motion.span>
-          <h1 className="font-display mt-6 text-5xl leading-[1.02] md:text-7xl">Hoodies and sneakers, <span className="font-serif bg-gradient-to-r from-gold via-oxblood to-amber bg-clip-text italic text-transparent">refined</span> to the essentials.</h1>
-          <p className="mt-6 max-w-lg text-lg text-ink/60">Heavyweight hoodies and sport sneakers made in small runs. Delivered worldwide in days.</p>
+          <h1 className="font-display mt-6 text-5xl leading-[1.02] md:text-7xl">Sneakers, <span className="font-serif bg-gradient-to-r from-gold via-oxblood to-amber bg-clip-text italic text-transparent">refined</span> to the essentials.</h1>
+          <p className="mt-6 max-w-lg text-lg text-ink/60">Premium sneakers for running, courts and city streets, made in small runs. Delivered worldwide in days.</p>
           <div className="mt-8 flex flex-wrap gap-3"><Link to="/shop"><Button variant="gold">Shop the collection <ArrowRight size={16} /></Button></Link><Link to="/lookbook"><Button variant="outline">View lookbook</Button></Link></div>
         </div>
         <div className="relative mx-auto grid max-w-md grid-cols-2 gap-4">
@@ -85,7 +85,7 @@ export function SaleBanner() {
     <Section id="sale">
       <div className="overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-oxblood via-gold to-sky p-8 text-white md:p-16">
         <p className="text-sm font-semibold">Members week</p>
-        <h2 className="font-display mt-2 max-w-xl text-4xl md:text-6xl">Up to 30% off hoodies</h2>
+        <h2 className="font-display mt-2 max-w-xl text-4xl md:text-6xl">Up to 30% off sneakers</h2>
         <div className="mt-8"><Countdown /></div>
         <Link to="/sale"><Button className="mt-8 bg-white !text-ink hover:bg-white/90">Shop the sale <ArrowRight size={16} /></Button></Link>
       </div>
@@ -222,7 +222,7 @@ export function Manifesto() {
   return (
     <Section id="manifesto">
       <p className="text-sm font-semibold text-gold">Our belief</p>
-      <p data-split className="font-serif mt-4 max-w-5xl text-4xl leading-[1.1] md:text-7xl">We make fewer garments, from better fibres, cut by people who care, so that you can wear them for decades instead of seasons.</p>
+      <p data-split className="font-serif mt-4 max-w-5xl text-4xl leading-[1.1] md:text-7xl">We make fewer shoes, from better materials, built by people who care, so that you can wear them for years instead of seasons.</p>
     </Section>
   );
 }

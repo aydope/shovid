@@ -23,7 +23,7 @@ export function AuthorCard({ name }: { name: string }) {
 }
 
 interface Comment { id: number; name: string; text: string; likes: number }
-const seed: Comment[] = [{ id: 1, name: "Clara W.", text: "Lovely read. The care tips saved my favourite knit.", likes: 6 }, { id: 2, name: "Omar H.", text: "Would love a follow up on alterations.", likes: 3 }];
+const seed: Comment[] = [{ id: 1, name: "Clara W.", text: "Lovely read. The cleaning tips saved my favourite white pair.", likes: 6 }, { id: 2, name: "Omar H.", text: "Would love a follow up on alterations.", likes: 3 }];
 
 export function Comments() {
   const toast = useToast();
