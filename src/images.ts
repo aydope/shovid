@@ -1,8 +1,9 @@
-export type Kind = "coat" | "knit" | "trouser" | "shirt" | "dress" | "scarf" | "belt" | "shoe" | "boot" | "sneaker";
+export type Kind = "hoodie" | "sneaker";
 type Pool = string[][];
 type Loader = () => Promise<Pool>;
 
-const label: Record<Kind, string> = { coat: "Coat", knit: "Knitwear", trouser: "Trousers", shirt: "Shirt", dress: "Dress", scarf: "Scarf", belt: "Belt", shoe: "Shoes", boot: "Boots", sneaker: "Sneakers" };
+const label: Record<Kind, string> = { hoodie: "Hoodie", sneaker: "Sneakers" };
+const pexelsKey = import.meta.env.VITE_PEXELS_KEY as string | undefined;
 
 const memo = new Map<string, Promise<Pool>>();
 const once = (id: string, fn: Loader): Loader => () => {
@@ -13,45 +14,41 @@ const once = (id: string, fn: Loader): Loader => () => {
   return run;
 };
 
-// DummyJSON: clean product photos for shirts, tops, dresses and shoes (public, no key).
-const dummy = (slug: string) => once(`dummy:${slug}`, async () => {
-  const res = await fetch(`https://dummyjson.com/products/category/${slug}?select=thumbnail,images&limit=12`);
+// Pexels (optional, free key): best quality curated photos. Used first when VITE_PEXELS_KEY is set.
+const pexels = (query: string) => once(`pexels:${query}`, async () => {
+  if (!pexelsKey) return [];
+  const res = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(query)}&per_page=30&orientation=portrait`, { headers: { Authorization: pexelsKey } });
+  if (!res.ok) throw new Error(`Pexels ${query}`);
+  const json = (await res.json()) as { photos: Array<{ src: { large: string } }> };
+  return json.photos.map((p) => [p.src.large]);
+});
+
+// DummyJSON (public, no key): clean product shots. Filtered to sporty shoes only.
+const dummy = (slug: string, match: RegExp) => once(`dummy:${slug}`, async () => {
+  const res = await fetch(`https://dummyjson.com/products/category/${slug}?select=title,thumbnail,images&limit=20`);
   if (!res.ok) throw new Error(`DummyJSON ${slug}`);
-  const json = (await res.json()) as { products: Array<{ thumbnail: string; images?: string[] }> };
-  return json.products.map((p) => (p.images?.length ? p.images : [p.thumbnail]));
+  const json = (await res.json()) as { products: Array<{ title: string; thumbnail: string; images?: string[] }> };
+  return json.products.filter((p) => match.test(p.title)).map((p) => (p.images?.length ? p.images : [p.thumbnail]));
 });
 
-// Fake Store API: jackets and coats (public, no key).
-const fake = (category: string, match: RegExp) => once(`fake:${category}`, async () => {
-  const res = await fetch(`https://fakestoreapi.com/products/category/${encodeURIComponent(category)}`);
-  if (!res.ok) throw new Error(`FakeStore ${category}`);
-  const json = (await res.json()) as Array<{ title: string; image: string }>;
-  return json.filter((p) => match.test(p.title)).map((p) => [p.image]);
-});
-
-// Wikimedia Commons search: real photos for trousers, scarves and belts (public, CORS enabled, no key).
+// Wikimedia Commons search (public, CORS enabled, no key): real photos, quality varies.
 const commons = (term: string) => once(`commons:${term}`, async () => {
   const q = encodeURIComponent(`filetype:bitmap ${term}`);
-  const res = await fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=20&prop=imageinfo&iiprop=url%7Cmime&iiurlwidth=800&format=json&origin=*`);
+  const res = await fetch(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrsearch=${q}&gsrnamespace=6&gsrlimit=30&prop=imageinfo&iiprop=url%7Cmime%7Csize&iiurlwidth=800&format=json&origin=*`);
   if (!res.ok) throw new Error(`Commons ${term}`);
-  const json = (await res.json()) as { query?: { pages?: Record<string, { imageinfo?: Array<{ thumburl?: string; mime: string }> }> } };
+  type Info = { thumburl?: string; mime: string; width: number; height: number };
+  const json = (await res.json()) as { query?: { pages?: Record<string, { imageinfo?: Info[] }> } };
   return Object.values(json.query?.pages ?? {})
     .map((p) => p.imageinfo?.[0])
-    .filter((i): i is { thumburl: string; mime: string } => Boolean(i?.thumburl) && i?.mime === "image/jpeg")
+    .filter((i): i is Info & { thumburl: string } => Boolean(i?.thumburl) && i?.mime === "image/jpeg" && (i?.width ?? 0) >= 600 && (i?.height ?? 0) >= 400)
     .map((i) => [i.thumburl]);
 });
 
+const sporty = /sport|sneaker|nike|puma|jordan|trainer|run/i;
+
 const loaders: Record<Kind, Loader[]> = {
-  shirt: [dummy("mens-shirts")],
-  knit: [dummy("tops")],
-  dress: [dummy("womens-dresses")],
-  shoe: [dummy("mens-shoes"), dummy("womens-shoes")],
-  boot: [dummy("mens-shoes")],
-  sneaker: [dummy("mens-shoes"), dummy("womens-shoes")],
-  coat: [fake("men's clothing", /jacket|coat/i), fake("women's clothing", /jacket|coat/i), commons("overcoat")],
-  trouser: [commons("trousers"), commons("chino pants")],
-  scarf: [commons("wool scarf")],
-  belt: [commons("leather belt")],
+  hoodie: [pexels("hoodie"), commons("hoodie"), commons("hooded sweatshirt")],
+  sneaker: [pexels("sneakers"), dummy("mens-shoes", sporty), commons("sneakers"), commons("running shoes")],
 };
 
 const pools: Partial<Record<Kind, Pool>> = {};

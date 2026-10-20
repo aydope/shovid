@@ -60,13 +60,13 @@ export function AdminOrders() {
 export function AdminProducts() {
   const toast = useToast();
   const [rows, setRows] = useState<Array<Product & { live: boolean }>>(seed.map((p) => ({ ...p, live: true })));
-  const [draft, setDraft] = useState({ name: "", price: "", category: "Essentials" as Category });
+  const [draft, setDraft] = useState({ name: "", price: "", category: "Heavyweight" as Category });
   const add = (e: FormEvent) => {
     e.preventDefault();
     const price = Number(draft.price);
     if (!draft.name.trim() || !(price > 0)) { toast("Enter a name and a valid price", "error"); return; }
     setRows((r) => [{ id: `p${100 + r.length}`, name: draft.name.trim(), price, category: draft.category, tone: "#6c4bff", stock: 10, note: "New product", live: false }, ...r]);
-    setDraft({ name: "", price: "", category: "Essentials" });
+    setDraft({ name: "", price: "", category: "Heavyweight" });
     toast("Product added as draft");
   };
   return (

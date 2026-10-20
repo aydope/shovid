@@ -43,6 +43,7 @@ jobs:
         env:
           VITE_BASE: /${{ github.event.repository.name }}/
           VITE_AI_ENDPOINT: ${{ vars.VITE_AI_ENDPOINT }}
+          VITE_PEXELS_KEY: ${{ secrets.VITE_PEXELS_KEY }}
 
       - name: SPA fallback for client-side routes
         run: cp dist/index.html dist/404.html

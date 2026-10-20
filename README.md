@@ -12,7 +12,7 @@ Demo accounts (stored in localStorage only): admin@shovid.example / Admin123!  a
 
 If the dev server shows "Invalid hook call" after dependencies change: stop it, delete node_modules/.vite, run `npm ls react react-dom` (there must be a single version of each), then `npm run dev -- --force`.
 
-Images: product photos come from public APIs with no key, loaded when the app starts (4 second limit). DummyJSON supplies shirts, tops, dresses and shoes, Fake Store API supplies jackets and coats, and Wikimedia Commons search supplies trousers, scarves, belts and extra coats. If a source is unreachable, a neutral labelled placeholder from placehold.co is shown. Commons photos are real but not studio shots. For consistent editorial photography, swap `photo()` in src/images.ts for the Unsplash or Pexels API (both need a free key).
+Images: the catalogue is hoodies and sneakers only. Photos load when the app starts (4 second limit). With a free Pexels key in `VITE_PEXELS_KEY` they come from Pexels searches for `hoodie` and `sneakers`. Without a key, sneakers use sporty shoes from DummyJSON plus Wikimedia Commons search, and hoodies use Wikimedia Commons search, so quality varies. A labelled placeholder from placehold.co is shown if no source is reachable. Edit `src/images.ts` to change sources.
 
 ## Scripts
 

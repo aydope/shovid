@@ -21,7 +21,7 @@ export function Header({ onSearch }: { onSearch: () => void }) {
     <header className="sticky top-0 z-40">
       <div className="hidden bg-ink text-[12px] text-white/80 md:block">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between px-6">
-          <Link to="/promotions" className="flex items-center gap-2 hover:text-white"><Tag size={14} /> {live ? `${live.name}: ${live.percent}% off ${live.scope === "all" ? "everything" : live.scope.toLowerCase()} today` : "Free insured shipping over $500"}</Link>
+          <Link to="/promotions" className="flex items-center gap-2 hover:text-white"><Tag size={14} /> {live ? `${live.name}: ${live.percent}% off ${live.scope === "all" ? "everything" : live.scope.toLowerCase()} today` : "Free insured shipping over $150"}</Link>
           <div className="flex items-center gap-5">
             <Link to="/track" className="hover:text-white">Track order</Link>
             <Link to="/stores" className="hover:text-white">Stores</Link>

@@ -27,7 +27,7 @@ export const About = () => (
 export const Shipping = () => (
   <InfoPage title="Shipping and returns" lead="Insured delivery worldwide, with free returns for 30 days." sections={[
     ["Delivery times", "EU orders arrive in 2 to 4 working days. International orders take 4 to 8 working days."],
-    ["Shipping cost", "Free on orders over $500. Otherwise a flat $15 within the EU and $30 elsewhere."],
+    ["Shipping cost", "Free on orders over $150. Otherwise a flat $15 within the EU and $30 elsewhere."],
     ["Returns", "Unworn items with tags can be returned within 30 days for a full refund to the original payment method."],
   ]} />
 );

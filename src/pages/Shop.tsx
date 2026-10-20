@@ -8,7 +8,7 @@ import { categories, discountFor, products, ratingOf } from "@/data";
 import { cn } from "@/lib/utils";
 
 interface Filters { cats: string[]; max: number; rating: number; stock: boolean; sale: boolean }
-const start: Filters = { cats: [], max: 2500, rating: 0, stock: false, sale: false };
+const start: Filters = { cats: [], max: 400, rating: 0, stock: false, sale: false };
 const PAGE = 12;
 
 function Panel({ f, set }: { f: Filters; set: (f: Filters) => void }) {
@@ -20,7 +20,7 @@ function Panel({ f, set }: { f: Filters; set: (f: Filters) => void }) {
           <label key={c} className="flex cursor-pointer items-center justify-between py-1.5"><span className="flex items-center gap-3"><input type="checkbox" checked={f.cats.includes(c)} onChange={() => toggle(c)} className="h-4 w-4 accent-[#6c4bff]" />{c}</span><span className="text-xs text-ink/40">{products.filter((p) => p.category === c).length}</span></label>
         ))}
       </fieldset>
-      <div><p className="mb-1 font-semibold">Price up to ${f.max}</p><Slider size="small" color="secondary" min={150} max={2500} step={50} value={f.max} onChange={(_, v) => set({ ...f, max: v as number })} aria-label="Maximum price" /></div>
+      <div><p className="mb-1 font-semibold">Price up to ${f.max}</p><Slider size="small" color="secondary" min={50} max={400} step={10} value={f.max} onChange={(_, v) => set({ ...f, max: v as number })} aria-label="Maximum price" /></div>
       <div><p className="mb-3 font-semibold">Rating</p><div className="flex gap-2">{[0, 4, 5].map((r) => <button key={r} onClick={() => set({ ...f, rating: r })} className={cn("flex cursor-pointer items-center gap-1 rounded-full border px-3 py-1.5 text-xs", f.rating === r ? "border-ink bg-ink text-white" : "border-sand")}>{r ? <>{r}+ <Star size={11} className="fill-amber text-amber" /></> : "Any"}</button>)}</div></div>
       {([["stock", "In stock only"], ["sale", "On sale"]] as const).map(([k, l]) => <label key={k} className="flex cursor-pointer items-center justify-between"><span className="font-semibold">{l}</span><input type="checkbox" role="switch" checked={f[k]} onChange={() => set({ ...f, [k]: !f[k] })} className="h-5 w-9 cursor-pointer accent-[#6c4bff]" /></label>)}
     </div>
@@ -46,7 +46,7 @@ export default function Shop() {
   }, [f, sort, q]);
 
   const update = (next: Filters) => { setF(next); setShown(PAGE); };
-  const chips = [...f.cats, ...(f.max < 2500 ? [`Under $${f.max}`] : []), ...(f.rating ? [`${f.rating}+ stars`] : []), ...(f.stock ? ["In stock"] : []), ...(f.sale ? ["On sale"] : [])];
+  const chips = [...f.cats, ...(f.max < 400 ? [`Under $${f.max}`] : []), ...(f.rating ? [`${f.rating}+ stars`] : []), ...(f.stock ? ["In stock"] : []), ...(f.sale ? ["On sale"] : [])];
 
   return (
     <section className="mx-auto max-w-7xl px-4 pt-10 md:px-6">

@@ -14,7 +14,7 @@ export interface Reply { text: string; items?: Product[]; links?: Array<{ label:
 export const newMemory = (): Memory => ({ filters: {}, shown: [], last: [] });
 export const modelInfo = model;
 
-const categoryWords: Array<[RegExp, Category]> = [[/\b(coat|jacket|outerwear|trench|bomber|parka)s?\b/, "Outerwear"], [/\b(knit|knitwear|sweater|jumper|cardigan|cashmere|scarf|roll neck)s?\b/, "Knitwear"], [/\b(suit|blazer|trouser|dress|tailoring|pants)s?\b/, "Tailoring"], [/\b(shirt|tee|t-shirt|denim|jeans|hoodie|belt|essential)s?\b/, "Essentials"], [/\b(shoe|sneaker|boot|loafer|derby|flat|footwear|trainer)s?\b/, "Footwear"]];
+const categoryWords: Array<[RegExp, Category]> = [[/\bzip(?:-up|ped)?s?\b/, "Zip Hoodies"], [/\b(pullover|half-zip|jumper)s?\b/, "Pullovers"], [/\b(oversized|boxy|baggy|relaxed)\b/, "Oversized"], [/\b(heavyweight|heavy|thick)\b/, "Heavyweight"], [/\b(sneaker|shoe|trainer|runner|footwear|kick)s?\b/, "Sneakers"]];
 const colorWords: Record<string, string[]> = { black: ["black"], white: ["white", "tan"], cream: ["white", "tan"], ivory: ["white", "tan"], grey: ["grey"], gray: ["grey"], brown: ["brown"], tan: ["tan"], camel: ["tan", "brown"], beige: ["tan", "white"], red: ["red"], burgundy: ["red"], wine: ["red"], pink: ["pink", "red"], blue: ["blue"], navy: ["blue"], green: ["green"], olive: ["green"], purple: ["purple"], gold: ["gold", "tan"] };
 const generic = new Set(["recommend", "show", "find", "want", "look", "looking", "something", "need", "buy", "suggest", "give", "idea", "under", "below", "over", "above", "cheap", "cheaper", "another", "more", "other", "option", "good", "best", "nice", "winter", "summer", "outfit", "sale"]);
 
@@ -66,7 +66,7 @@ function searchCatalog(f: Filters, skip: string[]) {
 }
 
 const describe = (f: Filters) => [f.category && f.category.toLowerCase(), f.color && `in ${f.color[0]}`, f.maxPrice !== undefined && `under ${money(f.maxPrice)}`, f.minPrice !== undefined && `over ${money(f.minPrice)}`, f.sale && "on sale"].filter(Boolean).join(" ");
-const base = ["Recommend a coat under $1500", "Where is my order?", "What is your return policy?", "How do points work?", "Any sale today?"];
+const base = ["Recommend a hoodie under $150", "Where is my order?", "What is your return policy?", "How do points work?", "Any sale today?"];
 
 export function respond(text: string, ctx: Ctx, mem: Memory): Reply {
   const t = text.toLowerCase();
@@ -151,7 +151,7 @@ export function respond(text: string, ctx: Ctx, mem: Memory): Reply {
       const top = intentDoc[intent] ? hits.find((h) => h.doc.id === intentDoc[intent]) ?? hits[0] : hits[0];
       if (!top || (intent === "unknown" && top.score < 1.2)) return out({ text: "I am not sure about that one. I can find products, check orders, explain shipping, returns, sizing and care, or connect you with an advisor.", links: [{ label: "Contact an advisor", to: "/contact" }], suggest: base });
       const plan = ctx.plan.id === "silver" || intent !== "shipping" ? "" : ` With ${plans[ctx.plan.id].name} shipping is free over ${ctx.plan.freeShipAt ? `$${ctx.plan.freeShipAt}` : "$0"}.`;
-      return out({ text: top.doc.text + plan, links: top.doc.link ? [{ label: top.doc.title, to: top.doc.link }] : undefined, suggest: intent === "care" ? ["How to care for leather shoes", "Recommend a coat under $1500"] : base.slice(0, 3) });
+      return out({ text: top.doc.text + plan, links: top.doc.link ? [{ label: top.doc.title, to: top.doc.link }] : undefined, suggest: intent === "care" ? ["How to care for leather shoes", "Recommend a hoodie under $150"] : base.slice(0, 3) });
     }
   }
 }

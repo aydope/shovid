@@ -55,7 +55,7 @@ function GiftPicker() {
     <div className="max-w-xl rounded-3xl bg-white p-8 ring-1 ring-sand">
       <p className="text-sm font-medium">Choose an amount</p>
       <div className="mt-4 flex flex-wrap gap-3">{[50, 100, 250, 500].map((a) => <button key={a} onClick={() => setAmount(a)} className={`cursor-pointer rounded-full border px-6 py-3 text-sm ${amount === a ? "border-ink bg-ink text-white" : "border-sand"}`}>{money(a)}</button>)}</div>
-      <Button className="mt-6 w-full" variant="gold" onClick={() => add({ id: `gift-${amount}`, name: `Gift card ${money(amount)}`, category: "Essentials", price: amount, tone: "#6c4bff", stock: 999, note: "Digital gift card" })}>Add gift card to bag</Button>
+      <Button className="mt-6 w-full" variant="gold" onClick={() => add({ id: `gift-${amount}`, name: `Gift card ${money(amount)}`, category: "Heavyweight", price: amount, tone: "#6c4bff", stock: 999, note: "Digital gift card" })}>Add gift card to bag</Button>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { photo, type Kind } from "./images";
 
-export type Category = "Outerwear" | "Knitwear" | "Tailoring" | "Essentials" | "Footwear";
+export type Category = "Zip Hoodies" | "Pullovers" | "Oversized" | "Heavyweight" | "Sneakers";
 
 export interface Product {
   id: string;
@@ -23,17 +23,17 @@ export interface Order {
 }
 
 const base: Product[] = [
-  { id: "p1", name: "Lumen Wool Overcoat", category: "Outerwear", price: 1180, tone: "#2b2723", stock: 14, note: "Double-faced Italian wool" },
-  { id: "p2", name: "Aurelia Cashmere Roll Neck", category: "Knitwear", price: 640, tone: "#b08d57", stock: 32, note: "Grade A Mongolian cashmere" },
-  { id: "p3", name: "Verona Pleated Trouser", category: "Tailoring", price: 420, tone: "#5b1a1a", stock: 21, note: "Tropical wool, high rise" },
-  { id: "p4", name: "Sable Silk Shirt", category: "Essentials", price: 320, tone: "#d8cbb2", stock: 48, note: "19 momme mulberry silk" },
-  { id: "p5", name: "Noir Leather Trench", category: "Outerwear", price: 2250, tone: "#0e0d0b", stock: 6, note: "Vegetable-tanned lambskin" },
-  { id: "p6", name: "Ivoire Merino Cardigan", category: "Knitwear", price: 480, tone: "#efe6d4", stock: 27, note: "Extra-fine 15.5 micron merino" },
-  { id: "p7", name: "Meridian Single-Breasted Blazer", category: "Tailoring", price: 960, tone: "#3a3f3a", stock: 11, note: "Half-canvas, hand-set sleeves" },
-  { id: "p8", name: "Atelier Pima Tee", category: "Essentials", price: 140, tone: "#f0ebe0", stock: 120, note: "Heavyweight 220gsm" },
+  { id: "p1", name: "Lumen Zip Hoodie", category: "Zip Hoodies", price: 140, tone: "#2b2723", stock: 14, note: "Heavyweight brushed fleece" },
+  { id: "p2", name: "Aurelia Pullover Hoodie", category: "Pullovers", price: 120, tone: "#b08d57", stock: 32, note: "Soft loopback cotton" },
+  { id: "p3", name: "Verona Oversized Hoodie", category: "Oversized", price: 130, tone: "#5b1a1a", stock: 21, note: "Dropped shoulder, boxy cut" },
+  { id: "p4", name: "Sable Heavyweight Hoodie", category: "Heavyweight", price: 150, tone: "#d8cbb2", stock: 48, note: "480gsm organic cotton" },
+  { id: "p5", name: "Noir Zip Hoodie", category: "Zip Hoodies", price: 160, tone: "#0e0d0b", stock: 6, note: "Full zip, metal hardware" },
+  { id: "p6", name: "Ivoire Pullover Hoodie", category: "Pullovers", price: 115, tone: "#efe6d4", stock: 27, note: "Brushed back, kangaroo pocket" },
+  { id: "p7", name: "Meridian Oversized Hoodie", category: "Oversized", price: 135, tone: "#3a3f3a", stock: 11, note: "Washed finish, relaxed fit" },
+  { id: "p8", name: "Atelier Heavyweight Hoodie", category: "Heavyweight", price: 125, tone: "#f0ebe0", stock: 120, note: "Double layer hood" },
 ];
 
-export const categories: Array<"All" | Category> = ["All", "Outerwear", "Knitwear", "Tailoring", "Essentials", "Footwear"];
+export const categories: Array<"All" | Category> = ["All", "Zip Hoodies", "Pullovers", "Oversized", "Heavyweight", "Sneakers"];
 
 export const orders: Order[] = [
   { id: "SH-10482", customer: "Amara Voss", total: 1820, status: "Processing", date: "2026-10-18" },
@@ -49,28 +49,28 @@ export const weeklyRevenue = [
 ];
 
 const extra: Array<[string, Category, number, string, string]> = [
-  ["Cassel Camel Coat", "Outerwear", 1390, "#a67c52", "Brushed wool and cashmere blend"],
-  ["Orsay Quilted Jacket", "Outerwear", 780, "#33392f", "Recycled down, matte shell"],
-  ["Hale Shearling Bomber", "Outerwear", 1850, "#4a3426", "Reversible Spanish shearling"],
-  ["Pallas Alpaca Cardigan", "Knitwear", 560, "#cdbfa6", "Baby alpaca, shawl collar"],
-  ["Rhone Fisherman Sweater", "Knitwear", 520, "#e9e1cf", "Chunky merino rib"],
-  ["Vesper Knit Polo", "Knitwear", 360, "#1f1d1a", "Mercerised cotton, open weave"],
-  ["Lysander Three-Piece Suit", "Tailoring", 2100, "#2a2d33", "Super 120s wool, full canvas"],
-  ["Corvin Linen Suit Jacket", "Tailoring", 890, "#c9bba0", "Irish linen, unlined"],
-  ["Elan Wide-Leg Trouser", "Tailoring", 390, "#3d1414", "Fluid crepe, side adjusters"],
-  ["Marche Oxford Shirt", "Essentials", 210, "#dfe3e6", "Brushed cotton, mother of pearl"],
-  ["Linden Cotton Hoodie", "Essentials", 260, "#8d8a82", "Loopback terry, 480gsm"],
-  ["Quill Straight Denim", "Essentials", 290, "#25303d", "Japanese selvedge, raw"],
-  ["Nera Silk Slip Dress", "Essentials", 540, "#6b2230", "Bias-cut charmeuse"],
-  ["Soleil Wrap Dress", "Tailoring", 680, "#c28a3a", "Matte crepe, tonal buttons"],
-  ["Ardent Leather Belt", "Essentials", 180, "#3b2a1c", "Full-grain, brass buckle"],
-  ["Halcyon Cashmere Scarf", "Knitwear", 340, "#b9a98f", "Hand-fringed, 200cm"],
-  ["Rivoli Leather Derby", "Footwear", 540, "#4a2c1d", "Goodyear welted calfskin"],
-  ["Tulum Suede Loafer", "Footwear", 420, "#9a6b3f", "Italian suede, leather sole"],
-  ["Arden Chelsea Boot", "Footwear", 620, "#1d1a17", "Hand-burnished leather"],
-  ["Nova Leather Sneaker", "Footwear", 310, "#f1ede4", "Minimal court sneaker"],
-  ["Coast Canvas Sneaker", "Footwear", 180, "#2d4a6b", "Organic canvas, rubber sole"],
-  ["Pellia Ballet Flat", "Footwear", 360, "#b5485d", "Nappa leather, flexible sole"],
+  ["Cassel Camel Zip Hoodie", "Zip Hoodies", 145, "#a67c52", "Warm sand, ribbed cuffs"],
+  ["Orsay Quilted Hoodie", "Zip Hoodies", 155, "#33392f", "Quilted panels, matte finish"],
+  ["Hale Sherpa Zip Hoodie", "Zip Hoodies", 170, "#4a3426", "Sherpa lined hood"],
+  ["Pallas Pullover Hoodie", "Pullovers", 125, "#cdbfa6", "Garment dyed fleece"],
+  ["Rhone Cable Pullover Hoodie", "Pullovers", 130, "#e9e1cf", "Chunky cable panel"],
+  ["Vesper Half-Zip Hoodie", "Pullovers", 110, "#1f1d1a", "Half zip, lightweight"],
+  ["Lysander Oversized Hoodie", "Oversized", 140, "#2a2d33", "Extra long sleeves"],
+  ["Corvin Boxy Hoodie", "Oversized", 120, "#c9bba0", "Cropped boxy fit"],
+  ["Elan Washed Hoodie", "Oversized", 115, "#3d1414", "Enzyme washed, faded"],
+  ["Marche Heavyweight Hoodie", "Heavyweight", 135, "#dfe3e6", "Structured hood"],
+  ["Linden Cotton Hoodie", "Heavyweight", 110, "#8d8a82", "Loopback terry"],
+  ["Quill Denim-Wash Hoodie", "Heavyweight", 125, "#25303d", "Indigo wash"],
+  ["Nera Runner Sneaker", "Sneakers", 190, "#6b2230", "Mesh and suede runner"],
+  ["Soleil Trail Sneaker", "Sneakers", 210, "#c28a3a", "Grippy trail outsole"],
+  ["Ardent Court Sneaker", "Sneakers", 170, "#3b2a1c", "Retro court silhouette"],
+  ["Halcyon High-Top Sneaker", "Sneakers", 185, "#b9a98f", "Padded high top"],
+  ["Rivoli Leather Sneaker", "Sneakers", 220, "#4a2c1d", "Full grain leather"],
+  ["Tulum Suede Runner", "Sneakers", 200, "#9a6b3f", "Suede and nylon runner"],
+  ["Arden Hiker Sneaker", "Sneakers", 230, "#1d1a17", "Chunky hiking sole"],
+  ["Nova Leather Sneaker", "Sneakers", 180, "#f1ede4", "Minimal court sneaker"],
+  ["Coast Canvas Sneaker", "Sneakers", 120, "#2d4a6b", "Organic canvas, rubber sole"],
+  ["Pellia Pastel Sneaker", "Sneakers", 160, "#b5485d", "Pastel leather, cushioned sole"],
 ];
 
 export const products: Product[] = [
@@ -126,32 +126,15 @@ export const posts: Post[] = [
     body: ["A canvas layer inside the chest of a jacket lets it mould to your body over time. Fused jackets use glue instead and stay flat.", "Half canvas gives you most of that benefit at a fair price, which is why our blazers use it.", "If you wear a jacket weekly for years, the difference becomes obvious. For occasional wear, fused construction is perfectly fine."] },
 ];
 
-const kinds: Kind[] = ["coat", "knit", "trouser", "shirt", "dress", "shoe", "sneaker", "boot", "scarf"];
-
-const kindOf = (name: string, category: string): Kind => {
-  const n = name.toLowerCase();
-  if (category === "Footwear") return /boot/.test(n) ? "boot" : /sneaker/.test(n) ? "sneaker" : "shoe";
-  if (/scarf/.test(n)) return "scarf";
-  if (/belt/.test(n)) return "belt";
-  if (/dress/.test(n)) return "dress";
-  if (/trouser|denim|jean/.test(n)) return "trouser";
-  if (/shirt|tee|polo/.test(n)) return "shirt";
-  if (/sweater|cardigan|roll neck|hoodie|knit/.test(n)) return "knit";
-  return "coat";
-};
-
-const group = (k: Kind) => (k === "shoe" || k === "boot" || k === "sneaker" ? "foot" : k);
-const rankOf = (p: Product) => {
-  const g = group(kindOf(p.name, p.category));
-  return products.filter((x) => group(kindOf(x.name, x.category)) === g).findIndex((x) => x.id === p.id);
-};
+const kindOf = (category: string): Kind => (category === "Sneakers" ? "sneaker" : "hoodie");
+const rankOf = (p: Product) => products.filter((x) => kindOf(x.category) === kindOf(p.category)).findIndex((x) => x.id === p.id);
 
 export const img = (key: string, w = 600, h = 750) => {
   const [id, n] = key.split("-");
   const p = products.find((x) => x.id === id);
   if (!p) {
     const hash = [...key].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
-    return photo(kinds[hash % kinds.length], hash % 5, hash % 4, hash, w, h);
+    return photo(hash % 3 === 0 ? "sneaker" : "hoodie", hash % 7, hash % 4, hash, w, h);
   }
-  return photo(kindOf(p.name, p.category), rankOf(p), /^\d$/.test(n ?? "") ? Number(n) : 0, Number(p.id.slice(1)) * 13, w, h);
+  return photo(kindOf(p.category), rankOf(p), /^\d$/.test(n ?? "") ? Number(n) : 0, Number(p.id.slice(1)) * 13, w, h);
 };

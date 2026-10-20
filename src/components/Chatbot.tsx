@@ -12,7 +12,7 @@ import { cn, money } from "@/lib/utils";
 interface Msg { from: "bot" | "me"; text: string; items?: Product[]; links?: Reply["links"]; meta?: { intent: string; confidence: number; tools: string[] } }
 
 const endpoint = import.meta.env.VITE_AI_ENDPOINT as string | undefined;
-const first = ["Recommend a coat under $1500", "Where is my order?", "What is your return policy?", "How do points work?", "Any sale today?"];
+const first = ["Recommend a hoodie under $150", "Where is my order?", "What is your return policy?", "How do points work?", "Any sale today?"];
 
 export function Chatbot() {
   const { user, plan, points, orders, coupons } = useApp();

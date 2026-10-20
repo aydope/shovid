@@ -17,7 +17,7 @@ const data: Record<Intent, string[]> = {
   human: ["talk to a human", "speak to an agent", "contact support", "I need customer service", "connect me with an advisor", "call someone", "real person"],
   cart: ["what is in my bag", "show my cart", "add it to my bag", "add the first one to cart", "checkout", "how much is my cart", "my basket total"],
   gift: ["gift card", "gift ideas", "buy a present", "gift wrapping", "something for my wife", "birthday present"],
-  care: ["how to wash cashmere", "care instructions", "how to clean leather shoes", "can I machine wash wool", "remove wrinkles from coat", "store my coat", "how do I care for knitwear"],
+  care: ["how to wash a hoodie", "care instructions", "how to clean sneakers", "can I machine wash fleece", "remove wrinkles from hoodie", "store my sneakers", "how do I care for my sneakers"],
   payment: ["which payment methods", "can I pay by card", "bank transfer details", "is checkout secure", "do you accept apple pay", "payment options"],
 };
 
