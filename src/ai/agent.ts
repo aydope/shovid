@@ -47,7 +47,7 @@ function entities(t: string): Filters {
   const color = Object.keys(colorWords).find((w) => new RegExp(`\\b${w}\\b`).test(t));
   if (color) f.color = colorWords[color];
   if (/\b(sale|discount|deal|offer)\b/.test(t)) f.sale = true;
-  const known = new Set([...Object.keys(colorWords), "coat", "jacket", "sweater", "dress", "sneaker", "boot", "shoe", "shirt", "trouser", "scarf", "belt", "suit", "blazer", "hoodie", "denim", "loafer"]);
+  const known = new Set([...Object.keys(colorWords), "hoodie", "sneaker", "runner", "zip", "pullover", "oversized", "heavyweight"]);
   const q = terms(t).filter((w) => !generic.has(w) && !/^\d+$/.test(w) && (known.has(w) || w.length > 4));
   if (q.length) f.q = q;
   return f;
