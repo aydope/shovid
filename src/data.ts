@@ -126,3 +126,5 @@ export const img = (key: string, w = 600, h = 750) => {
   }
   return photo(rank, shot, w, h);
 };
+
+export const stores = [["Porto Flagship", "Rua das Flores 28, Porto", "Mon to Sat, 10:00 to 19:00", "+351 220 000 000"], ["Lisbon Chiado", "Rua Garrett 40, Lisbon", "Mon to Sat, 10:00 to 20:00", "+351 210 000 000"], ["Berlin Mitte", "Torstrasse 100, Berlin", "Tue to Sat, 11:00 to 19:00", "+49 30 000000"], ["Paris Marais", "Rue de Bretagne 12, Paris", "Tue to Sun, 11:00 to 19:00", "+33 1 00 00 00 00"]];

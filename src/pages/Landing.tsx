@@ -4,7 +4,7 @@ import { Briefcase, Clock, Gift, Leaf, MapPin, Phone, Recycle, Sparkles, Users, 
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/ProductCard";
 import { Countdown, Section } from "@/components/Ui";
-import { img, likesFor, products } from "@/data";
+import { img, likesFor, products, stores } from "@/data";
 import { useCart } from "@/store";
 import { money } from "@/lib/utils";
 
@@ -62,7 +62,6 @@ function GiftPicker() {
 
 export const GiftCards = () => <Landing eyebrow="Gift cards" title="Give the gift of choice" lead="Delivered by email instantly, valid for two years." from="#ffb020" to="#ff3b6b" features={[[Gift, "Instant delivery", "Sent by email within a minute."], [Clock, "Valid two years", "No fees, no expiry surprises."], [Sparkles, "Personal note", "Add a message at checkout."]]}><GiftPicker /></Landing>;
 
-const stores = [["Porto Flagship", "Rua das Flores 28, Porto", "Mon to Sat, 10:00 to 19:00", "+351 220 000 000"], ["Lisbon Chiado", "Rua Garrett 40, Lisbon", "Mon to Sat, 10:00 to 20:00", "+351 210 000 000"], ["Berlin Mitte", "Torstrasse 100, Berlin", "Tue to Sat, 11:00 to 19:00", "+49 30 000000"], ["Paris Marais", "Rue de Bretagne 12, Paris", "Tue to Sun, 11:00 to 19:00", "+33 1 00 00 00 00"]];
 
 export const Stores = () => (
   <Landing eyebrow="Visit us" title="Find a Shovid store" lead="Fittings are free and take thirty minutes." from="#0a84ff" to="#14c8a0">

@@ -27,4 +27,10 @@ Images: the catalogue is sneakers only. Photos load when the app starts (4 secon
 
 ## Assistant
 
-The chat assistant is not a hosted LLM. A small neural network (trained in the browser on start) classifies intent, BM25 retrieves answers from policies and the journal, and tools read the live catalogue, cart, orders and plan. To let a real LLM phrase the answers, deploy a server endpoint and set `VITE_AI_ENDPOINT` (see `.env.example`).
+The chat assistant is not a hosted LLM. It combines:
+
+- an intent network (MLP with Adam, dropout, word dropout and character n-gram features) trained in the browser on a generated corpus built from the catalogue, plus examples taught by users through the thumbs up and down buttons (stored in localStorage and used on every retrain);
+- BM25 retrieval over store knowledge (policies, plans, promotions, stores, careers, journal and every product);
+- tools that read the live catalogue, reviews, discounts, stock, cart, orders and plan, for example ranking by discount, reviews, likes or price, comparing models and looking up a product.
+
+The validation score in the chat panel is measured on held-out generated examples, so real-world accuracy is lower. To let a real LLM phrase the answers, deploy a server endpoint and set `VITE_AI_ENDPOINT` (see `.env.example`).

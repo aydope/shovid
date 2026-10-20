@@ -1,4 +1,5 @@
-import { posts } from "@/data";
+import { planList } from "@/commerce";
+import { posts, products, ratingOf, stores } from "@/data";
 import { terms } from "./nlp";
 
 export interface Doc { id: string; tag: string; title: string; text: string; link?: string }
@@ -14,6 +15,13 @@ export const docs: Doc[] = [
   { id: "care-knit", tag: "care", title: "Caring for running shoes", text: "Rinse mesh uppers with lukewarm water and a soft brush, never use a washing machine or dryer, and air dry away from heat with paper inside to hold the shape." },
   { id: "care-leather", tag: "care", title: "Caring for sneakers", text: "Brush off dirt, clean uppers with mild soap and a damp cloth, remove laces to wash them separately and air dry away from heat. Brush suede with a suede brush and avoid soaking." },
   { id: "care-coat", tag: "care", title: "Storing your sneakers", text: "Keep sneakers in a ventilated spot out of direct sun, with shoe trees or paper inside to hold their shape. Rotate pairs to let the foam recover." },
+  { id: "stores", tag: "policy", title: "Store locations", link: "/stores", text: `Fittings are free and take about thirty minutes. ${stores.map(([n, a, h, p]) => `${n}: ${a}, ${h}, ${p}`).join(". ")}.` },
+  { id: "plans", tag: "policy", title: "Membership plans", link: "/membership", text: planList.map((p) => `${p.name} costs ${p.price.month ? `$${p.price.month} a month or $${p.price.year} a year` : "nothing"}: ${p.perks.join(", ")}`).join(". ") + "." },
+  { id: "rewards", tag: "policy", title: "Points and rewards", link: "/account/rewards", text: "Members earn 1 to 2 points per dollar depending on their plan. Rewards: $10 voucher at 500 points, free repair at 1,200, $50 voucher at 2,500 and a private styling session at 4,000." },
+  { id: "promos", tag: "policy", title: "Promotions", link: "/promotions", text: "Recurring offers apply automatically at checkout: Friday Flash 15% every Friday, Weekend Running Sale 20% on Running every Saturday and Sunday, Payday Week 10% in the first 7 days of the month and the Autumn Trail Event 25% on Trail in October and November. Offers stack with your member discount up to 40% of the subtotal." },
+  { id: "careers", tag: "policy", title: "Careers", link: "/careers", text: "Open roles: Footwear Designer in Porto (full time), Client Advisor in Berlin (full time), Frontend Engineer (remote, full time) and Visual Merchandiser in Paris (part time). Apply through the contact page." },
+  { id: "about", tag: "policy", title: "About Shovid", link: "/about", text: "Shovid is a footwear house from Porto, Portugal. We design premium sneakers for running, courts, trails and the city, make them in small runs, and repair them for life. We source full grain leather, suede and recycled mesh from audited suppliers." },
+  ...products.map((p): Doc => ({ id: `product-${p.id}`, tag: "product", title: p.name, link: `/product/${p.id}`, text: `${p.name} is a ${p.category} sneaker priced at $${p.price}. ${p.note}. ${p.stock} pairs in stock. Rated ${ratingOf(p).toFixed(1)} stars.` })),
   ...posts.map((p): Doc => ({ id: `post-${p.slug}`, tag: "journal", title: p.title, link: `/journal/${p.slug}`, text: `${p.excerpt} ${p.body.join(" ")}` })),
 ];
 
