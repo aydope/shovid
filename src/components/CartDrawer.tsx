@@ -24,11 +24,11 @@ export function CartDrawer() {
         <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white"><div className="h-full rounded-full bg-linear-to-r from-gold to-mint transition-all" style={{ width: `${freeAt ? Math.min(100, (total / freeAt) * 100) : 100}%` }} /></div>
       </div>
       <div className="mt-6 flex-1 space-y-5 overflow-y-auto">
-        {lines.length === 0 && <div className="py-16 text-center text-sm text-ink/60"><ShoppingBag className="mx-auto mb-3" />Your bag is empty.</div>}
-        {lines.map(({ product, qty }) => (
-          <div key={product.id} className="flex gap-4">
+        {lines.length === 0 && <div className="py-16 text-center text-sm text-ink/70"><ShoppingBag className="mx-auto mb-3" />Your bag is empty.</div>}
+        {lines.map(({ key, product, qty, size }) => (
+          <div key={key} className="flex gap-4">
             <img src={img(product.id, 160, 200)} alt="" loading="lazy" className="h-24 w-20 rounded-2xl object-cover" style={{ background: product.tone }} />
-            <div className="flex-1"><Link to={`/product/${product.id}`} onClick={() => setOpen(false)} className="font-medium">{product.name}</Link><p className="mt-1 text-xs text-ink/50">Qty {qty}</p><button className="mt-2 cursor-pointer text-xs text-oxblood" onClick={() => remove(product.id)}>Remove</button></div>
+            <div className="flex-1"><Link to={`/product/${product.id}`} onClick={() => setOpen(false)} className="font-medium">{product.name}</Link><p className="mt-1 text-xs text-ink/70">Qty {qty}{size ? `, EU ${size}` : ""}</p><button className="mt-2 cursor-pointer text-xs text-oxblood" onClick={() => remove(key)} aria-label={`Remove ${product.name}`}>Remove</button></div>
             <p className="text-sm font-medium">{money(product.price * qty)}</p>
           </div>
         ))}

@@ -33,7 +33,7 @@ export function Track() {
       {found && (
         <div className="mt-10 max-w-xl rounded-3xl bg-white p-6 ring-1 ring-sand">
           <p className="flex items-center gap-2 font-semibold"><Package size={18} className="text-gold" /> {found.id}, {fmtDate(found.date)}</p>
-          {found.status === "Refunded" ? <p className="mt-4 text-sm text-oxblood">This order was refunded.</p> : <ol className="mt-5 grid grid-cols-3 gap-2">{steps.map((s, i) => <li key={s} className="text-xs"><div className={cn("h-1.5 rounded-full", i <= at ? "bg-mint" : "bg-sand")} /><p className={cn("mt-2", i <= at ? "font-medium" : "text-ink/40")}>{s}</p></li>)}</ol>}
+          {found.status === "Refunded" ? <p className="mt-4 text-sm text-oxblood">This order was refunded.</p> : <ol className="mt-5 grid grid-cols-3 gap-2">{steps.map((s, i) => <li key={s} className="text-xs"><div className={cn("h-1.5 rounded-full", i <= at ? "bg-mint" : "bg-sand")} /><p className={cn("mt-2", i <= at ? "font-medium" : "text-ink/70")}>{s}</p></li>)}</ol>}
           <ul className="mt-5 space-y-1 text-sm text-ink/70">{found.items.map((x) => <li key={x}>{x}</li>)}</ul>
           <p className="mt-4 font-semibold">Total {money2(found.total)}</p>
         </div>

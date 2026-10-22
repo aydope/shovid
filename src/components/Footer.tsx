@@ -36,7 +36,7 @@ export function Footer() {
           </nav>
         ))}
       </div>
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-white/10 px-6 py-6 text-xs text-white/50 md:flex-row">
+      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-white/10 px-6 py-6 text-xs text-white/60 md:flex-row">
         <p>2026 Shovid. All rights reserved.</p>
         <div className="flex items-center gap-4">{pay.map((Icon, i) => <Icon key={i} size={20} />)}</div>
         <div className="flex items-center gap-4"><span className="flex items-center gap-1"><Globe size={14} /> English / USD</span><Link to="/privacy" className="hover:text-white">Privacy</Link><Link to="/terms" className="hover:text-white">Terms</Link></div>

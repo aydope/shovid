@@ -85,13 +85,13 @@ export function MapPicker({ onPick, className }: { onPick: (p: Picked) => void; 
     <div className={className}>
       <div className="relative">
         <div className="flex gap-2">
-          <label className="relative flex-1"><Search size={15} className="absolute left-4 top-3.5 text-ink/40" /><input value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={onKey} placeholder="Search a street, area or place" aria-label="Search a place" className="h-11 w-full rounded-full border border-sand bg-white pl-10 pr-4 text-sm outline-none focus:border-gold" /></label>
+          <label className="relative flex-1"><Search size={15} className="absolute left-4 top-3.5 text-ink/70" /><input value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={onKey} placeholder="Search a street, area or place" aria-label="Search a place" className="h-11 w-full rounded-full border border-sand bg-white pl-10 pr-4 text-sm outline-none focus:border-gold" /></label>
           <Button type="button" size="sm" className="h-11" onClick={() => void search()}>Search</Button>
         </div>
         {hits.length > 0 && <ul className="absolute z-[500] mt-2 w-full overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-sand">{hits.map((h) => <li key={`${h.lat}${h.lon}`}><button type="button" onClick={() => choose(h)} className="flex w-full cursor-pointer items-start gap-3 px-4 py-3 text-left text-sm hover:bg-sand/60"><MapPin size={15} className="mt-0.5 shrink-0 text-gold" />{h.display_name}</button></li>)}</ul>}
       </div>
       <div ref={el} className="relative isolate z-0 mt-3 h-72 overflow-hidden rounded-3xl ring-1 ring-sand" role="application" aria-label="Map to choose delivery location" />
-      <div className="mt-3 flex items-center justify-between gap-3 text-xs text-ink/60"><span>{status}</span><Button type="button" size="sm" variant="outline" onClick={locate}><LocateFixed size={14} /> Use my location</Button></div>
+      <div className="mt-3 flex items-center justify-between gap-3 text-xs text-ink/70"><span>{status}</span><Button type="button" size="sm" variant="outline" onClick={locate}><LocateFixed size={14} /> Use my location</Button></div>
     </div>
   );
 }

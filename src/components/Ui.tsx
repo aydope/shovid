@@ -52,7 +52,7 @@ export function Section({ id, eyebrow, title, children, className }: { id: strin
 }
 
 export function Countdown() {
-  const [end] = useState(() => Date.now() + 3 * 864e5);
+  const [end] = useState(() => { const d = new Date(); d.setHours(24, 0, 0, 0); return d.getTime(); });
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
   const s = Math.max(0, Math.floor((end - now) / 1000));
@@ -60,7 +60,7 @@ export function Countdown() {
   return (
     <div className="flex gap-3">
       {parts.map(([l, v]) => (
-        <div key={l} className="w-16 rounded-2xl bg-white/90 py-3 text-center text-ink"><p className="text-2xl font-semibold tabular-nums">{String(v).padStart(2, "0")}</p><p className="text-[10px]">{l}</p></div>
+        <div key={l} className="w-16 rounded-2xl bg-white/90 py-3 text-center text-ink"><p className="text-2xl font-semibold tabular-nums">{String(v).padStart(2, "0")}</p><p className="text-xs">{l}</p></div>
       ))}
     </div>
   );

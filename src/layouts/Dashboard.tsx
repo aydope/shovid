@@ -45,16 +45,16 @@ export default function Dashboard({ kind }: { kind: "admin" | "member" }) {
       <aside className={cn("sticky top-28 hidden h-[calc(100vh-8rem)] shrink-0 flex-col rounded-[2rem] bg-white py-6 ring-1 ring-sand transition-all duration-300 lg:flex", slim ? "w-24 px-4" : "w-72 px-5")} aria-label="Dashboard">
         <div className={cn("flex items-center gap-3", slim && "justify-center")}>
           <span className={cn("grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-lg font-semibold text-white", kind === "admin" ? "from-ink to-gold" : plan.color)}>{user.name[0]}</span>
-          {!slim && <div className="min-w-0"><p className="truncate font-semibold">{user.name}</p><p className="truncate text-xs text-ink/50">{kind === "admin" ? "Administrator" : `${plan.name} member`}</p></div>}
+          {!slim && <div className="min-w-0"><p className="truncate font-semibold">{user.name}</p><p className="truncate text-xs text-ink/70">{kind === "admin" ? "Administrator" : `${plan.name} member`}</p></div>}
         </div>
         <nav className="mt-8 flex-1 space-y-8 overflow-y-auto pr-1">
           {groups.map(([title, items]) => (
             <div key={title}>
-              {!slim && <p className="mb-3 px-4 text-xs font-medium text-ink/40">{title}</p>}
+              {!slim && <p className="mb-3 px-4 text-xs font-medium text-ink/70">{title}</p>}
               <div className="space-y-1.5">{items.map(([to, label, Icon]) => (
                 <NavLink key={to} to={to} end title={label} className={link}>
                   <Icon size={19} className="shrink-0" />{!slim && <span className="flex-1">{label}</span>}
-                  {!slim && badge(to) > 0 && <span className="rounded-full bg-oxblood px-2 py-0.5 text-[11px] font-medium text-white">{badge(to)}</span>}
+                  {!slim && badge(to) > 0 && <span className="rounded-full bg-oxblood px-2 py-0.5 text-xs font-medium text-white">{badge(to)}</span>}
                 </NavLink>
               ))}</div>
             </div>
@@ -68,10 +68,10 @@ export default function Dashboard({ kind }: { kind: "admin" | "member" }) {
       <div className="min-w-0 flex-1">
         <nav className="no-scrollbar mb-5 flex gap-2 overflow-x-auto lg:hidden" aria-label="Dashboard sections">{flat.map(([to, label, Icon]) => <NavLink key={to} to={to} end className={({ isActive }) => cn("flex h-11 shrink-0 items-center gap-2 rounded-full border px-5 text-sm", isActive ? "border-ink bg-ink text-white" : "border-sand bg-white")}><Icon size={15} />{label}</NavLink>)}</nav>
         <div className="mb-8 flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-white px-5 py-3 ring-1 ring-sand">
-          <p className="text-sm text-ink/50">{kind === "admin" ? "Back office" : "Member area"} <span className="mx-1">/</span> <span className="font-medium text-ink">{here}</span></p>
+          <p className="text-sm text-ink/70">{kind === "admin" ? "Back office" : "Member area"} <span className="mx-1">/</span> <span className="font-medium text-ink">{here}</span></p>
           <div className="flex items-center gap-2">
             {chips.map(([Icon, text]) => <span key={text} className="hidden items-center gap-1.5 rounded-full bg-sand/60 px-3 py-1.5 text-xs sm:flex"><Icon size={13} className="text-gold" />{text}</span>)}
-            <Link to="/contact" className="rounded-full px-3 py-1.5 text-xs text-ink/60 hover:text-ink">Help</Link>
+            <Link to="/contact" className="rounded-full px-3 py-1.5 text-xs text-ink/70 hover:text-ink">Help</Link>
             <span className="relative rounded-full bg-sand/60 p-2"><Bell size={15} />{(kind === "admin" ? pending : active) > 0 && <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-oxblood" />}</span>
           </div>
         </div>

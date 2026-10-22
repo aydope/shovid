@@ -13,12 +13,12 @@ export function Cart() {
     <PageShell title="Your bag">
       {lines.length === 0 ? <p>Your bag is empty. <Link to="/shop" className="text-gold">Continue shopping</Link></p> : (
         <>
-          {lines.map(({ product, qty }) => (
-            <div key={product.id} className="flex items-center gap-6 border-b border-sand py-6">
+          {lines.map(({ key, product, qty, size }) => (
+            <div key={key} className="flex items-center gap-6 border-b border-sand py-6">
               <div className="h-28 w-24" style={{ background: product.tone }} />
-              <div className="flex-1"><Link to={`/product/${product.id}`} className="font-display text-2xl hover:text-gold">{product.name}</Link><p className="text-xs">Qty {qty}</p></div>
+              <div className="flex-1"><Link to={`/product/${product.id}`} className="font-display text-2xl hover:text-gold">{product.name}</Link><p className="text-xs">Qty {qty}{size ? `, EU ${size}` : ""}</p></div>
               <p>{money(product.price * qty)}</p>
-              <button onClick={() => remove(product.id)} className="cursor-pointer text-xs uppercase tracking-widest text-oxblood">Remove</button>
+              <button onClick={() => remove(key)} className="cursor-pointer text-xs   text-oxblood">Remove</button>
             </div>
           ))}
           <div className="mt-8 flex items-center justify-between"><p className="font-display text-3xl">Total {money(total)}</p><Link to="/checkout"><Button>Checkout</Button></Link></div>

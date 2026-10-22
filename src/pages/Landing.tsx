@@ -27,7 +27,7 @@ function Landing({ eyebrow, title, lead, from, to, features, cta, children, extr
       {features && (
         <Section id="features" className="pt-16 md:pt-20">
           <div className="grid gap-4 md:grid-cols-3">
-            {features.map(([Icon, t, s]) => <div key={t} className="rounded-3xl bg-white p-8 ring-1 ring-sand"><Icon className="text-gold" /><h2 className="mt-5 text-xl font-semibold">{t}</h2><p className="mt-2 text-sm text-ink/60">{s}</p></div>)}
+            {features.map(([Icon, t, s]) => <div key={t} className="rounded-3xl bg-white p-8 ring-1 ring-sand"><Icon className="text-gold" /><h2 className="mt-5 text-xl font-semibold">{t}</h2><p className="mt-2 text-sm text-ink/70">{s}</p></div>)}
           </div>
         </Section>
       )}
@@ -40,7 +40,7 @@ const grid = (list: typeof products) => <div className="grid grid-cols-2 gap-4 m
 
 export const NewArrivals = () => <Landing eyebrow="Just landed" title="New arrivals" lead="The latest pieces from our Porto atelier." from="#6c4bff" to="#0a84ff">{grid(products.slice(-12).reverse())}</Landing>;
 
-export const Sale = () => <Landing eyebrow="Members week" title="Up to 30% off" lead="Our biggest seasonal event. Ends when the clock does." from="#ff3b6b" to="#ffb020" extra={<Countdown />}>{grid([...products].sort((a, b) => likesFor(b) - likesFor(a)).slice(0, 8))}</Landing>;
+export const Sale = () => <Landing eyebrow="Seasonal sale" title="Up to 30% off" lead="Seasonal prices on selected sneakers. Today's offers end at midnight." from="#ff3b6b" to="#ffb020" extra={<div><p className="mb-2 text-sm">Today's offers end in</p><Countdown /></div>}>{grid([...products].sort((a, b) => likesFor(b) - likesFor(a)).slice(0, 8))}</Landing>;
 
 export const Lookbook = () => (
   <Landing eyebrow="Editorial" title="Autumn Winter lookbook" lead="Six looks shot on location in Porto." from="#14c8a0" to="#0a84ff">
@@ -65,7 +65,7 @@ export const GiftCards = () => <Landing eyebrow="Gift cards" title="Give the gif
 
 export const Stores = () => (
   <Landing eyebrow="Visit us" title="Find a Shovid store" lead="Fittings are free and take thirty minutes." from="#0a84ff" to="#14c8a0">
-    <div className="grid gap-4 md:grid-cols-2">{stores.map(([n, a, h, p]) => <div key={n} className="rounded-3xl bg-white p-8 ring-1 ring-sand"><h2 className="text-2xl font-semibold">{n}</h2><ul className="mt-4 space-y-2 text-sm text-ink/60"><li className="flex gap-2"><MapPin size={16} /> {a}</li><li className="flex gap-2"><Clock size={16} /> {h}</li><li className="flex gap-2"><Phone size={16} /> {p}</li></ul></div>)}</div>
+    <div className="grid gap-4 md:grid-cols-2">{stores.map(([n, a, h, p]) => <div key={n} className="rounded-3xl bg-white p-8 ring-1 ring-sand"><h2 className="text-2xl font-semibold">{n}</h2><ul className="mt-4 space-y-2 text-sm text-ink/70"><li className="flex gap-2"><MapPin size={16} /> {a}</li><li className="flex gap-2"><Clock size={16} /> {h}</li><li className="flex gap-2"><Phone size={16} /> {p}</li></ul></div>)}</div>
   </Landing>
 );
 
@@ -75,6 +75,6 @@ const roles = [["Footwear Designer", "Porto", "Full time"], ["Client Advisor", "
 
 export const Careers = () => (
   <Landing eyebrow="Join us" title="Build Shovid with us" lead="A small team making clothing and software with care." from="#ff3b6b" to="#6c4bff">
-    <div className="divide-y divide-sand rounded-3xl bg-white ring-1 ring-sand">{roles.map(([r, l, t]) => <div key={r} className="flex flex-wrap items-center gap-4 p-6"><Briefcase size={20} className="text-gold" /><p className="flex-1 font-medium">{r}</p><p className="text-sm text-ink/50">{l}, {t}</p><Link to="/contact"><Button size="sm" variant="outline">Apply</Button></Link></div>)}</div>
+    <div className="divide-y divide-sand rounded-3xl bg-white ring-1 ring-sand">{roles.map(([r, l, t]) => <div key={r} className="flex flex-wrap items-center gap-4 p-6"><Briefcase size={20} className="text-gold" /><p className="flex-1 font-medium">{r}</p><p className="text-sm text-ink/70">{l}, {t}</p><Link to="/contact"><Button size="sm" variant="outline">Apply</Button></Link></div>)}</div>
   </Landing>
 );

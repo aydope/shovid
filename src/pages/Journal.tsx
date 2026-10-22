@@ -23,7 +23,7 @@ export default function Journal() {
       {lead && (
         <Link to={`/journal/${lead.slug}`} className="group mt-10 grid overflow-hidden rounded-[2rem] bg-white ring-1 ring-sand md:grid-cols-2">
           <img src={img(lead.slug, 900, 700)} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-          <div className="flex flex-col justify-center p-8 md:p-12"><p className="text-sm font-semibold text-gold">{lead.tag}</p><h2 className="font-display mt-2 text-3xl md:text-5xl">{lead.title}</h2><p className="mt-4 text-ink/60">{lead.excerpt}</p><p className="mt-6 flex items-center gap-2 text-xs text-ink/50"><Clock size={13} /> {lead.read} min read, {lead.author}</p></div>
+          <div className="flex flex-col justify-center p-8 md:p-12"><p className="text-sm font-semibold text-gold">{lead.tag}</p><h2 className="font-display mt-2 text-3xl md:text-5xl">{lead.title}</h2><p className="mt-4 text-ink/70">{lead.excerpt}</p><p className="mt-6 flex items-center gap-2 text-xs text-ink/70"><Clock size={13} /> {lead.read} min read, {lead.author}</p></div>
         </Link>
       )}
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -31,7 +31,7 @@ export default function Journal() {
           <motion.div key={p.slug} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * 0.08 }}>
             <Link to={`/journal/${p.slug}`} className="group block overflow-hidden rounded-3xl bg-white ring-1 ring-sand">
               <img src={img(p.slug, 600, 400)} alt="" loading="lazy" className="aspect-[3/2] w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="p-6"><p className="text-xs font-semibold text-gold">{p.tag}</p><h2 className="mt-1 text-xl font-semibold">{p.title}</h2><p className="mt-2 text-sm text-ink/60">{p.excerpt}</p><p className="mt-4 text-xs text-ink/50">{p.read} min read, {p.date}</p></div>
+              <div className="p-6"><p className="text-xs font-semibold text-gold">{p.tag}</p><h2 className="mt-1 text-xl font-semibold">{p.title}</h2><p className="mt-2 text-sm text-ink/70">{p.excerpt}</p><p className="mt-4 text-xs text-ink/70">{p.read} min read, {p.date}</p></div>
             </Link>
           </motion.div>
         ))}

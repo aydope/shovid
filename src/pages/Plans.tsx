@@ -36,7 +36,7 @@ export function Plans() {
       <div className="grid gap-4 md:grid-cols-3">
         {planList.map((p, i) => (
           <motion.div key={p.id} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={cn("flex flex-col rounded-3xl p-8", p.id === "silver" ? "bg-white ring-1 ring-sand" : `bg-linear-to-br ${p.color} text-white`)}>
-            <p className="flex items-center gap-2 text-sm font-semibold">{p.id !== "silver" && <Crown size={15} />}{p.name}{current === p.id && <span className="rounded-full bg-white/25 px-2 py-0.5 text-[11px]">Current</span>}</p>
+            <p className="flex items-center gap-2 text-sm font-semibold">{p.id !== "silver" && <Crown size={15} />}{p.name}{current === p.id && <span className="rounded-full bg-white/25 px-2 py-0.5 text-xs">Current</span>}</p>
             <p className="font-display mt-3 text-5xl">{p.price[cycle] ? `$${p.price[cycle]}` : "Free"}<span className="text-base font-normal opacity-70">{p.price[cycle] ? `/${cycle}` : ""}</span></p>
             <ul className="mt-6 flex-1 space-y-2 text-sm">{p.perks.map((x) => <li key={x} className="flex gap-2"><Check size={16} className="mt-0.5 shrink-0" />{x}</li>)}</ul>
             <Button className={cn("mt-8", p.id !== "silver" && "bg-white !text-ink hover:bg-white/90")} disabled={current === p.id} onClick={() => choose(p.id)}>{current === p.id ? "Your plan" : `Choose ${p.name}`}</Button>
@@ -44,10 +44,10 @@ export function Plans() {
         ))}
       </div>
       <div className="mt-12 overflow-x-auto rounded-3xl bg-white ring-1 ring-sand">
-        <table className="w-full min-w-[520px] text-left text-sm"><thead><tr className="text-xs text-ink/50"><th className="p-4">Compare</th>{planList.map((p) => <th key={p.id} className="p-4">{p.name}</th>)}</tr></thead>
-          <tbody>{rows.map(([label, get]) => <tr key={label} className="border-t border-sand"><td className="p-4 font-medium">{label}</td>{planList.map((p) => { const v = get(p.id); return <td key={p.id} className="p-4">{typeof v === "boolean" ? (v ? <Check size={16} className="text-mint" /> : <Minus size={16} className="text-ink/30" />) : v}</td>; })}</tr>)}</tbody></table>
+        <table className="w-full min-w-[520px] text-left text-sm"><thead><tr className="text-xs text-ink/70"><th scope="col" className="p-4">Compare</th>{planList.map((p) => <th scope="col" key={p.id} className="p-4">{p.name}</th>)}</tr></thead>
+          <tbody>{rows.map(([label, get]) => <tr key={label} className="border-t border-sand"><td className="p-4 font-medium">{label}</td>{planList.map((p) => { const v = get(p.id); return <td key={p.id} className="p-4">{typeof v === "boolean" ? (v ? <Check size={16} className="text-mint-ink" /> : <Minus size={16} className="text-ink/30" />) : v}</td>; })}</tr>)}</tbody></table>
       </div>
-      <p className="mt-4 text-xs text-ink/50">Demo billing: no payment is taken. Your plan is saved in this browser.</p>
+      <p className="mt-4 text-xs text-ink/70">Demo billing: no payment is taken. Your plan is saved in this browser.</p>
     </PageShell>
   );
 }

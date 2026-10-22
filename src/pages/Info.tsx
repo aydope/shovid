@@ -36,7 +36,7 @@ export const SizeGuide = () => (
   <InfoPage title="Size guide" lead="Stand on a sheet of paper, mark your longest toe and heel, and measure the distance in centimetres." sections={[["Between sizes?", "Choose the larger size for running shoes and your usual size for lifestyle sneakers."]]}>
     <div className="mb-12 overflow-x-auto">
       <table className="w-full min-w-[420px] text-left text-sm">
-        <thead><tr className="border-b border-ink text-xs uppercase tracking-widest">{["EU", "US", "UK", "Foot length"].map((h) => <th key={h} className="py-3">{h}</th>)}</tr></thead>
+        <thead><tr className="border-b border-ink text-xs  ">{["EU", "US", "UK", "Foot length"].map((h) => <th scope="col" key={h} className="py-3">{h}</th>)}</tr></thead>
         <tbody>{[["40", "7", "6", "25.0 cm"], ["41", "8", "7", "25.7 cm"], ["42", "9", "8", "26.3 cm"], ["43", "10", "9", "27.0 cm"], ["44", "11", "10", "27.7 cm"], ["45", "12", "11", "28.3 cm"]].map((r) => <tr key={r[0]} className="border-b border-sand">{r.map((c, i) => <td key={i} className="py-3">{c}</td>)}</tr>)}</tbody>
       </table>
     </div>

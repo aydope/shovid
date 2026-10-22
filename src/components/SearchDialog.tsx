@@ -18,7 +18,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
       <form onSubmit={submit} className="flex items-center gap-3 border-b border-sand p-5">
         <Search size={18} />
         <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search running, trail, court" aria-label="Search products" className="flex-1 bg-transparent outline-none" />
-        <kbd className="text-[10px] uppercase tracking-widest text-ink/50">Esc</kbd>
+        <kbd className="text-xs   text-ink/70">Esc</kbd>
       </form>
       <ul>
         {hits.map((p) => (
@@ -26,7 +26,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
             <span className="h-10 w-8" style={{ background: p.tone }} /><span className="flex-1 text-sm">{p.name}</span><span className="text-sm">{money(p.price)}</span>
           </button></li>
         ))}
-        {q.trim() && hits.length === 0 && <li className="p-5 text-sm text-ink/60">No products match "{q}".</li>}
+        {q.trim() && hits.length === 0 && <li className="p-5 text-sm text-ink/70">No products match "{q}".</li>}
       </ul>
     </Dialog>
   );

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { usePageTitle } from "@/lib/titles";
 import { Link, useParams } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { ArrowLeft, Clock, Heart, Link2 } from "lucide-react";
@@ -17,6 +18,7 @@ export default function Post() {
   const width = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
   const index = posts.findIndex((p) => p.slug === slug);
   const post = posts[index];
+  usePageTitle(post?.title);
 
   if (!post) return <p className="py-40 text-center text-5xl font-semibold">Article not found</p>;
 
@@ -29,10 +31,10 @@ export default function Post() {
   return (
     <article className="mx-auto max-w-3xl px-4 pt-10 md:px-6">
       <motion.div style={{ scaleX: width }} className="fixed inset-x-0 top-0 z-[61] h-1 origin-left bg-mint" />
-      <Link to="/journal" className="inline-flex items-center gap-2 text-sm text-ink/60 hover:text-ink"><ArrowLeft size={14} /> Journal</Link>
+      <Link to="/journal" className="inline-flex items-center gap-2 text-sm text-ink/70 hover:text-ink"><ArrowLeft size={14} /> Journal</Link>
       <p className="mt-8 text-sm font-semibold text-gold">{post.tag}</p>
       <h1 className="font-display mt-2 text-4xl md:text-6xl">{post.title}</h1>
-      <p className="mt-4 flex items-center gap-3 text-sm text-ink/50"><Clock size={14} /> {post.read} min read, {post.author}, {post.date}</p>
+      <p className="mt-4 flex items-center gap-3 text-sm text-ink/70"><Clock size={14} /> {post.read} min read, {post.author}, {post.date}</p>
       <div className="mt-8 overflow-hidden rounded-3xl"><img data-parallax="0.2" src={img(post.slug, 1200, 700)} alt="" className="aspect-[16/10] w-full scale-110 object-cover" /></div>
       <p className="mt-8 text-xl text-ink/70">{post.excerpt}</p>
       <Takeaways items={[post.excerpt, post.body[1].split(". ")[0] + ".", `${post.read} minute read`]} />

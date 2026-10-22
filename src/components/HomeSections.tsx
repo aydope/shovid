@@ -27,7 +27,7 @@ export function Hero() {
         <div>
           <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-medium shadow-sm ring-1 ring-sand"><span className="h-2 w-2 rounded-full bg-mint" /> Autumn Winter 2026 is here</motion.span>
           <h1 className="font-display mt-6 text-5xl leading-[1.02] md:text-7xl">Sneakers, <span className="font-serif bg-linear-to-r from-gold via-oxblood to-amber bg-clip-text italic text-transparent">refined</span> to the essentials.</h1>
-          <p className="mt-6 max-w-lg text-lg text-ink/60">Premium sneakers for running, courts and city streets, made in small runs. Delivered worldwide in days.</p>
+          <p className="mt-6 max-w-lg text-lg text-ink/70">Premium sneakers for running, courts and city streets, made in small runs. Delivered worldwide in days.</p>
           <div className="mt-8 flex flex-wrap gap-3"><Link to="/shop"><Button variant="gold">Shop the collection <ArrowRight size={16} /></Button></Link><Link to="/lookbook"><Button variant="outline">View lookbook</Button></Link></div>
         </div>
         <div className="relative mx-auto grid max-w-md grid-cols-2 gap-4">
@@ -44,7 +44,7 @@ export function Trust() {
   return (
     <Section id="trust" className="pt-6 md:pt-6">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {trust.map(([Icon, t, s]) => <div key={t} className="flex items-center gap-4 rounded-3xl bg-white p-5 ring-1 ring-sand"><Icon className="text-gold" /><div><p className="text-sm font-semibold">{t}</p><p className="text-xs text-ink/50">{s}</p></div></div>)}
+        {trust.map(([Icon, t, s]) => <div key={t} className="flex items-center gap-4 rounded-3xl bg-white p-5 ring-1 ring-sand"><Icon className="text-gold" /><div><p className="text-sm font-semibold">{t}</p><p className="text-xs text-ink/70">{s}</p></div></div>)}
       </div>
     </Section>
   );
@@ -85,9 +85,9 @@ export function SaleBanner() {
   return (
     <Section id="sale">
       <div className="overflow-hidden rounded-[2.5rem] bg-linear-to-br from-oxblood via-gold to-sky p-8 text-white md:p-16">
-        <p className="text-sm font-semibold">Members week</p>
+        <p className="text-sm font-semibold">Seasonal sale</p>
         <h2 className="font-display mt-2 max-w-xl text-4xl md:text-6xl">Up to 30% off sneakers</h2>
-        <div className="mt-8"><Countdown /></div>
+        <p className="mt-8 text-sm text-white/90">Today's offers end in</p><div className="mt-2"><Countdown /></div>
         <Link to="/sale"><Button className="mt-8 bg-white !text-ink hover:bg-white/90">Shop the sale <ArrowRight size={16} /></Button></Link>
       </div>
       <div className="mt-8"><SaleSlider /></div>
@@ -102,7 +102,7 @@ export function Why() {
         {why.map(([Icon, t, s, tone], i) => (
           <motion.div key={t} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="rounded-3xl bg-white p-8 ring-1 ring-sand">
             <span className={`grid h-12 w-12 place-items-center rounded-2xl ${tone}`}><Icon size={22} /></span>
-            <h3 className="mt-6 text-xl font-semibold">{t}</h3><p className="mt-2 text-sm text-ink/60">{s}</p>
+            <h3 className="mt-6 text-xl font-semibold">{t}</h3><p className="mt-2 text-sm text-ink/70">{s}</p>
           </motion.div>
         ))}
       </div>
@@ -186,7 +186,7 @@ export function Newsletter() {
         <p className="mt-3 text-sm text-white/60">New arrivals and private sales, once a month.</p>
         {sent ? <p className="mt-8 text-mint">Subscribed. Thank you.</p> : (
           <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="mx-auto mt-8 flex max-w-md flex-col gap-3 sm:flex-row">
-            <input type="email" required aria-label="Email address" placeholder="Email address" className="h-12 flex-1 rounded-full bg-white/10 px-5 outline-none placeholder:text-white/40 focus:bg-white/20" />
+            <input type="email" required aria-label="Email address" placeholder="Email address" className="h-12 flex-1 rounded-full bg-white/10 px-5 outline-none placeholder:text-white/60 focus:bg-white/20" />
             <Button type="submit" variant="gold">Subscribe</Button>
           </form>
         )}
@@ -206,7 +206,7 @@ export function Satisfaction() {
             <circle cx="60" cy="60" r="52" fill="none" stroke="var(--color-sand)" strokeWidth="10" />
             <motion.circle cx="60" cy="60" r="52" fill="none" stroke="var(--color-mint)" strokeWidth="10" strokeLinecap="round" strokeDasharray={c} initial={{ strokeDashoffset: c }} whileInView={{ strokeDashoffset: c * 0.04 }} viewport={{ once: true }} transition={{ duration: 1.4 }} />
           </svg>
-          <div><p className="font-display text-5xl">4.8</p><div className="flex">{Array.from({ length: 5 }, (_, i) => <Star key={i} size={14} className="fill-amber text-amber" />)}</div><p className="mt-1 text-xs text-ink/50">2,481 verified reviews</p></div>
+          <div><p className="font-display text-5xl">4.8</p><div className="flex">{Array.from({ length: 5 }, (_, i) => <Star key={i} size={14} className="fill-amber text-amber" />)}</div><p className="mt-1 text-xs text-ink/70">2,481 verified reviews</p></div>
         </div>
         <div className="rounded-3xl bg-white p-8 ring-1 ring-sand">
           {bars.map(([l, v]) => <div key={l} className="mb-3 flex items-center gap-3 text-xs"><span className="w-12">{l}</span><div className="h-2 flex-1 overflow-hidden rounded-full bg-sand"><motion.div className="h-full rounded-full bg-amber" initial={{ width: 0 }} whileInView={{ width: `${v}%` }} viewport={{ once: true }} transition={{ duration: 1 }} /></div><span className="w-8 text-right">{v}%</span></div>)}

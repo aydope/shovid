@@ -17,7 +17,7 @@ export function AuthorCard({ name }: { name: string }) {
   return (
     <div data-reveal className="mt-10 flex items-center gap-4 rounded-3xl bg-white p-6 ring-1 ring-sand">
       <span className="grid h-14 w-14 place-items-center rounded-full bg-linear-to-br from-gold to-oxblood text-xl font-semibold text-white">{name[0]}</span>
-      <div><p className="font-semibold">{name}</p><p className="text-sm text-ink/60">Writes about craft, materials and care at the Porto atelier.</p></div>
+      <div><p className="font-semibold">{name}</p><p className="text-sm text-ink/70">Writes about craft, materials and care at the Porto atelier.</p></div>
     </div>
   );
 }

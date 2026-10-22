@@ -17,7 +17,7 @@ function Panel({ f, set }: { f: Filters; set: (f: Filters) => void }) {
     <div className="space-y-8 text-sm">
       <fieldset><legend className="mb-3 font-semibold">Category</legend>
         {categories.slice(1).map((c) => (
-          <label key={c} className="flex cursor-pointer items-center justify-between py-1.5"><span className="flex items-center gap-3"><input type="checkbox" checked={f.cats.includes(c)} onChange={() => toggle(c)} className="h-4 w-4 accent-[#6c4bff]" />{c}</span><span className="text-xs text-ink/40">{products.filter((p) => p.category === c).length}</span></label>
+          <label key={c} className="flex cursor-pointer items-center justify-between py-1.5"><span className="flex items-center gap-3"><input type="checkbox" checked={f.cats.includes(c)} onChange={() => toggle(c)} className="h-4 w-4 accent-[#6c4bff]" />{c}</span><span className="text-xs text-ink/70">{products.filter((p) => p.category === c).length}</span></label>
         ))}
       </fieldset>
       <div><p className="mb-1 font-semibold">Price up to ${f.max}</p><Slider size="small" color="secondary" min={100} max={300} step={10} value={f.max} onChange={(_, v) => set({ ...f, max: v as number })} aria-label="Maximum price" /></div>
@@ -55,14 +55,14 @@ export default function Shop() {
         <aside className="hidden lg:block"><div className="sticky top-32 rounded-3xl bg-white p-6 ring-1 ring-sand"><Panel f={f} set={update} /></div></aside>
         <div>
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="text-sm text-ink/60">{list.length} products</p>
+            <p className="text-sm text-ink/70">{list.length} products</p>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" className="lg:hidden" onClick={() => setSheet(true)}><SlidersHorizontal size={14} /> Filters</Button>
               <select value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort products" className="h-9 rounded-full border border-sand bg-white px-4 text-sm"><option value="featured">Featured</option><option value="rated">Top rated</option><option value="low">Price, low to high</option><option value="high">Price, high to low</option></select>
               <div className="hidden rounded-full border border-sand p-1 sm:flex">{([[3, LayoutGrid], [4, Grid3x3]] as const).map(([n, Icon]) => <button key={n} onClick={() => setCols(n)} aria-label={`${n} columns`} className={cn("grid h-7 w-7 cursor-pointer place-items-center rounded-full", cols === n && "bg-ink text-white")}><Icon size={14} /></button>)}</div>
             </div>
           </div>
-          {chips.length > 0 && <div className="mt-4 flex flex-wrap gap-2">{chips.map((c) => <span key={c} className="rounded-full bg-gold/10 px-3 py-1 text-xs text-gold">{c}</span>)}<button onClick={() => update(start)} className="flex cursor-pointer items-center gap-1 text-xs text-ink/60"><X size={12} /> Clear all</button></div>}
+          {chips.length > 0 && <div className="mt-4 flex flex-wrap gap-2">{chips.map((c) => <span key={c} className="rounded-full bg-gold/10 px-3 py-1 text-xs text-gold">{c}</span>)}<button onClick={() => update(start)} className="flex cursor-pointer items-center gap-1 text-xs text-ink/70"><X size={12} /> Clear all</button></div>}
           <div className={cn("mt-6 grid grid-cols-2 gap-4 md:gap-6", cols === 3 ? "md:grid-cols-3" : "md:grid-cols-3 xl:grid-cols-4")}>{list.slice(0, shown).map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}</div>
           {list.length === 0 && <p className="py-24 text-center text-2xl font-semibold">Nothing matches these filters.</p>}
           {shown < list.length && <div className="mt-10 text-center"><Button variant="outline" onClick={() => setShown((s) => s + PAGE)}>Load more ({list.length - shown} left)</Button></div>}

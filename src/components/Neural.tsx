@@ -22,7 +22,7 @@ export function Orb({ open }: { open: boolean }) {
       <span className="absolute inset-0 rounded-full bg-[conic-gradient(from_0deg,#6c4bff,#ff3b6b,#14c8a0,#0a84ff,#6c4bff)] blur-[2px]" style={{ animation: "spin 5s linear infinite" }} />
       <span className="absolute inset-[3px] rounded-full bg-[#0b0b14]" />
       <NeuralMesh active={!open} className="absolute inset-[3px] h-[calc(100%-6px)] w-[calc(100%-6px)] overflow-hidden rounded-full text-white/60" />
-      <span className="relative text-xs font-bold tracking-wider text-white">{open ? "X" : "AI"}</span>
+      <span className="relative text-xs font-bold  text-white">{open ? "X" : "AI"}</span>
     </span>
   );
 }
