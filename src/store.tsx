@@ -1,8 +1,8 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
-import type { Product } from "@/data";
+import { discountFor, type Product } from "@/data";
 import { useToast } from "@/toast";
 
-interface CartLine { product: Product; qty: number }
+interface CartLine { key: string; product: Product; qty: number; size?: string }
 
 interface CartState {
   lines: CartLine[];
@@ -10,8 +10,8 @@ interface CartState {
   count: number;
   open: boolean;
   setOpen: (v: boolean) => void;
-  add: (p: Product) => void;
-  remove: (id: string) => void;
+  add: (p: Product, size?: string) => void;
+  remove: (key: string) => void;
   clear: () => void;
   wish: string[];
   toggleWish: (id: string) => void;
@@ -34,15 +34,16 @@ export function CartProvider({ children }: { children: ReactNode }) {
       setWish((cur) => (cur.includes(id) ? cur.filter((w) => w !== id) : [...cur, id]));
     },
     setOpen,
-    total: lines.reduce((s, l) => s + l.product.price * l.qty, 0),
+    total: lines.reduce((s, l) => s + Math.round(l.product.price * (1 - discountFor(l.product) / 100)) * l.qty, 0),
     count: lines.reduce((s, l) => s + l.qty, 0),
-    add: (p) => {
-      setLines((cur) => cur.some((l) => l.product.id === p.id)
-        ? cur.map((l) => (l.product.id === p.id ? { ...l, qty: l.qty + 1 } : l))
-        : [...cur, { product: p, qty: 1 }]);
-      toast(`${p.name} added to bag`);
+    add: (p, size) => {
+      const key = size ? `${p.id}:${size}` : p.id;
+      setLines((cur) => cur.some((l) => l.key === key)
+        ? cur.map((l) => (l.key === key ? { ...l, qty: l.qty + 1 } : l))
+        : [...cur, { key, product: p, qty: 1, size }]);
+      toast(`${p.name}${size ? `, EU ${size},` : ""} added to bag`);
     },
-    remove: (id) => setLines((cur) => cur.filter((l) => l.product.id !== id)),
+    remove: (key) => setLines((cur) => cur.filter((l) => l.key !== key)),
     clear: () => setLines([]),
   }), [lines, open, wish, toast]);
 

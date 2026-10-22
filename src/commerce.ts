@@ -1,4 +1,4 @@
-import type { Category, Product } from "@/data";
+import { discountFor, type Category, type Product } from "@/data";
 
 export type PlanId = "silver" | "gold" | "noir";
 export type Cycle = "month" | "year";
@@ -32,13 +32,14 @@ export interface Line { product: Product; qty: number }
 
 export function quote(lines: Line[], plan: Plan, coupon?: Coupon) {
   const subtotal = lines.reduce((s, l) => s + l.product.price * l.qty, 0);
-  const promo = lines.reduce((s, l) => s + (l.product.price * l.qty * promoPercent(l.product)) / 100, 0);
-  const member = ((subtotal - promo) * plan.discount) / 100;
-  const code = ((subtotal - promo - member) * (coupon?.on ? coupon.off : 0)) / 100;
-  const raw = promo + member + code;
+  const sale = lines.reduce((s, l) => s + (l.product.price * l.qty * discountFor(l.product)) / 100, 0);
+  const promo = lines.reduce((s, l) => s + (l.product.price * (1 - discountFor(l.product) / 100) * l.qty * promoPercent(l.product)) / 100, 0);
+  const member = ((subtotal - sale - promo) * plan.discount) / 100;
+  const code = ((subtotal - sale - promo - member) * (coupon?.on ? coupon.off : 0)) / 100;
+  const raw = sale + promo + member + code;
   const k = raw > subtotal * 0.4 ? (subtotal * 0.4) / raw : 1;
   const net = subtotal - raw * k;
   const shipping = lines.length === 0 || net >= plan.freeShipAt ? 0 : 15;
   const total = Math.round((net + shipping) * 100) / 100;
-  return { subtotal, promo: promo * k, member: member * k, coupon: code * k, shipping, total, points: Math.floor(total * plan.points), capped: k < 1 };
+  return { subtotal, sale: sale * k, promo: promo * k, member: member * k, coupon: code * k, shipping, total, points: Math.floor(total * plan.points), capped: k < 1 };
 }

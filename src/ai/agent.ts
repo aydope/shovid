@@ -9,7 +9,7 @@ import { money, money2 } from "@/lib/utils";
 export interface Ctx { user: Account | null; plan: Plan; points: number; orders: StoredOrder[]; coupons: Coupon[]; cartCount: number; cartTotal: number }
 export interface Filters { category?: Category; maxPrice?: number; minPrice?: number; color?: string[]; sale?: boolean; q?: string[] }
 export interface Memory { filters: Filters; shown: string[]; last: string[] }
-export interface Reply { text: string; items?: Product[]; links?: Array<{ label: string; to: string }>; tools: string[]; intent: string; confidence: number; suggest: string[]; addIds?: string[] }
+export interface Reply { text: string; items?: Product[]; links?: Array<{ label: string; to: string }>; tools: string[]; intent: string; confidence: number; suggest: string[] }
 
 export const newMemory = (): Memory => ({ filters: {}, shown: [], last: [] });
 
@@ -135,7 +135,7 @@ export function respond(text: string, ctx: Ctx, mem: Memory): Reply {
       tools.push("get_cart");
       if (/\badd\b/.test(t) && mem.last.length) {
         const pick = products.find((x) => x.id === mem.last[0]);
-        if (pick) return out({ text: `Added ${pick.name} to your bag.`, addIds: [pick.id], links: [{ label: "Checkout", to: "/checkout" }], suggest: ["Show my bag", "Show cheaper options"] });
+        if (pick) return out({ text: `Sizes differ between models, so choose your size for ${pick.name} on its page and add it from there.`, links: [{ label: "Choose size", to: `/product/${pick.id}` }], suggest: ["Show my bag", "Show cheaper options"] });
       }
       return out({ text: ctx.cartCount ? `Your bag has ${ctx.cartCount} item${ctx.cartCount > 1 ? "s" : ""}, subtotal ${money2(ctx.cartTotal)}.` : "Your bag is empty.", links: [{ label: "Checkout", to: "/checkout" }] });
     }

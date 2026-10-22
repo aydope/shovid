@@ -5,7 +5,7 @@ import { Cpu, RefreshCw, Send, Sparkles, ThumbsDown, ThumbsUp } from "lucide-rea
 import { NeuralMesh, Orb } from "@/components/Neural";
 import { newMemory, respond, type Reply } from "@/ai/agent";
 import { getStatus, intentLabels, intents, startTraining, subscribeStatus, teach, type Intent } from "@/ai/intent";
-import { img, products, type Product } from "@/data";
+import { img, type Product } from "@/data";
 import { useApp } from "@/auth";
 import { useCart } from "@/store";
 import { useToast } from "@/toast";
@@ -25,7 +25,7 @@ function Spark({ values }: { values: number[] }) {
 
 export function Chatbot() {
   const { user, plan, points, orders, coupons } = useApp();
-  const { add, count, total } = useCart();
+  const { count, total } = useCart();
   const toast = useToast();
   const st = useSyncExternalStore(subscribeStatus, getStatus);
   const [open, setOpen] = useState(false);
@@ -38,6 +38,8 @@ export function Chatbot() {
   const [msgs, setMsgs] = useState<Msg[]>([{ from: "bot", text: "Hi, I am Shovi. I know the whole Shovid catalogue, prices, reviews, discounts, stock, stores and policies. Ask me anything about the shop." }]);
   const memory = useRef(newMemory());
   const end = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const input = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const t = setTimeout(() => void startTraining(), 800);
     return () => clearTimeout(t);
@@ -45,6 +47,9 @@ export function Chatbot() {
   useEffect(() => {
     end.current?.scrollIntoView({ behavior: "smooth" });
   }, [msgs, busy, asking]);
+  useEffect(() => {
+    if (open) input.current?.focus();
+  }, [open]);
   useEffect(() => {
     if (!busy) return;
     const t = setInterval(() => setStep((s) => Math.min(s + 1, busy.length - 1)), 350);
@@ -66,7 +71,6 @@ export function Chatbot() {
           .catch(() => reply.text)
       : Promise.resolve(reply.text);
     const [answer] = await Promise.all([rewrite, wait]);
-    reply.addIds?.forEach((id) => { const p = products.find((x) => x.id === id); if (p) add(p); });
     setBusy(null);
     setChips(reply.suggest);
     setMsgs((m) => [...m, { from: "bot", text: answer, items: reply.items, links: reply.links, query: q, meta: { intent: reply.intent, confidence: reply.confidence, tools: reply.tools } }]);
@@ -92,7 +96,7 @@ export function Chatbot() {
     <div className="fixed bottom-5 right-5 z-[70]">
       <AnimatePresence>
         {open && (
-          <motion.div initial={{ opacity: 0, y: 24, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 24, scale: 0.94 }} role="dialog" aria-label="Shovi AI assistant" className="absolute bottom-[4.5rem] right-0 flex h-[38rem] max-h-[82vh] w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded-[2rem] bg-[#0b0b14] text-white shadow-2xl ring-1 ring-white/10">
+          <motion.div initial={{ opacity: 0, y: 24, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 24, scale: 0.94 }} role="dialog" aria-label="Shovi AI assistant" onKeyDown={(e) => { if (e.key === "Escape") { setOpen(false); trigger.current?.focus(); } }} className="absolute bottom-[4.5rem] right-0 flex h-[38rem] max-h-[82vh] w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded-[2rem] bg-[#0b0b14] text-white shadow-2xl ring-1 ring-white/10">
             <div className="relative h-28 shrink-0 overflow-hidden bg-linear-to-br from-gold/50 via-[#0b0b14] to-mint/30">
               <NeuralMesh active={!!busy || training} className="absolute inset-0 h-full w-full text-mint" />
               <div className="relative flex items-center gap-3 p-4"><span className="grid h-10 w-10 place-items-center rounded-2xl bg-white/15 backdrop-blur"><Sparkles size={18} /></span><div className="flex-1"><p className="font-semibold">Shovi AI</p><p className="flex items-center gap-1.5 text-xs text-white/70"><span className={cn("h-1.5 w-1.5 rounded-full", training ? "animate-pulse bg-amber" : "bg-mint")} /> {training ? `Learning ${Math.round(st.progress * 100)}%` : endpoint ? "Connected to remote model" : "Runs privately in your browser"}</p></div><button onClick={() => setInfo((v) => !v)} aria-pressed={info} aria-label="How this works" className="grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-white/10 hover:bg-white/20"><Cpu size={16} /></button></div>
@@ -111,15 +115,15 @@ export function Chatbot() {
               {msgs.map((m, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={cn("max-w-[92%]", m.from === "me" && "ml-auto")}>
                   <div className={cn("whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm", m.from === "me" ? "bg-linear-to-br from-gold to-oxblood" : "border border-white/10 bg-white/[0.07]")}>{m.text}</div>
-                  {m.items && <div className="mt-2 space-y-2">{m.items.map((p) => <div key={p.id} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.05] p-2"><Link to={`/product/${p.id}`} onClick={() => setOpen(false)}><img src={img(p.id, 120, 150)} alt="" className="h-14 w-12 rounded-xl bg-white/80 object-cover" /></Link><div className="min-w-0 flex-1"><p className="truncate text-xs font-medium">{p.name}</p><p className="text-xs text-white/60">{money(p.price)}</p></div><button onClick={() => add(p)} className="cursor-pointer rounded-full bg-white px-3 py-1.5 text-xs font-medium text-ink">Add</button></div>)}</div>}
+                  {m.items && <div className="mt-2 space-y-2">{m.items.map((p) => <div key={p.id} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.05] p-2"><Link to={`/product/${p.id}`} onClick={() => setOpen(false)}><img src={img(p.id, 120, 150)} alt="" className="h-14 w-12 rounded-xl bg-white/80 object-cover" /></Link><div className="min-w-0 flex-1"><p className="truncate text-xs font-medium">{p.name}</p><p className="text-xs text-white/60">{money(p.price)}</p></div><Link to={`/product/${p.id}`} onClick={() => setOpen(false)} className="rounded-full bg-white px-3 py-1.5 text-xs font-medium text-ink">Choose size</Link></div>)}</div>}
                   {m.links && <div className="mt-2 flex flex-wrap gap-2">{m.links.map((l) => <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="rounded-full border border-white/20 px-3 py-1 text-xs hover:border-mint hover:text-mint">{l.label}</Link>)}</div>}
                   {m.meta && (
-                    <div className="mt-1.5 text-[10px] text-white/45">
+                    <div className="mt-1.5 text-xs text-white/60">
                       <p className="flex flex-wrap items-center gap-1.5"><span className="text-mint">{m.meta.intent} {m.meta.confidence}%</span>{m.meta.tools.slice(1).map((t) => <span key={t} className="rounded bg-white/10 px-1.5 py-0.5 font-mono">{t}</span>)}</p>
                       {m.fb ? <p className="mt-1 text-mint">{m.fb === "up" ? "Thanks, learned from this." : m.fb === "taught" ? "Thanks, correction learned." : ""}</p> : (
                         <p className="mt-1 flex items-center gap-2"><span>Was this right?</span><button onClick={() => approve(i)} aria-label="Yes, this was right" className="cursor-pointer rounded-full p-1.5 hover:bg-white/10 hover:text-mint"><ThumbsUp size={12} /></button><button onClick={() => setAsking(asking === i ? null : i)} aria-label="No, teach Shovi" className="cursor-pointer rounded-full p-1.5 hover:bg-white/10 hover:text-oxblood"><ThumbsDown size={12} /></button></p>
                       )}
-                      {asking === i && <div className="mt-2 rounded-2xl border border-white/10 bg-white/[0.05] p-3"><p className="mb-2 text-white/70">What did you want?</p><div className="flex flex-wrap gap-1.5">{intents.map((k) => <button key={k} onClick={() => correct(i, k)} className="cursor-pointer rounded-full border border-white/15 px-2.5 py-1 text-[11px] text-white/80 hover:border-mint hover:text-mint">{intentLabels[k]}</button>)}</div></div>}
+                      {asking === i && <div className="mt-2 rounded-2xl border border-white/10 bg-white/[0.05] p-3"><p className="mb-2 text-white/70">What did you want?</p><div className="flex flex-wrap gap-1.5">{intents.map((k) => <button key={k} onClick={() => correct(i, k)} className="cursor-pointer rounded-full border border-white/15 px-2.5 py-1 text-xs text-white/80 hover:border-mint hover:text-mint">{intentLabels[k]}</button>)}</div></div>}
                     </div>
                   )}
                 </motion.div>
@@ -128,11 +132,11 @@ export function Chatbot() {
               <div ref={end} />
             </div>
             <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-2">{chips.map((q) => <button key={q} disabled={!!busy} onClick={() => void ask(q)} className="shrink-0 cursor-pointer rounded-full border border-white/15 px-3 py-1.5 text-xs text-white/80 hover:border-mint hover:text-mint disabled:opacity-40">{q}</button>)}</div>
-            <form onSubmit={submit} className="flex gap-2 border-t border-white/10 p-3"><input value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask about products, prices, reviews, stores" aria-label="Message" className="h-10 flex-1 rounded-full bg-white/10 px-4 text-sm outline-none placeholder:text-white/40" /><button aria-label="Send" disabled={!!busy} className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-linear-to-br from-gold to-oxblood disabled:opacity-50"><Send size={16} /></button></form>
+            <form onSubmit={submit} className="flex gap-2 border-t border-white/10 p-3"><input ref={input} value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask about products, prices, reviews, stores" aria-label="Message" className="h-10 flex-1 rounded-full bg-white/10 px-4 text-sm outline-none placeholder:text-white/60" /><button aria-label="Send" disabled={!!busy} className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-linear-to-br from-gold to-oxblood disabled:opacity-50"><Send size={16} /></button></form>
           </motion.div>
         )}
       </AnimatePresence>
-      <button onClick={() => setOpen((o) => !o)} aria-label={open ? "Close chat" : "Open AI assistant"} className="cursor-pointer rounded-full shadow-2xl transition-transform hover:scale-110"><Orb open={open} /></button>
+      <button ref={trigger} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label={open ? "Close chat" : "Open AI assistant"} className="cursor-pointer rounded-full shadow-2xl transition-transform hover:scale-110"><Orb open={open} /></button>
     </div>
   );
 }
