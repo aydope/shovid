@@ -1,9 +1,11 @@
-import { Suspense, lazy, useEffect, useState, type ComponentType } from "react";
+import { Suspense, lazy, useEffect, useRef, useState, type ComponentType } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CartDrawer } from "@/components/CartDrawer";
 import { Footer } from "@/components/Footer";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Header } from "@/components/Header";
+import { titleFor } from "@/lib/titles";
 import { SearchDialog } from "@/components/SearchDialog";
 import { PageSkeleton, ScrollProgress } from "@/components/Ui";
 import { Chatbot } from "@/components/Chatbot";
@@ -80,7 +82,13 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  useEffect(() => { if (!location.hash) window.scrollTo(0, 0); }, [location.pathname, location.hash]);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (!location.hash) window.scrollTo(0, 0);
+    document.title = titleFor(location.pathname);
+    if (firstRender.current) { firstRender.current = false; return; }
+    document.getElementById("main")?.focus({ preventScroll: true });
+  }, [location.pathname, location.hash]);
 
   return (
     <>
@@ -91,15 +99,15 @@ export default function App() {
       <SearchDialog open={searching} onClose={() => setSearching(false)} />
       <CartDrawer />
       <AnimatePresence mode="wait">
-        <motion.main id="main" key={location.pathname} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }}>
-          <Suspense fallback={<PageSkeleton />}>
+        <motion.main id="main" tabIndex={-1} className="outline-none" key={location.pathname} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.35 }}>
+          <ErrorBoundary key={location.pathname}><Suspense fallback={<PageSkeleton />}>
             <Routes location={location}>
               {routes.map(([path, Page]) => <Route key={path} path={path} element={<Page />} />)}
               <Route path="/admin" element={<Dashboard kind="admin" />}><Route index element={<AdminHome />} />{admin.map(([p, Page]) => <Route key={p} path={p} element={<Page />} />)}</Route>
               <Route path="/account" element={<Dashboard kind="member" />}><Route index element={<MemberHome />} />{member.map(([p, Page]) => <Route key={p} path={p} element={<Page />} />)}</Route>
               <Route path="*" element={<p className="py-40 text-center text-5xl font-semibold">Page not found</p>} />
             </Routes>
-          </Suspense>
+          </Suspense></ErrorBoundary>
         </motion.main>
       </AnimatePresence>
       <Footer />

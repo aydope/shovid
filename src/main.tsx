@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { MotionConfig } from "framer-motion";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import App from "./App";
 import { AppProvider } from "./auth";
@@ -16,6 +17,7 @@ void loadImages().finally(() => {
       <ThemeProvider theme={theme}>
         <CssBaseline enableColorScheme />
         <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <MotionConfig reducedMotion="user">
           <ToastProvider>
             <AppProvider>
               <CartProvider>
@@ -23,6 +25,7 @@ void loadImages().finally(() => {
               </CartProvider>
             </AppProvider>
           </ToastProvider>
+          </MotionConfig>
         </BrowserRouter>
       </ThemeProvider>
     </StrictMode>,
