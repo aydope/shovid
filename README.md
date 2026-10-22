@@ -14,6 +14,17 @@ If the dev server shows "Invalid hook call" after dependencies change: stop it, 
 
 Images: the catalogue is sneakers only. Photos load when the app starts (4 second limit). With a free Pexels key in `VITE_PEXELS_KEY` they come from Pexels searches for `sneakers` and `running shoes`. Without a key, sporty shoes from DummyJSON are used first and Wikimedia Commons search fills the gaps, so quality varies and some images repeat. A labelled placeholder from placehold.co is shown if no source is reachable. Edit `src/images.ts` to change sources.
 
+## Requirements
+
+Node 22.12 or newer (Vite 8 and TypeScript 7). Install with `npm install` and commit the generated `package-lock.json`.
+
+Dependency versions are the ones in `package.json`: React 19.3, React Router 7 (`react-router-dom`), MUI 9, Vite 8 with `@vitejs/plugin-react` 6, Tailwind 4.3, TypeScript 7, framer-motion 14, lucide-react 1 and gsap 3.15. Notes for these versions:
+
+- lucide-react 1 removed brand icons, so the social icons live in `src/components/BrandIcons.tsx`.
+- MUI 9 removed `PaperProps` and `inputProps`; the code uses `slotProps`.
+- TypeScript 7 removed `baseUrl`; the `@/*` alias is declared with `paths` only and mirrored in `vite.config.ts`.
+- Leaflet is used through class constructors (`new L.Map`) so it works with 1.9 and 2.x.
+
 ## Scripts
 
     npm run dev        start the dev server
@@ -22,7 +33,7 @@ Images: the catalogue is sneakers only. Photos load when the app starts (4 secon
 
 ## CI and deployment
 
-`.github/workflows/ci.yml` typechecks and builds on every pull request and push to main (Node 20 and 22).
+`.github/workflows/ci.yml` typechecks and builds on every pull request and push to main (Node 22 and 24).
 `.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to main. In the repository settings choose Pages, Source: GitHub Actions. The build uses `VITE_BASE=/<repo name>/`; change it in the workflow for a user site or a custom domain. Commit a `package-lock.json` so the workflows use `npm ci`.
 
 ## Assistant
