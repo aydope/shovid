@@ -25,6 +25,8 @@ Dependency versions are the ones in `package.json`: React 19.3, React Router 7 (
 - TypeScript 7 removed `baseUrl`; the `@/*` alias is declared with `paths` only and mirrored in `vite.config.ts`.
 - Leaflet is used through class constructors (`new L.Map`) so it works with 1.9 and 2.x.
 
+UX and accessibility notes, open items and a validation plan are in `docs/UX-AUDIT.md`.
+
 ## Scripts
 
     npm run dev        start the dev server
