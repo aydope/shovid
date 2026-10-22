@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 25 });
-  return <motion.div style={{ scaleX }} className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-gold via-oxblood to-amber" />;
+  return <motion.div style={{ scaleX }} className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-linear-to-r from-gold via-oxblood to-amber" />;
 }
 
 export function SectionDots({ sections }: { sections: ReadonlyArray<readonly [string, string]> }) {

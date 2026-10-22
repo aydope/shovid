@@ -10,13 +10,13 @@ const face = "absolute inset-0 rounded-3xl p-6 text-white shadow-2xl [backface-v
 export function CardVisual({ number, name, expiry, cvc = "", flipped = false, variant = "user" }: Props) {
   const digits = number.replace(/\D/g, "");
   const shown = (digits + "################").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
-  const bg = variant === "store" ? "bg-gradient-to-br from-oxblood via-gold to-ink" : "bg-gradient-to-br from-ink via-[#2b1d73] to-gold";
+  const bg = variant === "store" ? "bg-linear-to-br from-oxblood via-gold to-ink" : "bg-linear-to-br from-ink via-[#2b1d73] to-gold";
   return (
     <div className="w-full max-w-sm [perspective:1000px]">
       <motion.div animate={{ rotateY: flipped ? 180 : 0 }} transition={{ duration: 0.6 }} className="relative aspect-[1.586] [transform-style:preserve-3d]">
         <div className={cn(face, bg)}>
           <div className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-white/10" /><div className="absolute -bottom-16 left-10 h-44 w-44 rounded-full bg-white/10" />
-          <div className="relative flex items-center justify-between"><span className="h-9 w-12 rounded-lg bg-gradient-to-br from-amber to-[#b88a2c]" /><Wifi size={22} className="rotate-90 opacity-80" /></div>
+          <div className="relative flex items-center justify-between"><span className="h-9 w-12 rounded-lg bg-linear-to-br from-amber to-[#b88a2c]" /><Wifi size={22} className="rotate-90 opacity-80" /></div>
           <p className="relative mt-7 font-mono text-xl tracking-[0.18em] sm:text-2xl">{shown}</p>
           <div className="relative mt-5 flex items-end justify-between text-xs"><div><p className="text-[10px] uppercase text-white/60">{variant === "store" ? "Account holder" : "Card holder"}</p><p className="mt-0.5 text-sm font-medium uppercase">{name || "Your name"}</p></div><div><p className="text-[10px] uppercase text-white/60">Expires</p><p className="mt-0.5 text-sm font-medium">{expiry || "MM/YY"}</p></div><span className="text-sm font-bold italic tracking-wider">{brand(digits)}</span></div>
         </div>

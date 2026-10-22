@@ -68,7 +68,7 @@ export default function Shop() {
           {shown < list.length && <div className="mt-10 text-center"><Button variant="outline" onClick={() => setShown((s) => s + PAGE)}>Load more ({list.length - shown} left)</Button></div>}
         </div>
       </div>
-      <Drawer anchor="bottom" open={sheet} onClose={() => setSheet(false)} PaperProps={{ sx: { p: 3, borderRadius: "24px 24px 0 0", maxHeight: "85vh" } }}>
+      <Drawer anchor="bottom" open={sheet} onClose={() => setSheet(false)} slotProps={{ paper: { sx: { p: 3, borderRadius: "24px 24px 0 0", maxHeight: "85vh" } } }}>
         <div className="mb-4 flex items-center justify-between"><p className="text-xl font-semibold">Filters</p><button onClick={() => setSheet(false)} aria-label="Close filters" className="cursor-pointer"><X /></button></div>
         <Panel f={f} set={update} /><Button className="mt-6" onClick={() => setSheet(false)}>Show {list.length} products</Button>
       </Drawer>

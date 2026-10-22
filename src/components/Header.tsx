@@ -58,7 +58,7 @@ export function Header({ onSearch }: { onSearch: () => void }) {
           </div>
         </div>
       </div>
-      <Drawer anchor="left" open={menu} onClose={() => setMenu(false)} PaperProps={{ sx: { width: 300, p: 3 } }}>
+      <Drawer anchor="left" open={menu} onClose={() => setMenu(false)} slotProps={{ paper: { sx: { width: 300, p: 3 } } }}>
         <div className="mb-6 flex items-center justify-between"><span className="text-xl font-bold">shovid.</span><button onClick={() => setMenu(false)} aria-label="Close menu" className="cursor-pointer"><X /></button></div>
         <ul className="space-y-1 text-lg font-medium" onClick={() => setMenu(false)}>
           {[["Shop", "/shop"], ...links, ["Wishlist", "/wishlist"], ["Account", "/account"], ["Stores", "/stores"], ["Help", "/faq"]].map(([l, to]) => <li key={to}><Link to={to} className="block rounded-xl px-3 py-3 hover:bg-sand/60">{l}</Link></li>)}

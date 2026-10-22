@@ -93,7 +93,7 @@ export function Chatbot() {
       <AnimatePresence>
         {open && (
           <motion.div initial={{ opacity: 0, y: 24, scale: 0.94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 24, scale: 0.94 }} role="dialog" aria-label="Shovi AI assistant" className="absolute bottom-[4.5rem] right-0 flex h-[38rem] max-h-[82vh] w-[calc(100vw-2.5rem)] max-w-sm flex-col overflow-hidden rounded-[2rem] bg-[#0b0b14] text-white shadow-2xl ring-1 ring-white/10">
-            <div className="relative h-28 shrink-0 overflow-hidden bg-gradient-to-br from-gold/50 via-[#0b0b14] to-mint/30">
+            <div className="relative h-28 shrink-0 overflow-hidden bg-linear-to-br from-gold/50 via-[#0b0b14] to-mint/30">
               <NeuralMesh active={!!busy || training} className="absolute inset-0 h-full w-full text-mint" />
               <div className="relative flex items-center gap-3 p-4"><span className="grid h-10 w-10 place-items-center rounded-2xl bg-white/15 backdrop-blur"><Sparkles size={18} /></span><div className="flex-1"><p className="font-semibold">Shovi AI</p><p className="flex items-center gap-1.5 text-xs text-white/70"><span className={cn("h-1.5 w-1.5 rounded-full", training ? "animate-pulse bg-amber" : "bg-mint")} /> {training ? `Learning ${Math.round(st.progress * 100)}%` : endpoint ? "Connected to remote model" : "Runs privately in your browser"}</p></div><button onClick={() => setInfo((v) => !v)} aria-pressed={info} aria-label="How this works" className="grid h-9 w-9 cursor-pointer place-items-center rounded-full bg-white/10 hover:bg-white/20"><Cpu size={16} /></button></div>
               {training && <div className="absolute inset-x-0 bottom-0 h-1 bg-white/10"><div className="h-full bg-mint transition-all" style={{ width: `${st.progress * 100}%` }} /></div>}
@@ -110,7 +110,7 @@ export function Chatbot() {
             <div className="flex-1 space-y-3 overflow-y-auto p-4" aria-live="polite">
               {msgs.map((m, i) => (
                 <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className={cn("max-w-[92%]", m.from === "me" && "ml-auto")}>
-                  <div className={cn("whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm", m.from === "me" ? "bg-gradient-to-br from-gold to-oxblood" : "border border-white/10 bg-white/[0.07]")}>{m.text}</div>
+                  <div className={cn("whitespace-pre-line rounded-2xl px-4 py-2.5 text-sm", m.from === "me" ? "bg-linear-to-br from-gold to-oxblood" : "border border-white/10 bg-white/[0.07]")}>{m.text}</div>
                   {m.items && <div className="mt-2 space-y-2">{m.items.map((p) => <div key={p.id} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.05] p-2"><Link to={`/product/${p.id}`} onClick={() => setOpen(false)}><img src={img(p.id, 120, 150)} alt="" className="h-14 w-12 rounded-xl bg-white/80 object-cover" /></Link><div className="min-w-0 flex-1"><p className="truncate text-xs font-medium">{p.name}</p><p className="text-xs text-white/60">{money(p.price)}</p></div><button onClick={() => add(p)} className="cursor-pointer rounded-full bg-white px-3 py-1.5 text-xs font-medium text-ink">Add</button></div>)}</div>}
                   {m.links && <div className="mt-2 flex flex-wrap gap-2">{m.links.map((l) => <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="rounded-full border border-white/20 px-3 py-1 text-xs hover:border-mint hover:text-mint">{l.label}</Link>)}</div>}
                   {m.meta && (
@@ -128,7 +128,7 @@ export function Chatbot() {
               <div ref={end} />
             </div>
             <div className="no-scrollbar flex gap-2 overflow-x-auto px-4 pb-2">{chips.map((q) => <button key={q} disabled={!!busy} onClick={() => void ask(q)} className="shrink-0 cursor-pointer rounded-full border border-white/15 px-3 py-1.5 text-xs text-white/80 hover:border-mint hover:text-mint disabled:opacity-40">{q}</button>)}</div>
-            <form onSubmit={submit} className="flex gap-2 border-t border-white/10 p-3"><input value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask about products, prices, reviews, stores" aria-label="Message" className="h-10 flex-1 rounded-full bg-white/10 px-4 text-sm outline-none placeholder:text-white/40" /><button aria-label="Send" disabled={!!busy} className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-gradient-to-br from-gold to-oxblood disabled:opacity-50"><Send size={16} /></button></form>
+            <form onSubmit={submit} className="flex gap-2 border-t border-white/10 p-3"><input value={text} onChange={(e) => setText(e.target.value)} placeholder="Ask about products, prices, reviews, stores" aria-label="Message" className="h-10 flex-1 rounded-full bg-white/10 px-4 text-sm outline-none placeholder:text-white/40" /><button aria-label="Send" disabled={!!busy} className="grid h-10 w-10 cursor-pointer place-items-center rounded-full bg-linear-to-br from-gold to-oxblood disabled:opacity-50"><Send size={16} /></button></form>
           </motion.div>
         )}
       </AnimatePresence>

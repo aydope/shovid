@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
-import L from "leaflet";
+import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { LocateFixed, MapPin, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,9 +23,9 @@ export function MapPicker({ onPick, className }: { onPick: (p: Picked) => void; 
 
   const place = async (lat: number, lng: number, known?: Hit) => {
     if (!map.current) return;
-    const icon = L.divIcon({ className: "", html: '<div class="h-5 w-5 rounded-full bg-gold ring-4 ring-white shadow-xl"></div>', iconSize: [20, 20], iconAnchor: [10, 10] });
+    const icon = new L.DivIcon({ className: "", html: '<div class="h-5 w-5 rounded-full bg-gold ring-4 ring-white shadow-xl"></div>', iconSize: [20, 20], iconAnchor: [10, 10] });
     if (marker.current) marker.current.setLatLng([lat, lng]);
-    else marker.current = L.marker([lat, lng], { icon }).addTo(map.current);
+    else marker.current = new L.Marker([lat, lng], { icon }).addTo(map.current);
     const fallback = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
     try {
       let hit = known;
@@ -64,8 +64,8 @@ export function MapPicker({ onPick, className }: { onPick: (p: Picked) => void; 
 
   useEffect(() => {
     if (!el.current) return;
-    const m = L.map(el.current).setView([41.1496, -8.611], 12);
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "&copy; OpenStreetMap contributors", maxZoom: 19 }).addTo(m);
+    const m = new L.Map(el.current).setView([41.1496, -8.611], 12);
+    new L.TileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "&copy; OpenStreetMap contributors", maxZoom: 19 }).addTo(m);
     m.on("click", (e: L.LeafletMouseEvent) => { void place(e.latlng.lat, e.latlng.lng); });
     map.current = m;
     return () => { m.remove(); map.current = null; marker.current = null; };

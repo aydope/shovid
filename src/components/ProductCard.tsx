@@ -23,7 +23,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
       transition={{ duration: 0.5, delay: (index % 4) * 0.06 }}
       className="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-sand transition-shadow duration-500 hover:shadow-2xl"
     >
-      <div className="relative aspect-[4/5] overflow-hidden bg-gradient-to-b from-[#f4f1ea] to-[#e4ddd0]">
+      <div className="relative aspect-[4/5] overflow-hidden bg-linear-to-b from-[#f4f1ea] to-[#e4ddd0]">
         {!loaded && <Skeleton variant="rectangular" className="!absolute inset-0 !h-full !w-full" />}
         <Link to={`/product/${product.id}`} aria-label={product.name}>
           <img src={img(product.id)} alt={product.name} width={600} height={750} loading="lazy" decoding="async" onLoad={() => setLoaded(true)} onError={() => setLoaded(true)} className={cn("h-full w-full object-cover transition-all duration-700 group-hover:scale-105", loaded ? "opacity-100" : "opacity-0")} />

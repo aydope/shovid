@@ -35,7 +35,7 @@ export function Plans() {
       <div className="mb-8 inline-flex rounded-full bg-sand/70 p-1">{(["month", "year"] as const).map((c) => <button key={c} onClick={() => setCycle(c)} className={cn("cursor-pointer rounded-full px-5 py-2 text-sm", cycle === c ? "bg-ink text-white" : "")}>{c === "month" ? "Monthly" : "Yearly, 2 months free"}</button>)}</div>
       <div className="grid gap-4 md:grid-cols-3">
         {planList.map((p, i) => (
-          <motion.div key={p.id} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={cn("flex flex-col rounded-3xl p-8", p.id === "silver" ? "bg-white ring-1 ring-sand" : `bg-gradient-to-br ${p.color} text-white`)}>
+          <motion.div key={p.id} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className={cn("flex flex-col rounded-3xl p-8", p.id === "silver" ? "bg-white ring-1 ring-sand" : `bg-linear-to-br ${p.color} text-white`)}>
             <p className="flex items-center gap-2 text-sm font-semibold">{p.id !== "silver" && <Crown size={15} />}{p.name}{current === p.id && <span className="rounded-full bg-white/25 px-2 py-0.5 text-[11px]">Current</span>}</p>
             <p className="font-display mt-3 text-5xl">{p.price[cycle] ? `$${p.price[cycle]}` : "Free"}<span className="text-base font-normal opacity-70">{p.price[cycle] ? `/${cycle}` : ""}</span></p>
             <ul className="mt-6 flex-1 space-y-2 text-sm">{p.perks.map((x) => <li key={x} className="flex gap-2"><Check size={16} className="mt-0.5 shrink-0" />{x}</li>)}</ul>

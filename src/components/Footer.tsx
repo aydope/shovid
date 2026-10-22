@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { CreditCard, Facebook, Gift, Globe, Instagram, Landmark, Leaf, Lock, MapPin, Mail, Phone, RefreshCw, Smartphone, Twitter, Wallet, Youtube } from "lucide-react";
+import { CreditCard, Gift, Globe, Landmark, Leaf, Lock, MapPin, Mail, Phone, RefreshCw, Smartphone, Wallet } from "lucide-react";
+import { Facebook, Instagram, Twitter, Youtube } from "@/components/BrandIcons";
 
 const columns = [
   { title: "Shop", links: [["New arrivals", "/new-arrivals"], ["Collections", "/collections"], ["Sale", "/sale"], ["Promotions", "/promotions"], ["Lookbook", "/lookbook"], ["Gift cards", "/gift-cards"]] },

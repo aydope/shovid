@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export function Takeaways({ items }: { items: string[] }) {
   return (
-    <aside data-reveal className="mt-8 rounded-3xl bg-gradient-to-br from-gold/10 to-mint/10 p-6">
+    <aside data-reveal className="mt-8 rounded-3xl bg-linear-to-br from-gold/10 to-mint/10 p-6">
       <p className="flex items-center gap-2 text-sm font-semibold text-gold"><Sparkles size={15} /> Key takeaways</p>
       <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm text-ink/70">{items.map((t) => <li key={t}>{t}</li>)}</ul>
     </aside>
@@ -16,7 +16,7 @@ export function Takeaways({ items }: { items: string[] }) {
 export function AuthorCard({ name }: { name: string }) {
   return (
     <div data-reveal className="mt-10 flex items-center gap-4 rounded-3xl bg-white p-6 ring-1 ring-sand">
-      <span className="grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-gold to-oxblood text-xl font-semibold text-white">{name[0]}</span>
+      <span className="grid h-14 w-14 place-items-center rounded-full bg-linear-to-br from-gold to-oxblood text-xl font-semibold text-white">{name[0]}</span>
       <div><p className="font-semibold">{name}</p><p className="text-sm text-ink/60">Writes about craft, materials and care at the Porto atelier.</p></div>
     </div>
   );

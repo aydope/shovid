@@ -44,7 +44,7 @@ export default function Dashboard({ kind }: { kind: "admin" | "member" }) {
     <div className="mx-auto flex max-w-7xl gap-8 px-4 pt-6 md:px-6">
       <aside className={cn("sticky top-28 hidden h-[calc(100vh-8rem)] shrink-0 flex-col rounded-[2rem] bg-white py-6 ring-1 ring-sand transition-all duration-300 lg:flex", slim ? "w-24 px-4" : "w-72 px-5")} aria-label="Dashboard">
         <div className={cn("flex items-center gap-3", slim && "justify-center")}>
-          <span className={cn("grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br text-lg font-semibold text-white", kind === "admin" ? "from-ink to-gold" : plan.color)}>{user.name[0]}</span>
+          <span className={cn("grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-linear-to-br text-lg font-semibold text-white", kind === "admin" ? "from-ink to-gold" : plan.color)}>{user.name[0]}</span>
           {!slim && <div className="min-w-0"><p className="truncate font-semibold">{user.name}</p><p className="truncate text-xs text-ink/50">{kind === "admin" ? "Administrator" : `${plan.name} member`}</p></div>}
         </div>
         <nav className="mt-8 flex-1 space-y-8 overflow-y-auto pr-1">

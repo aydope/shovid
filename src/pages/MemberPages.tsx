@@ -25,7 +25,7 @@ export function MemberOverview() {
     <>
       <Title>{`Welcome back, ${user?.name.split(" ")[0] ?? ""}`}</Title>
       <div className="grid gap-4 lg:grid-cols-3">
-        <div className={cn("rounded-3xl bg-gradient-to-br p-8 text-white lg:col-span-2", plan.color)}>
+        <div className={cn("rounded-3xl bg-linear-to-br p-8 text-white lg:col-span-2", plan.color)}>
           <p className="flex items-center gap-2 text-sm"><Crown size={16} /> {plan.name} member{sub && `, renews ${fmtDate(sub.renews)}`}</p>
           <p className="font-display mt-4 text-6xl">{points.toLocaleString()} <span className="text-xl text-white/70">points</span></p>
           <p className="mt-4 text-sm text-white/85">{plan.points}x points, {plan.discount}% off every order{plan.freeShipAt ? `, free shipping over $${plan.freeShipAt}` : ", free shipping always"}</p>
@@ -130,7 +130,7 @@ export function MemberSubscription() {
   return (
     <>
       <Title>Subscription</Title>
-      <div className={cn("rounded-3xl bg-gradient-to-br p-8 text-white", plan.color)}>
+      <div className={cn("rounded-3xl bg-linear-to-br p-8 text-white", plan.color)}>
         <p className="flex items-center gap-2 text-sm"><Crown size={16} /> {plan.name} plan</p>
         <p className="font-display mt-3 text-5xl">{sub && plan.price[sub.cycle] ? `$${plan.price[sub.cycle]}/${sub.cycle}` : "Free"}</p>
         {sub ? <p className="mt-3 flex items-center gap-2 text-sm text-white/85"><CalendarClock size={15} /> Member since {fmtDate(sub.since)}, renews {fmtDate(sub.renews)}</p> : <p className="mt-3 text-sm text-white/85">You are on the free plan.</p>}
@@ -159,7 +159,7 @@ export function MemberSettings() {
     <>
       <Title>Settings</Title>
       <Panel title="Profile"><div className="grid gap-3 sm:grid-cols-2"><input defaultValue={user?.name} aria-label="Name" className={field} /><input defaultValue={user?.email} aria-label="Email" className={field} /></div></Panel>
-      <Panel title="Notifications" className="mt-4">{(Object.keys(prefs) as Array<keyof typeof prefs>).map((k) => <div key={k} className="flex items-center justify-between border-b border-sand py-2 last:border-0"><span className="text-sm">{k === "sms" ? "SMS alerts" : `${k[0].toUpperCase()}${k.slice(1)} emails`}</span><Switch color="secondary" checked={prefs[k]} onChange={() => setPrefs({ ...prefs, [k]: !prefs[k] })} inputProps={{ "aria-label": k }} /></div>)}</Panel>
+      <Panel title="Notifications" className="mt-4">{(Object.keys(prefs) as Array<keyof typeof prefs>).map((k) => <div key={k} className="flex items-center justify-between border-b border-sand py-2 last:border-0"><span className="text-sm">{k === "sms" ? "SMS alerts" : `${k[0].toUpperCase()}${k.slice(1)} emails`}</span><Switch color="secondary" checked={prefs[k]} onChange={() => setPrefs({ ...prefs, [k]: !prefs[k] })} slotProps={{ input: { "aria-label": k } }} /></div>)}</Panel>
       <Button className="mt-4" onClick={() => toast("Profile saved")}>Save changes</Button>
     </>
   );

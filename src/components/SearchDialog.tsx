@@ -14,7 +14,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
   const submit = (e: FormEvent) => { e.preventDefault(); if (q.trim()) go(`/shop?q=${encodeURIComponent(q.trim())}`); };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" PaperProps={{ sx: { alignSelf: "flex-start", mt: 10 } }}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" slotProps={{ paper: { sx: { alignSelf: "flex-start", mt: 10 } } }}>
       <form onSubmit={submit} className="flex items-center gap-3 border-b border-sand p-5">
         <Search size={18} />
         <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search running, trail, court" aria-label="Search products" className="flex-1 bg-transparent outline-none" />

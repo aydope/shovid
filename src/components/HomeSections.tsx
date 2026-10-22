@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, Gem, Headphones, Instagram, Leaf, Quote, RefreshCw, Scissors, ShieldCheck, Star, Truck } from "lucide-react";
+import { ArrowRight, Gem, Headphones, Leaf, Quote, RefreshCw, Scissors, ShieldCheck, Star, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Instagram } from "@/components/BrandIcons";
 import { ProductCard } from "@/components/ProductCard";
 import { Countdown, Section } from "@/components/Ui";
 import { DragScroll } from "@/components/DragScroll";
@@ -25,7 +26,7 @@ export function Hero() {
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2">
         <div>
           <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-xs font-medium shadow-sm ring-1 ring-sand"><span className="h-2 w-2 rounded-full bg-mint" /> Autumn Winter 2026 is here</motion.span>
-          <h1 className="font-display mt-6 text-5xl leading-[1.02] md:text-7xl">Sneakers, <span className="font-serif bg-gradient-to-r from-gold via-oxblood to-amber bg-clip-text italic text-transparent">refined</span> to the essentials.</h1>
+          <h1 className="font-display mt-6 text-5xl leading-[1.02] md:text-7xl">Sneakers, <span className="font-serif bg-linear-to-r from-gold via-oxblood to-amber bg-clip-text italic text-transparent">refined</span> to the essentials.</h1>
           <p className="mt-6 max-w-lg text-lg text-ink/60">Premium sneakers for running, courts and city streets, made in small runs. Delivered worldwide in days.</p>
           <div className="mt-8 flex flex-wrap gap-3"><Link to="/shop"><Button variant="gold">Shop the collection <ArrowRight size={16} /></Button></Link><Link to="/lookbook"><Button variant="outline">View lookbook</Button></Link></div>
         </div>
@@ -59,7 +60,7 @@ export function Categories() {
             <motion.div key={c} whileHover={{ scale: 1.02 }} className={i === 0 ? "col-span-2 row-span-2" : ""}>
               <Link to={`/shop?c=${c}`} className="group relative block h-full overflow-hidden rounded-3xl">
                 <img src={img(p.id, 800, 800)} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
                 <span className="absolute bottom-5 left-5 text-2xl font-semibold text-white">{c}</span>
               </Link>
             </motion.div>
@@ -83,7 +84,7 @@ export function Arrivals() {
 export function SaleBanner() {
   return (
     <Section id="sale">
-      <div className="overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-oxblood via-gold to-sky p-8 text-white md:p-16">
+      <div className="overflow-hidden rounded-[2.5rem] bg-linear-to-br from-oxblood via-gold to-sky p-8 text-white md:p-16">
         <p className="text-sm font-semibold">Members week</p>
         <h2 className="font-display mt-2 max-w-xl text-4xl md:text-6xl">Up to 30% off sneakers</h2>
         <div className="mt-8"><Countdown /></div>
@@ -137,7 +138,7 @@ export function Stats() {
   return (
     <Section id="stats">
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        {stats.map(([v, l, g]) => <div key={l} className={`rounded-3xl bg-gradient-to-br ${g} p-8 text-white`}><p className="font-display text-5xl" data-count={parseFloat(v)} data-decimals={v.includes(".") ? 1 : 0} data-suffix={v.replace(/[\d.]/g, "")}>{v}</p><p className="mt-1 text-sm text-white/85">{l}</p></div>)}
+        {stats.map(([v, l, g]) => <div key={l} className={`rounded-3xl bg-linear-to-br ${g} p-8 text-white`}><p className="font-display text-5xl" data-count={parseFloat(v)} data-decimals={v.includes(".") ? 1 : 0} data-suffix={v.replace(/[\d.]/g, "")}>{v}</p><p className="mt-1 text-sm text-white/85">{l}</p></div>)}
       </div>
       <div className="mt-12 overflow-hidden"><div className="animate-marquee flex w-max gap-16 text-2xl font-semibold text-ink/25">{[...press, ...press].map((p, i) => <span key={i}>{p}</span>)}</div></div>
     </Section>
@@ -211,7 +212,7 @@ export function Satisfaction() {
           {bars.map(([l, v]) => <div key={l} className="mb-3 flex items-center gap-3 text-xs"><span className="w-12">{l}</span><div className="h-2 flex-1 overflow-hidden rounded-full bg-sand"><motion.div className="h-full rounded-full bg-amber" initial={{ width: 0 }} whileInView={{ width: `${v}%` }} viewport={{ once: true }} transition={{ duration: 1 }} /></div><span className="w-8 text-right">{v}%</span></div>)}
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {[["92%", "Fit as expected", "from-gold to-sky"], ["98%", "Arrived on time", "from-mint to-sky"], ["89%", "Repeat buyers", "from-oxblood to-amber"], ["24h", "Support reply", "from-amber to-gold"]].map(([v, l, g]) => <div key={l} className={`rounded-3xl bg-gradient-to-br ${g} p-5 text-white`}><p className="font-display text-3xl">{v}</p><p className="text-xs text-white/85">{l}</p></div>)}
+          {[["92%", "Fit as expected", "from-gold to-sky"], ["98%", "Arrived on time", "from-mint to-sky"], ["89%", "Repeat buyers", "from-oxblood to-amber"], ["24h", "Support reply", "from-amber to-gold"]].map(([v, l, g]) => <div key={l} className={`rounded-3xl bg-linear-to-br ${g} p-5 text-white`}><p className="font-display text-3xl">{v}</p><p className="text-xs text-white/85">{l}</p></div>)}
         </div>
       </div>
     </Section>

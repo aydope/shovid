@@ -28,7 +28,7 @@ export function AdminOverview() {
       <div className="mt-4 grid gap-4 xl:grid-cols-3">
         <Panel title="Revenue" className="xl:col-span-2">
           <div className="mb-4 flex gap-2">{([7, 30] as const).map((r) => <button key={r} onClick={() => setRange(r)} className={cn("cursor-pointer rounded-full px-4 py-1.5 text-xs", range === r ? "bg-ink text-white" : "bg-sand/60")}>{r} days</button>)}</div>
-          <div className="flex h-56 items-end gap-1.5">{data.map((v, i) => <div key={i} title={money(v)} className="flex-1 rounded-t-lg bg-gradient-to-t from-gold to-sky transition-all hover:from-oxblood hover:to-amber" style={{ height: `${(v / max) * 100}%` }} />)}</div>
+          <div className="flex h-56 items-end gap-1.5">{data.map((v, i) => <div key={i} title={money(v)} className="flex-1 rounded-t-lg bg-linear-to-t from-gold to-sky transition-all hover:from-oxblood hover:to-amber" style={{ height: `${(v / max) * 100}%` }} />)}</div>
         </Panel>
         <Panel title="Top products">{seed.slice(0, 5).map((p, i) => <div key={p.id} className="flex items-center gap-3 py-2"><span className="w-4 text-xs text-ink/40">{i + 1}</span><img src={img(p.id, 80, 80)} alt="" className="h-10 w-10 rounded-xl object-cover" /><p className="flex-1 truncate text-sm">{p.name}</p><p className="text-sm font-medium">{money(p.price)}</p></div>)}</Panel>
       </div>
@@ -76,7 +76,7 @@ export function AdminProducts() {
       <Panel className="mt-4"><div className="overflow-x-auto"><table className="w-full min-w-[640px] text-left text-sm"><thead><tr className="text-xs text-ink/50"><th className="py-2">Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Live</th><th /></tr></thead>
         <tbody>{rows.map((p) => <tr key={p.id} className="border-t border-sand"><td className="flex items-center gap-3 py-2"><img src={img(p.id, 80, 80)} alt="" className="h-10 w-10 rounded-xl object-cover" />{p.name}</td><td>{p.category}</td><td>{money(p.price)}</td>
           <td><input type="number" min={0} value={p.stock} aria-label={`Stock for ${p.name}`} onChange={(e) => setRows((r) => r.map((x) => (x.id === p.id ? { ...x, stock: Math.max(0, Number(e.target.value)) } : x)))} className={cn("w-20 rounded-xl border px-2 py-1.5", p.stock < 15 ? "border-oxblood text-oxblood" : "border-sand")} /></td>
-          <td><Switch size="small" color="secondary" checked={p.live} onChange={() => { setRows((r) => r.map((x) => (x.id === p.id ? { ...x, live: !x.live } : x))); toast(p.live ? "Unpublished" : "Published", "info"); }} inputProps={{ "aria-label": `Publish ${p.name}` }} /></td>
+          <td><Switch size="small" color="secondary" checked={p.live} onChange={() => { setRows((r) => r.map((x) => (x.id === p.id ? { ...x, live: !x.live } : x))); toast(p.live ? "Unpublished" : "Published", "info"); }} slotProps={{ input: { "aria-label": `Publish ${p.name}` } }} /></td>
           <td><button aria-label={`Delete ${p.name}`} onClick={() => { setRows((r) => r.filter((x) => x.id !== p.id)); toast("Product deleted", "info"); }} className="cursor-pointer text-oxblood"><Trash2 size={16} /></button></td></tr>)}</tbody></table></div></Panel>
     </>
   );
@@ -90,7 +90,7 @@ export function AdminCustomers() {
       <Title>Customers</Title>
       <Panel><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search customers" aria-label="Search customers" className={cn(field, "mb-4 max-w-sm")} />
         <div className="overflow-x-auto"><table className="w-full min-w-[560px] text-left text-sm"><thead><tr className="text-xs text-ink/50"><th className="py-2">Customer</th><th>Email</th><th>Orders</th><th>Spent</th><th>Tier</th></tr></thead>
-          <tbody>{rows.filter((r) => r.n.toLowerCase().includes(q.toLowerCase())).map((r) => <tr key={r.n} className="border-t border-sand"><td className="flex items-center gap-3 py-3"><span className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-gold to-oxblood text-xs text-white">{r.n[0]}</span>{r.n}</td><td>{r.email}</td><td>{r.orders}</td><td>{money(r.spent)}</td><td><span className="rounded-full bg-gold/10 px-3 py-1 text-xs text-gold">{r.tier}</span></td></tr>)}</tbody></table></div></Panel>
+          <tbody>{rows.filter((r) => r.n.toLowerCase().includes(q.toLowerCase())).map((r) => <tr key={r.n} className="border-t border-sand"><td className="flex items-center gap-3 py-3"><span className="grid h-8 w-8 place-items-center rounded-full bg-linear-to-br from-gold to-oxblood text-xs text-white">{r.n[0]}</span>{r.n}</td><td>{r.email}</td><td>{r.orders}</td><td>{money(r.spent)}</td><td><span className="rounded-full bg-gold/10 px-3 py-1 text-xs text-gold">{r.tier}</span></td></tr>)}</tbody></table></div></Panel>
     </>
   );
 }
@@ -117,7 +117,7 @@ export function AdminCoupons() {
     <>
       <Title>Coupons</Title>
       <Panel><form onSubmit={add} className="flex flex-wrap gap-3"><input value={code} onChange={(e) => setCode(e.target.value)} placeholder="CODE" aria-label="Coupon code" className={cn(field, "w-48")} /><input value={off} onChange={(e) => setOff(e.target.value)} aria-label="Percent off" inputMode="numeric" className={cn(field, "w-28")} /><button className="h-11 cursor-pointer rounded-full bg-gold px-6 text-sm text-white">Create</button></form></Panel>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">{list.map((c) => <Panel key={c.code}><div className="flex items-center justify-between"><div><p className="font-mono font-semibold">{c.code}</p><p className="text-sm text-ink/50">{c.off}% off</p></div><Switch color="secondary" checked={c.on} onChange={() => setList((l) => l.map((x) => (x.code === c.code ? { ...x, on: !x.on } : x)))} inputProps={{ "aria-label": `Enable ${c.code}` }} /></div></Panel>)}</div>
+      <div className="mt-4 grid gap-3 sm:grid-cols-2">{list.map((c) => <Panel key={c.code}><div className="flex items-center justify-between"><div><p className="font-mono font-semibold">{c.code}</p><p className="text-sm text-ink/50">{c.off}% off</p></div><Switch color="secondary" checked={c.on} onChange={() => setList((l) => l.map((x) => (x.code === c.code ? { ...x, on: !x.on } : x)))} slotProps={{ input: { "aria-label": `Enable ${c.code}` } }} /></div></Panel>)}</div>
     </>
   );
 }
@@ -130,7 +130,7 @@ export function AdminSettings() {
     <>
       <Title>Settings</Title>
       <Panel title="Store"><div className="grid gap-3 sm:grid-cols-2"><input defaultValue="Shovid" aria-label="Store name" className={field} /><input defaultValue="hello@shovid.example" aria-label="Support email" className={field} /></div></Panel>
-      <Panel title="Notifications and policy" className="mt-4">{(Object.keys(on) as Array<keyof typeof on>).map((k) => <div key={k} className="flex items-center justify-between border-b border-sand py-2 last:border-0"><span className="text-sm">{labels[k]}</span><Switch color="secondary" checked={on[k]} onChange={() => setOn({ ...on, [k]: !on[k] })} inputProps={{ "aria-label": labels[k] }} /></div>)}</Panel>
+      <Panel title="Notifications and policy" className="mt-4">{(Object.keys(on) as Array<keyof typeof on>).map((k) => <div key={k} className="flex items-center justify-between border-b border-sand py-2 last:border-0"><span className="text-sm">{labels[k]}</span><Switch color="secondary" checked={on[k]} onChange={() => setOn({ ...on, [k]: !on[k] })} slotProps={{ input: { "aria-label": labels[k] } }} /></div>)}</Panel>
       <button onClick={() => toast("Settings saved")} className="mt-4 h-12 cursor-pointer rounded-full bg-ink px-8 text-sm text-white">Save changes</button>
     </>
   );

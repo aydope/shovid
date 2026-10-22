@@ -43,7 +43,7 @@ export default function Product() {
       <nav aria-label="Breadcrumb" className="text-xs text-ink/50"><Link to="/" className="hover:text-ink">Home</Link> / <Link to={`/shop?c=${product.category}`} className="hover:text-ink">{product.category}</Link> / {product.name}</nav>
       <div className="mt-6 grid gap-10 lg:grid-cols-2">
         <div>
-          <div className="group relative aspect-[4/5] cursor-zoom-in overflow-hidden rounded-3xl bg-gradient-to-b from-[#f4f1ea] to-[#e4ddd0]" onMouseMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); setOrigin(`${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`); }}>
+          <div className="group relative aspect-[4/5] cursor-zoom-in overflow-hidden rounded-3xl bg-linear-to-b from-[#f4f1ea] to-[#e4ddd0]" onMouseMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); setOrigin(`${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`); }}>
             <AnimatePresence mode="wait"><motion.img key={shot} src={shots[shot]} alt={product.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ transformOrigin: origin }} className="h-full w-full object-cover transition-transform duration-300 md:group-hover:scale-[1.8]" /></AnimatePresence>
           </div>
           <div className="mt-4 grid grid-cols-4 gap-3">{shots.map((s, i) => <button key={s} onClick={() => setShot(i)} aria-label={`View photo ${i + 1}`} className={cn("cursor-pointer overflow-hidden rounded-2xl ring-2 transition", shot === i ? "ring-gold" : "ring-transparent")}><img src={s} alt="" loading="lazy" className="aspect-square w-full object-cover" /></button>)}</div>
@@ -80,7 +80,7 @@ export default function Product() {
         <div className="space-y-4 lg:col-span-2">
           {reviews.map((r) => (
             <motion.article layout key={r.id} className="rounded-3xl bg-white p-6 ring-1 ring-sand">
-              <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-br from-gold to-oxblood font-semibold text-white">{r.author[0]}</span><div><p className="text-sm font-medium">{r.author}</p><p className="text-xs text-ink/50">{r.date}</p></div><Rating className="!ml-auto" value={r.rating} readOnly size="small" /></div>
+              <div className="flex items-center gap-3"><span className="grid h-10 w-10 place-items-center rounded-full bg-linear-to-br from-gold to-oxblood font-semibold text-white">{r.author[0]}</span><div><p className="text-sm font-medium">{r.author}</p><p className="text-xs text-ink/50">{r.date}</p></div><Rating className="!ml-auto" value={r.rating} readOnly size="small" /></div>
               <h3 className="mt-4 font-semibold">{r.title}</h3><p className="mt-1 text-sm text-ink/60">{r.body}</p>
               <button onClick={() => setLiked((l) => (l.includes(r.id) ? l.filter((x) => x !== r.id) : [...l, r.id]))} className={cn("mt-4 inline-flex cursor-pointer items-center gap-2 rounded-full px-3 py-1.5 text-xs ring-1 ring-sand", liked.includes(r.id) && "bg-gold/10 text-gold ring-gold")}><ThumbsUp size={13} /> Helpful ({r.likes + (liked.includes(r.id) ? 1 : 0)})</button>
             </motion.article>
