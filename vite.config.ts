@@ -11,6 +11,15 @@ export default defineConfig({
     dedupe: ["react", "react-dom"],
   },
   optimizeDeps: {
-    include: ["react", "react-dom", "react-router-dom", "framer-motion", "leaflet", "gsap", "gsap/ScrollTrigger", "@mui/material"],
+    include: [
+      "react",
+      "react-dom",
+      "react-router-dom",
+      "framer-motion",
+      "leaflet",
+      "gsap",
+      "gsap/ScrollTrigger",
+      "@mui/material",
+    ],
   },
 });

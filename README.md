@@ -8,7 +8,7 @@ Stack: React 18, TypeScript, Vite, Tailwind 4, shadcn-style UI primitives, MUI, 
     npm run dev
 
 Data lives in src/data.ts and cart state in src/store.tsx. There is no backend, authentication or payment provider yet. Forms validate input but do not submit anywhere.
-Demo accounts (stored in localStorage only): admin@shovid.example / Admin123!  and  member@shovid.example / Member123!
+Demo accounts (stored in localStorage only): admin@shovid.example / Admin123! and member@shovid.example / Member123!
 
 If the dev server shows "Invalid hook call" after dependencies change: stop it, delete node_modules/.vite, run `npm ls react react-dom` (there must be a single version of each), then `npm run dev -- --force`.
 

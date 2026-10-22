@@ -10,8 +10,29 @@ export const theme = createTheme({
   shape: { borderRadius: 20 },
   typography: { fontFamily: '"Plus Jakarta Sans", sans-serif' },
   components: {
-    MuiPaper: { styleOverrides: { root: { backgroundImage: "none", boxShadow: "0 1px 2px rgba(0,0,0,.04), 0 8px 30px rgba(0,0,0,.05)", border: "1px solid #e8e8ee" } } },
-    MuiTableCell: { styleOverrides: { head: { fontSize: 12, fontWeight: 600, color: "#6e6e73" } } },
-    MuiAccordion: { styleOverrides: { root: { boxShadow: "none", border: "1px solid #e8e8ee", marginBottom: 12, "&:before": { display: "none" } } } },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: "none",
+          boxShadow: "0 1px 2px rgba(0,0,0,.04), 0 8px 30px rgba(0,0,0,.05)",
+          border: "1px solid #e8e8ee",
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        head: { fontSize: 12, fontWeight: 600, color: "#6e6e73" },
+      },
+    },
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+          border: "1px solid #e8e8ee",
+          marginBottom: 12,
+          "&:before": { display: "none" },
+        },
+      },
+    },
   },
 });
