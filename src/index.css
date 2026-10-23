@@ -16,7 +16,6 @@
 }
 
 html { scroll-behavior: smooth; }
-html.snap { scroll-snap-type: y proximity; }
 body { background: var(--color-ivory); color: var(--color-ink); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
 ::selection { background: var(--color-gold); color: #fff; }
 

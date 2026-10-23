@@ -39,7 +39,7 @@ export function PageSkeleton() {
 
 export function Section({ id, eyebrow, title, children, className }: { id: string; eyebrow?: string; title?: string; children: ReactNode; className?: string }) {
   return (
-    <section id={id} className={cn("mx-auto max-w-7xl scroll-mt-24 snap-start px-6 pt-24 md:pt-32", className)}>
+    <section id={id} className={cn("mx-auto max-w-7xl scroll-mt-24 px-6 pt-24 md:pt-32", className)}>
       {title && (
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="mb-12 max-w-3xl">
           {eyebrow && <p className="text-sm font-semibold text-gold">{eyebrow}</p>}
