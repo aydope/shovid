@@ -221,3 +221,12 @@ export function Satisfaction() {
     </Section>
   );
 }
+
+export function Manifesto() {
+  return (
+    <Section id="manifesto">
+      <p className="text-sm font-semibold text-gold">Our belief</p>
+      <p data-split className="font-serif mt-4 max-w-5xl text-4xl leading-[1.1] md:text-7xl">We make fewer shoes, from better materials, built by people who care, so that you can wear them for years instead of seasons.</p>
+    </Section>
+  );
+}
