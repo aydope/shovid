@@ -97,7 +97,7 @@ export function AdminCustomers() {
 
 export function AdminReviews() {
   const toast = useToast();
-  const [pending, setPending] = useState(seed.slice(0, 6).flatMap((p) => reviewsFor(p).slice(0, 1).map((r) => ({ ...r, product: p.name }))));
+  const [pending, setPending] = useState(seed.slice(0, 6).flatMap((p) => [...reviewsFor(p)].sort((a, b) => a.rating - b.rating).slice(0, 1).map((r) => ({ ...r, product: p.name }))));
   const act = (id: string, ok: boolean) => { setPending((l) => l.filter((r) => r.id !== id)); toast(ok ? "Review approved" : "Review rejected", ok ? "success" : "info"); };
   return (
     <>

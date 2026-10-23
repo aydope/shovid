@@ -8,18 +8,18 @@ import { ProductCard } from "@/components/ProductCard";
 import { Countdown, Section } from "@/components/Ui";
 import { DragScroll } from "@/components/DragScroll";
 import { SaleSlider } from "@/components/SaleSlider";
-import { categories, img, likesFor, products } from "@/data";
+import { categories, img, likesFor, products, reviewSummary } from "@/data";
 
 const trust = [[Truck, "Free shipping", "On orders over $150"], [RefreshCw, "Free returns", "Within 30 days"], [ShieldCheck, "Secure payment", "Encrypted checkout"], [Headphones, "Client advisors", "Reply in one day"]] as const;
 const why = [[Scissors, "Crafted in small runs", "Every pair is lasted by hand and walked in before it ships.", "text-gold bg-gold/10"], [Leaf, "Premium materials", "Full grain leather, suede and recycled mesh from audited suppliers.", "text-mint bg-mint/10"], [Gem, "Resole and repair", "Resoling and cleaning for the life of the shoe.", "text-oxblood bg-oxblood/10"], [Truck, "Insured delivery", "Tracked worldwide shipping, 2 to 8 working days.", "text-sky bg-sky/10"], [ShieldCheck, "Secure by default", "Encrypted payments and private order data.", "text-amber bg-amber/10"], [Headphones, "Human support", "Real advisors, not chatbots, six days a week.", "text-gold bg-gold/10"]] as const;
-const stats = [["12k+", "Members", "from-gold to-sky"], ["4.8", "Average rating", "from-oxblood to-amber"], ["30", "Day free returns", "from-mint to-sky"], ["48", "Countries", "from-amber to-oxblood"]];
+const stats = [[String(products.length), "Sneaker models", "from-gold to-sky"], [reviewSummary().avg.toFixed(1), "Average rating", "from-oxblood to-amber"], ["30", "Day free returns", "from-mint to-sky"], ["48", "Countries", "from-amber to-oxblood"]];
 const press = ["Atelier Weekly", "The Cut Line", "Form Journal", "Mono Mag", "Thread & Co"];
 const reviews = [["Clara W.", "The sneakers fit true to size and feel great from day one. Delivery took three days.", "bg-gold"], ["Omar H.", "Clean design and honest materials. I stopped shopping anywhere else.", "bg-mint"], ["Ines C.", "The repair was free and the cobbler called me personally.", "bg-oxblood"]];
 
 export function Hero() {
   const stack = products.slice(0, 3);
   return (
-    <section id="hero" className="relative snap-start overflow-hidden px-6 pb-24 pt-16 md:pt-24">
+    <section id="hero" className="relative overflow-hidden px-6 pb-24 pt-16 md:pt-24">
       {[["bg-gold/30 -left-20 top-0", 14], ["bg-oxblood/25 right-0 top-20", 18], ["bg-mint/25 bottom-0 left-1/3", 16]].map(([c, d]) => (
         <motion.div key={String(c)} aria-hidden className={`absolute h-96 w-96 rounded-full blur-3xl ${c}`} animate={{ scale: [1, 1.2, 1], x: [0, 30, 0] }} transition={{ duration: Number(d), repeat: Infinity }} />
       ))}
@@ -196,34 +196,28 @@ export function Newsletter() {
 }
 
 export function Satisfaction() {
-  const bars = [["5 stars", 78], ["4 stars", 16], ["3 stars", 4], ["2 stars", 1], ["1 star", 1]] as const;
+  const r = reviewSummary();
   const c = 2 * Math.PI * 52;
+  const bars = r.dist.map((v, k) => [`${5 - k} star${5 - k === 1 ? "" : "s"}`, v] as const);
+  const tiles = [[r.avg.toFixed(1), "Average rating", "from-gold to-sky"], [`${r.positive}%`, "Positive reviews, 4 to 5 stars", "from-mint-ink to-sky"], [String(r.n), "Reviews in total", "from-oxblood to-amber"], [`${r.critical}%`, "Critical reviews, 1 to 2 stars", "from-ink to-gold"]];
   return (
-    <Section id="happy" eyebrow="Customer satisfaction" title="96% of customers would buy again">
+    <Section id="happy" eyebrow="Customer reviews" title={`${r.positive}% of reviews are positive`}>
+      <p className="-mt-6 mb-8 text-sm text-ink/70">Based on {r.n} reviews across {products.length} models in this demo store, including the critical ones.</p>
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="flex items-center gap-6 rounded-3xl bg-white p-8 ring-1 ring-sand">
-          <svg viewBox="0 0 120 120" className="h-32 w-32 -rotate-90" role="img" aria-label="96 percent satisfied">
+          <svg viewBox="0 0 120 120" className="h-32 w-32 -rotate-90" role="img" aria-label={`${r.positive} percent of reviews are positive`}>
             <circle cx="60" cy="60" r="52" fill="none" stroke="var(--color-sand)" strokeWidth="10" />
-            <motion.circle cx="60" cy="60" r="52" fill="none" stroke="var(--color-mint)" strokeWidth="10" strokeLinecap="round" strokeDasharray={c} initial={{ strokeDashoffset: c }} whileInView={{ strokeDashoffset: c * 0.04 }} viewport={{ once: true }} transition={{ duration: 1.4 }} />
+            <motion.circle cx="60" cy="60" r="52" fill="none" stroke="var(--color-mint)" strokeWidth="10" strokeLinecap="round" strokeDasharray={c} initial={{ strokeDashoffset: c }} whileInView={{ strokeDashoffset: c * (1 - r.positive / 100) }} viewport={{ once: true }} transition={{ duration: 1.4 }} />
           </svg>
-          <div><p className="font-display text-5xl">4.8</p><div className="flex">{Array.from({ length: 5 }, (_, i) => <Star key={i} size={14} className="fill-amber text-amber" />)}</div><p className="mt-1 text-xs text-ink/70">2,481 verified reviews</p></div>
+          <div><p className="font-display text-5xl">{r.avg.toFixed(1)}</p><div className="flex">{Array.from({ length: 5 }, (_, i) => <Star key={i} size={14} className={i < Math.round(r.avg) ? "fill-amber text-amber" : "text-ink/30"} />)}</div><p className="mt-1 text-xs text-ink/70">{r.n} reviews</p></div>
         </div>
         <div className="rounded-3xl bg-white p-8 ring-1 ring-sand">
-          {bars.map(([l, v]) => <div key={l} className="mb-3 flex items-center gap-3 text-xs"><span className="w-12">{l}</span><div className="h-2 flex-1 overflow-hidden rounded-full bg-sand"><motion.div className="h-full rounded-full bg-amber" initial={{ width: 0 }} whileInView={{ width: `${v}%` }} viewport={{ once: true }} transition={{ duration: 1 }} /></div><span className="w-8 text-right">{v}%</span></div>)}
+          {bars.map(([l, v]) => <div key={l} className="mb-3 flex items-center gap-3 text-xs"><span className="w-14">{l}</span><div className="h-2 flex-1 overflow-hidden rounded-full bg-sand"><motion.div className="h-full rounded-full bg-amber" initial={{ width: 0 }} whileInView={{ width: `${v}%` }} viewport={{ once: true }} transition={{ duration: 1 }} /></div><span className="w-8 text-right">{v}%</span></div>)}
         </div>
         <div className="grid grid-cols-2 gap-4">
-          {[["92%", "Fit as expected", "from-gold to-sky"], ["98%", "Arrived on time", "from-mint to-sky"], ["89%", "Repeat buyers", "from-oxblood to-amber"], ["24h", "Support reply", "from-amber to-gold"]].map(([v, l, g]) => <div key={l} className={`rounded-3xl bg-linear-to-br ${g} p-5 text-white`}><p className="font-display text-3xl">{v}</p><p className="text-xs text-white/85">{l}</p></div>)}
+          {tiles.map(([v, l, g]) => <div key={l} className={`rounded-3xl bg-linear-to-br ${g} p-5 text-white`}><p className="font-display text-3xl">{v}</p><p className="text-xs text-white/90">{l}</p></div>)}
         </div>
       </div>
-    </Section>
-  );
-}
-
-export function Manifesto() {
-  return (
-    <Section id="manifesto">
-      <p className="text-sm font-semibold text-gold">Our belief</p>
-      <p data-split className="font-serif mt-4 max-w-5xl text-4xl leading-[1.1] md:text-7xl">We make fewer shoes, from better materials, built by people who care, so that you can wear them for years instead of seasons.</p>
     </Section>
   );
 }

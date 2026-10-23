@@ -72,22 +72,33 @@ export const products: Product[] = [
 
 export interface Review { id: string; author: string; rating: number; title: string; body: string; date: string; likes: number }
 
-const reviewers = ["Amara V.", "Luca B.", "Mei T.", "Jonas K.", "Sofia M.", "Daniel R.", "Ines C.", "Omar H.", "Clara W.", "Theo L."];
-const reviewText: Array<[string, string]> = [
-  ["Worth every cent", "The build feels far better than the price suggests and the fit was right on my first size."],
-  ["Beautifully finished", "The stitching and lasting are spotless. You can tell somebody cared about this pair."],
-  ["Runs slightly large", "Lovely shoe, but go half a size down if you are between sizes. Customer service swapped them quickly."],
-  ["My new favourite", "Wore them three days in a row. Comfortable out of the box and no creasing at all."],
-  ["Quiet luxury", "Understated, no logos, and it gets compliments anyway. Packaging was excellent too."],
+const reviewers = ["Amara V.", "Luca B.", "Mei T.", "Jonas K.", "Sofia M.", "Daniel R.", "Ines C.", "Omar H.", "Clara W.", "Theo L.", "Nadia P.", "Ravi S."];
+const reviewText: Array<[rating: number, title: string, body: string]> = [
+  [5, "Worth every cent", "The {name} feels far better built than the price suggests and the fit was right on my first size."],
+  [5, "Beautifully finished", "The stitching and lasting are spotless. You can tell somebody cared about this pair."],
+  [5, "My new favourite", "Wore them three days in a row. Comfortable out of the box and no creasing at all."],
+  [5, "Quiet luxury", "Understated, no logos, and it still gets compliments. The packaging was excellent too."],
+  [4, "Great, but runs slightly large", "Lovely shoe. Go half a size down if you are between sizes. Customer service swapped them quickly."],
+  [4, "Very good for the price", "Solid materials and comfortable after a short break in. The laces could be better."],
+  [4, "Looks better in person", "Comfortable and well made. Delivery took a day longer than promised."],
+  [3, "Fine, nothing special", "Comfortable enough, but the cushioning feels thinner than I expected at this price."],
+  [3, "Sizing is inconsistent", "I needed a different size than in my other pairs. Returning them was easy, though."],
+  [3, "Good looks, stiff at first", "They needed about two weeks to soften up and my heels were sore until then."],
+  [2, "Sole wore quickly", "After two months of daily use the outsole is already worn down at the heel. I expected better."],
+  [2, "Not as pictured", "The colour is noticeably duller than in the photos. The fit itself is fine."],
+  [1, "Uncomfortable for me", "My toes were cramped within the first hour and I had to return them. The size guide did not help."],
+  [1, "Slow delivery and a scuffed box", "The pair arrived late in a scuffed box. The refund was quick, but I will not reorder."],
 ];
+const patterns = [[5, 4, 5, 3, 4], [5, 5, 4, 2, 4, 3], [4, 3, 5, 1, 4], [5, 4, 4, 3, 5, 2], [5, 5, 5, 4, 3], [4, 4, 3, 2, 5, 1, 5]];
 
 export const reviewsFor = (p: Product): Review[] => {
   const seed = Number(p.id.slice(1));
-  return Array.from({ length: 3 + (seed % 3) }, (_, i) => {
-    const [title, body] = reviewText[(seed + i) % reviewText.length];
+  return patterns[seed % patterns.length].map((rating, i) => {
+    const pool = reviewText.filter((r) => r[0] === rating);
+    const [, title, body] = pool[(seed + i * 3) % pool.length];
     return {
-      id: `${p.id}-r${i}`, author: reviewers[(seed * 3 + i) % reviewers.length],
-      rating: 4 + ((seed + i) % 5 === 0 ? 0 : 1), title, body, likes: (seed * 7 + i * 11) % 42, date: `2026-0${9 - (i % 3)}-${10 + ((seed + i * 5) % 18)}`,
+      id: `${p.id}-r${i}`, author: reviewers[(seed * 3 + i) % reviewers.length], rating, title, body: body.replace("{name}", p.name),
+      likes: (seed * 7 + i * 11) % 42, date: `2026-0${9 - (i % 3)}-${10 + ((seed + i * 5) % 18)}`,
     };
   });
 };
@@ -128,3 +139,15 @@ export const img = (key: string, w = 600, h = 750) => {
 };
 
 export const stores = [["Porto Flagship", "Rua das Flores 28, Porto", "Mon to Sat, 10:00 to 19:00", "+351 220 000 000"], ["Lisbon Chiado", "Rua Garrett 40, Lisbon", "Mon to Sat, 10:00 to 20:00", "+351 210 000 000"], ["Berlin Mitte", "Torstrasse 100, Berlin", "Tue to Sat, 11:00 to 19:00", "+49 30 000000"], ["Paris Marais", "Rue de Bretagne 12, Paris", "Tue to Sun, 11:00 to 19:00", "+33 1 00 00 00 00"]];
+
+export function reviewSummary() {
+  const all = products.flatMap(reviewsFor);
+  const n = all.length;
+  return {
+    n,
+    avg: all.reduce((t, r) => t + r.rating, 0) / n,
+    positive: Math.round((all.filter((r) => r.rating >= 4).length / n) * 100),
+    critical: Math.round((all.filter((r) => r.rating <= 2).length / n) * 100),
+    dist: [5, 4, 3, 2, 1].map((star) => Math.round((all.filter((r) => r.rating === star).length / n) * 100)),
+  };
+}
