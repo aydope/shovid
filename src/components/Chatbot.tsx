@@ -104,7 +104,7 @@ export function Chatbot() {
             </div>
             {info && (
               <div className="space-y-2 border-b border-white/10 bg-white/[0.04] p-4 text-xs leading-relaxed text-white/70">
-                <p>Intent network: {st.shape || "not trained yet"}. Trained in your browser on {st.examples} examples ({st.taught} taught by you) with Adam, dropout and word dropout.</p>
+                <p>Intent network: {st.shape || "not trained yet"}, {st.params.toLocaleString()} trainable parameters. Trained in your browser on {st.examples} examples ({st.taught} taught by you) with Adam and dropout. Your feedback fine-tunes it without starting over.</p>
                 <p>Held-out validation: <b className="text-mint">{st.valAcc ?? "n/a"}%</b>, final training accuracy: {st.trainAcc ?? "n/a"}%, {st.trainMs} ms. The validation set comes from the same generated examples, so real-world accuracy is lower.</p>
                 <div className="text-mint"><Spark values={st.loss} /></div>
                 <p>Answers use live catalogue, review, discount, stock, order and plan data plus BM25 search over store knowledge. Rate replies with the thumbs to teach it.</p>

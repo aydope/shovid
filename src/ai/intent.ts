@@ -1,15 +1,15 @@
 import { products } from "@/data";
 import { terms, tokenize } from "./nlp";
 
-export const intents = ["greeting", "thanks", "order_status", "returns", "shipping", "size_help", "recommend", "discount", "top_discount", "top_rated", "popular", "cheapest", "priciest", "new_arrivals", "stock", "product_info", "compare", "membership", "points", "human", "cart", "gift", "care", "payment", "stores", "careers", "about", "stats"] as const;
+export const intents = ["greeting", "thanks", "order_status", "returns", "shipping", "size_help", "recommend", "discount", "top_discount", "top_rated", "popular", "cheapest", "priciest", "new_arrivals", "stock", "product_info", "compare", "membership", "points", "human", "cart", "gift", "care", "payment", "stores", "careers", "about", "stats", "off_topic"] as const;
 export type Intent = (typeof intents)[number];
 
 export const intentLabels: Record<Intent, string> = {
-  greeting: "Say hello", thanks: "Say thanks", order_status: "Order status", returns: "Returns", shipping: "Shipping", size_help: "Sizing help", recommend: "Product recommendation", discount: "Sales and coupons", top_discount: "Biggest discounts", top_rated: "Best reviewed", popular: "Most popular", cheapest: "Cheapest", priciest: "Most expensive", new_arrivals: "New arrivals", stock: "Stock and availability", product_info: "Product details", compare: "Compare products", membership: "Membership plans", points: "Points and rewards", human: "Talk to a person", cart: "My bag", gift: "Gifts", care: "Shoe care", payment: "Payment", stores: "Store locations", careers: "Jobs", about: "About Shovid", stats: "Catalogue facts",
+  greeting: "Say hello", thanks: "Say thanks", order_status: "Order status", returns: "Returns", shipping: "Shipping", size_help: "Sizing help", recommend: "Product recommendation", discount: "Sales and coupons", top_discount: "Biggest discounts", top_rated: "Best reviewed", popular: "Most popular", cheapest: "Cheapest", priciest: "Most expensive", new_arrivals: "New arrivals", stock: "Stock and availability", product_info: "Product details", compare: "Compare products", membership: "Membership plans", points: "Points and rewards", human: "Talk to a person", cart: "My bag", gift: "Gifts", care: "Shoe care", payment: "Payment", stores: "Store locations", careers: "Jobs", about: "About Shovid", stats: "Catalogue facts", off_topic: "Not about the shop",
 };
 
 const base: Record<Intent, string[]> = {
-  greeting: ["hello", "hi there", "good morning", "hey shovi", "hello assistant", "hi", "good evening", "hey there"],
+  greeting: ["hello", "hi there", "good morning", "hey shovi", "hello assistant", "hi", "good evening", "hey there", "how are you", "whats up"],
   thanks: ["thanks", "thank you so much", "great thanks", "that helps", "perfect thank you", "cheers", "awesome thanks"],
   order_status: ["where is my order", "track my package", "order status", "has my order shipped", "when will my order arrive", "order SH-10482 status", "delivery tracking", "where is my parcel", "my orders", "did my order ship yet"],
   returns: ["what is your return policy", "can I return an item", "how do I get a refund", "exchange a product", "send back my order", "return window", "is returning free", "refund time"],
@@ -19,11 +19,11 @@ const base: Record<Intent, string[]> = {
   discount: ["any discounts today", "is there a sale", "coupon code", "promo code", "do you have offers", "what promotions are running", "special offer", "is there a discount code", "friday sale"],
   top_discount: ["products with the biggest discounts", "items with the highest discount", "give me the best deals", "most discounted sneakers", "which shoes have the largest price drop", "show products with a big discount", "what has the highest sale percent", "top discounted pairs", "biggest sale items", "biggest discount on running shoes", "most discounted trail shoes"],
   top_rated: ["products with the best reviews", "the highest rated shoes", "which sneakers have the most positive reviews", "items customers love most", "top rated sneakers", "best reviewed pairs", "shoes with five star reviews", "what do customers rate highest", "most positive feedback", "give me the top rated models", "best reviewed trail shoes", "highest rated running shoes"],
-  popular: ["best sellers", "most popular shoes", "what is trending", "most liked sneakers", "what do people buy most", "trending models right now", "customer favourites", "which pair is the most loved"],
-  cheapest: ["cheapest shoes", "lowest priced sneakers", "most affordable pair", "budget options", "least expensive models", "what is the cheapest pair", "shoes that are cheap", "low price sneakers", "cheapest running shoe", "lowest priced trail shoes", "cheapest court sneakers"],
+  popular: ["best sellers", "most popular shoes", "what is trending", "most liked sneakers", "what do people buy most", "trending models right now", "customer favourites", "which pair is the most loved", "most popular sneakers", "which sneakers sell best", "bestselling shoes", "what are people buying", "top selling models", "hottest shoes right now"],
+  cheapest: ["cheapest shoes", "lowest priced sneakers", "most affordable pair", "budget options", "least expensive models", "what is the cheapest pair", "shoes that are cheap", "what is the lowest price", "low price sneakers", "cheapest running shoe", "lowest priced trail shoes", "cheapest court sneakers"],
   priciest: ["most expensive shoes", "premium pairs", "highest priced sneakers", "luxury models", "what is your priciest model", "top of the range sneakers", "most premium pair", "most expensive high tops"],
   new_arrivals: ["new arrivals", "latest releases", "newest sneakers", "what is new this week", "just launched models", "recently added shoes", "what is new in store"],
-  stock: ["is it in stock", "low stock items", "what is almost sold out", "availability of sizes", "do you have size 43", "which shoes are running low", "is size 42 available", "how many pairs are left"],
+  stock: ["is it in stock", "low stock items", "what is almost sold out", "availability of sizes", "do you have size 43", "which shoes are running low", "is size 42 available", "how many pairs are left", "are they back in stock", "do you have my size"],
   product_info: ["tell me about this shoe", "details of the model", "what is it made of", "how much does it cost", "describe the product", "specs of this sneaker", "price of this pair", "what are the features"],
   compare: ["compare two models", "difference between these shoes", "which is better of the two", "compare these sneakers", "what is the difference between them", "versus comparison", "which one should I choose between"],
   membership: ["tell me about membership", "gold plan benefits", "how to upgrade my plan", "what does noir include", "subscription plans", "cancel my subscription", "member perks", "my plan"],
@@ -32,23 +32,26 @@ const base: Record<Intent, string[]> = {
   cart: ["what is in my bag", "show my cart", "add it to my bag", "add the first one to cart", "checkout", "how much is my cart", "my basket total"],
   gift: ["gift card", "gift ideas", "buy a present", "gift wrapping", "something for my wife", "birthday present"],
   care: ["how to wash my sneakers", "care instructions", "how to clean leather shoes", "can I machine wash sneakers", "remove odor from shoes", "store my sneakers", "how do I clean white sneakers"],
-  payment: ["which payment methods", "can I pay by card", "bank transfer details", "is checkout secure", "do you accept apple pay", "payment options"],
-  stores: ["where are your stores", "store locations", "opening hours", "is there a shop in berlin", "find a store near me", "do you have a physical store", "shop in paris"],
-  careers: ["are you hiring", "job openings", "careers at shovid", "work with you", "open positions", "can I apply for a job"],
+  payment: ["which payment methods", "can I pay by card", "bank transfer details", "is checkout secure", "do you accept apple pay", "payment options", "i want to pay with card", "how can i pay", "do you take credit cards", "can i pay by bank transfer", "is paypal accepted", "which cards do you accept"],
+  stores: ["where are your stores", "store locations", "opening hours", "is there a shop in berlin", "find a store near me", "do you have a physical store", "shop in paris", "do you have a store in berlin", "is there a shop in lisbon", "store in porto", "where can i try the shoes on", "your shop address", "do you have a store in london"],
+  careers: ["are you hiring", "job openings", "careers at shovid", "work with you", "open positions", "can I apply for a job", "any vacancies at shovid", "how do i join your team"],
   about: ["who are you", "tell me about shovid", "about the company", "where are the shoes made", "your story", "who makes the shoes", "what is shovid"],
-  stats: ["how many products do you have", "how many models are in the catalogue", "catalogue size", "how many categories", "what is the price range", "how many reviews are there", "how many shoes are on sale"],
+  off_topic: ["what is the weather today", "tell me a joke", "who won the football game", "write me a poem", "how do i cook pasta", "translate this sentence", "what is the capital of france", "help me with my homework", "what is the meaning of life", "play some music", "who is the president", "do you like pizza", "solve this math problem", "recommend a movie", "who is the best footballer", "what is the stock market doing", "who is the richest person", "tell me the news", "how tall is mount everest", "who wrote hamlet", "what time is it in tokyo", "give me a recipe", "what is bitcoin worth", "tell me about politics"],
+  stats: ["how many products do you have", "how many models are in the catalogue", "catalogue size", "how many categories", "what is the price range", "how many reviews are there", "how many shoes are on sale", "how many sneakers do you sell", "number of models"],
 };
 
-const H = 48, HASH = 192, EPOCHS = 28, WD = 1e-5, C = intents.length;
+const H1 = 96, H2 = 32, HASH = 256, EPOCHS = 18, TUNE_EPOCHS = 6, WD = 1e-5, C = intents.length;
 const fillers = ["please", "hey shovi", "quick question", "can you tell me", "i would like to know"];
+const suffixes = ["under $200", "in black", "for running", "for the city", "for men", "for women", "right now", "this week"];
+const augmented: Intent[] = ["recommend", "top_discount", "top_rated", "popular", "cheapest", "priciest", "new_arrivals", "stock"];
 const KEY = "shovid-ai-taught";
 
-interface Model { vocab: Map<string, number>; n: number; W1: Float32Array; b1: Float32Array; W2: Float32Array; b2: Float32Array }
+interface Model { vocab: Map<string, number>; n: number; W1: Float32Array; b1: Float32Array; W2: Float32Array; b2: Float32Array; W3: Float32Array; b3: Float32Array }
 interface Sample { idx: number[]; y: number; base: boolean }
 interface Taught { text: string; intent: Intent }
-export interface Status { phase: "idle" | "training" | "ready"; label: string; progress: number; loss: number[]; valAcc: number | null; trainAcc: number | null; shape: string; examples: number; taught: number; trainMs: number }
+export interface Status { phase: "idle" | "training" | "ready"; label: string; progress: number; loss: number[]; valAcc: number | null; trainAcc: number | null; shape: string; params: number; neurons: number; examples: number; taught: number; trainMs: number }
 
-let status: Status = { phase: "idle", label: "Not trained yet", progress: 0, loss: [], valAcc: null, trainAcc: null, shape: "", examples: 0, taught: 0, trainMs: 0 };
+let status: Status = { phase: "idle", label: "Not trained yet", progress: 0, loss: [], valAcc: null, trainAcc: null, shape: "", params: 0, neurons: H1 + H2, examples: 0, taught: 0, trainMs: 0 };
 const listeners = new Set<() => void>();
 const publish = (patch: Partial<Status>) => { status = { ...status, ...patch }; listeners.forEach((l) => l()); };
 export const getStatus = () => status;
@@ -56,27 +59,30 @@ export const subscribeStatus = (l: () => void) => { listeners.add(l); return () 
 
 let model: Model | null = null;
 let running: Promise<void> | null = null;
-let again = false;
+let pending: "tune" | "full" | null = null;
 let resolveReady: () => void = () => {};
 export const ready = new Promise<void>((r) => { resolveReady = r; });
 
 const loadTaught = (): Taught[] => { try { return JSON.parse(localStorage.getItem(KEY) ?? "[]") as Taught[]; } catch { return []; } };
 const saveTaught = (t: Taught[]) => { try { localStorage.setItem(KEY, JSON.stringify(t)); } catch { /* storage unavailable */ } };
-
 const rng = (seed: number) => () => { seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 
+// Hashed character trigrams occupy the first HASH inputs (typo tolerance), words and bigrams follow, so the vocabulary can grow.
+const tokensOf = (text: string) => { const t = terms(text); return [...t, ...t.slice(1).map((w, i) => `${t[i]}_${w}`)]; };
 function features(text: string, vocab: Map<string, number>) {
-  const t = terms(text);
   const idx = new Set<number>();
-  for (const k of [...t, ...t.slice(1).map((w, i) => `${t[i]}_${w}`)]) { const i = vocab.get(k); if (i !== undefined) idx.add(i); }
-  for (const w of tokenize(text)) if (w.length >= 4) for (let i = 0; i + 3 <= w.length; i++) { let h = 0; for (const ch of w.slice(i, i + 3)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; idx.add(vocab.size + (h % HASH)); }
+  for (const k of tokensOf(text)) { const i = vocab.get(k); if (i !== undefined) idx.add(HASH + i); }
+  for (const w of tokenize(text)) if (w.length >= 4) for (let i = 0; i + 3 <= w.length; i++) { let h = 0; for (const ch of w.slice(i, i + 3)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; idx.add(h % HASH); }
   return [...idx];
 }
 
 function corpus(taught: Taught[]) {
   const out: Array<{ text: string; y: number; base: boolean }> = [];
-  intents.forEach((intent, y) => base[intent].forEach((text, i) => { out.push({ text, y, base: true }, { text: `${fillers[(i + y) % fillers.length]} ${text}`, y, base: true }); }));
   const at = (i: Intent) => intents.indexOf(i);
+  intents.forEach((intent, y) => base[intent].forEach((text, i) => {
+    out.push({ text, y, base: true }, { text: `${fillers[(i + y) % fillers.length]} ${text}`, y, base: true });
+    if (augmented.includes(intent)) out.push({ text: `${text} ${suffixes[(i * 3 + y) % suffixes.length]}`, y, base: true });
+  }));
   products.forEach((p, i) => {
     const q = products[(i + 5) % products.length];
     out.push({ text: `tell me about the ${p.name}`, y: at("product_info"), base: true }, { text: `how much is the ${p.name}`, y: at("product_info"), base: true }, { text: `is the ${p.name} in stock`, y: at("stock"), base: true }, { text: `compare ${p.name} and ${q.name}`, y: at("compare"), base: true });
@@ -85,14 +91,19 @@ function corpus(taught: Taught[]) {
   return out;
 }
 
-const act = (m: Model, idx: number[], a: Float32Array) => { for (let j = 0; j < H; j++) { let s = m.b1[j]; for (const i of idx) s += m.W1[i * H + j]; a[j] = Math.tanh(s); } };
-const softmax = (m: Model, h: Float32Array, p: Float32Array) => {
+interface Buf { t1: Float32Array; a1: Float32Array; t2: Float32Array; a2: Float32Array; p: Float32Array }
+const buffers = (): Buf => ({ t1: new Float32Array(H1), a1: new Float32Array(H1), t2: new Float32Array(H2), a2: new Float32Array(H2), p: new Float32Array(C) });
+
+function forward(m: Model, idx: number[], b: Buf, d1?: Float32Array, d2?: Float32Array) {
+  for (let j = 0; j < H1; j++) { let s = m.b1[j]; for (const i of idx) s += m.W1[i * H1 + j]; b.t1[j] = Math.tanh(s); b.a1[j] = b.t1[j] * (d1 ? d1[j] : 1); }
+  for (let j = 0; j < H2; j++) { let s = m.b2[j]; for (let i = 0; i < H1; i++) s += b.a1[i] * m.W2[i * H2 + j]; b.t2[j] = Math.tanh(s); b.a2[j] = b.t2[j] * (d2 ? d2[j] : 1); }
   let max = -1e9;
-  for (let k = 0; k < C; k++) { let s = m.b2[k]; for (let j = 0; j < H; j++) s += h[j] * m.W2[j * C + k]; p[k] = s; if (s > max) max = s; }
+  for (let k = 0; k < C; k++) { let s = m.b3[k]; for (let j = 0; j < H2; j++) s += b.a2[j] * m.W3[j * C + k]; b.p[k] = s; if (s > max) max = s; }
   let sum = 0;
-  for (let k = 0; k < C; k++) { p[k] = Math.exp(p[k] - max); sum += p[k]; }
-  for (let k = 0; k < C; k++) p[k] /= sum;
-};
+  for (let k = 0; k < C; k++) { b.p[k] = Math.exp(b.p[k] - max); sum += b.p[k]; }
+  for (let k = 0; k < C; k++) b.p[k] /= sum;
+}
+
 const adam = (w: Float32Array, m: Float32Array, v: Float32Array, i: number, g: number, lr: number, c1: number, c2: number) => {
   m[i] = 0.9 * m[i] + 0.1 * g;
   v[i] = 0.999 * v[i] + 0.001 * g * g;
@@ -100,25 +111,34 @@ const adam = (w: Float32Array, m: Float32Array, v: Float32Array, i: number, g: n
 };
 
 const init = (vocab: Map<string, number>, rnd: () => number): Model => {
-  const n = vocab.size + HASH;
-  return { vocab, n, W1: Float32Array.from({ length: n * H }, () => (rnd() - 0.5) * 0.2), b1: new Float32Array(H), W2: Float32Array.from({ length: H * C }, () => (rnd() - 0.5) * 0.4), b2: new Float32Array(C) };
+  const n = HASH + vocab.size;
+  const rand = (len: number, scale: number) => Float32Array.from({ length: len }, () => (rnd() - 0.5) * scale);
+  return { vocab, n, W1: rand(n * H1, 0.2), b1: new Float32Array(H1), W2: rand(H1 * H2, 0.3), b2: new Float32Array(H2), W3: rand(H2 * C, 0.4), b3: new Float32Array(C) };
 };
 
+// New words get fresh input rows while every learned weight is kept, so feedback adds knowledge instead of resetting it.
+function grow(old: Model, vocab: Map<string, number>, rnd: () => number): Model {
+  const fresh = init(vocab, rnd);
+  fresh.W1.set(old.W1);
+  fresh.b1.set(old.b1); fresh.W2.set(old.W2); fresh.b2.set(old.b2); fresh.W3.set(old.W3); fresh.b3.set(old.b3);
+  return fresh;
+}
+
 const accuracy = (m: Model, data: Sample[]) => {
-  const a = new Float32Array(H), p = new Float32Array(C);
+  const b = buffers();
   let ok = 0;
-  for (const s of data) { act(m, s.idx, a); softmax(m, a, p); if (p.indexOf(Math.max(...p)) === s.y) ok++; }
+  for (const s of data) { forward(m, s.idx, b); if (b.p.indexOf(Math.max(...b.p)) === s.y) ok++; }
   return data.length ? Math.round((ok / data.length) * 100) : 0;
 };
 
-async function fit(m: Model, data: Sample[], from: number, to: number, rnd: () => number) {
-  const s1 = [new Float32Array(m.W1.length), new Float32Array(m.W1.length)], sb1 = [new Float32Array(H), new Float32Array(H)];
-  const s2 = [new Float32Array(m.W2.length), new Float32Array(m.W2.length)], sb2 = [new Float32Array(C), new Float32Array(C)];
-  const a = new Float32Array(H), h = new Float32Array(H), p = new Float32Array(C), mask = new Float32Array(H), dz = new Float32Array(C), dh = new Float32Array(H);
-  const losses: number[] = [];
+async function fit(m: Model, data: Sample[], epochs: number, lr0: number, from: number, to: number, rnd: () => number, losses: number[]) {
+  const st = (len: number) => [new Float32Array(len), new Float32Array(len)];
+  const s1 = st(m.W1.length), sb1 = st(H1), s2 = st(m.W2.length), sb2 = st(H2), s3 = st(m.W3.length), sb3 = st(C);
+  const b = buffers();
+  const d1 = new Float32Array(H1), d2 = new Float32Array(H2), dz = new Float32Array(C), dt2 = new Float32Array(H2), dt1 = new Float32Array(H1);
   let t = 0;
-  for (let e = 0; e < EPOCHS; e++) {
-    const lr = 0.02 * (0.5 + 0.5 * Math.cos((Math.PI * e) / EPOCHS));
+  for (let e = 0; e < epochs; e++) {
+    const lr = lr0 * (0.5 + 0.5 * Math.cos((Math.PI * e) / epochs));
     const order = data.map((_, i) => i);
     for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
     let loss = 0;
@@ -127,62 +147,75 @@ async function fit(m: Model, data: Sample[], from: number, to: number, rnd: () =
       const idx = s.idx.length > 2 && rnd() < 0.2 ? s.idx.filter((_, i) => i !== Math.floor(rnd() * s.idx.length)) : s.idx;
       t++;
       const c1 = 1 - 0.9 ** t, c2 = 1 - 0.999 ** t;
-      act(m, idx, a);
-      for (let j = 0; j < H; j++) { mask[j] = rnd() < 0.8 ? 1.25 : 0; h[j] = a[j] * mask[j]; }
-      softmax(m, h, p);
-      for (let k = 0; k < C; k++) { const target = k === s.y ? 0.95 : 0.05 / (C - 1); dz[k] = p[k] - target; loss -= target * Math.log(p[k] + 1e-9); }
-      for (let j = 0; j < H; j++) { let g = 0; for (let k = 0; k < C; k++) g += m.W2[j * C + k] * dz[k]; dh[j] = g * mask[j] * (1 - a[j] * a[j]); }
-      for (let j = 0; j < H; j++) for (let k = 0; k < C; k++) { const i = j * C + k; adam(m.W2, s2[0], s2[1], i, h[j] * dz[k] + WD * m.W2[i], lr, c1, c2); }
-      for (let k = 0; k < C; k++) adam(m.b2, sb2[0], sb2[1], k, dz[k], lr, c1, c2);
-      for (let j = 0; j < H; j++) { adam(m.b1, sb1[0], sb1[1], j, dh[j], lr, c1, c2); for (const i of idx) { const q = i * H + j; adam(m.W1, s1[0], s1[1], q, dh[j] + WD * m.W1[q], lr, c1, c2); } }
+      for (let j = 0; j < H1; j++) d1[j] = rnd() < 0.85 ? 1 / 0.85 : 0;
+      for (let j = 0; j < H2; j++) d2[j] = rnd() < 0.85 ? 1 / 0.85 : 0;
+      forward(m, idx, b, d1, d2);
+      for (let k = 0; k < C; k++) { const target = k === s.y ? 0.95 : 0.05 / (C - 1); dz[k] = b.p[k] - target; loss -= target * Math.log(b.p[k] + 1e-9); }
+      for (let j = 0; j < H2; j++) { let g = 0; for (let k = 0; k < C; k++) g += m.W3[j * C + k] * dz[k]; dt2[j] = g * d2[j] * (1 - b.t2[j] * b.t2[j]); }
+      for (let i = 0; i < H1; i++) { let g = 0; for (let j = 0; j < H2; j++) g += m.W2[i * H2 + j] * dt2[j]; dt1[i] = g * d1[i] * (1 - b.t1[i] * b.t1[i]); }
+      for (let j = 0; j < H2; j++) for (let k = 0; k < C; k++) { const q = j * C + k; adam(m.W3, s3[0], s3[1], q, b.a2[j] * dz[k] + WD * m.W3[q], lr, c1, c2); }
+      for (let k = 0; k < C; k++) adam(m.b3, sb3[0], sb3[1], k, dz[k], lr, c1, c2);
+      for (let i = 0; i < H1; i++) for (let j = 0; j < H2; j++) { const q = i * H2 + j; adam(m.W2, s2[0], s2[1], q, b.a1[i] * dt2[j] + WD * m.W2[q], lr, c1, c2); }
+      for (let j = 0; j < H2; j++) adam(m.b2, sb2[0], sb2[1], j, dt2[j], lr, c1, c2);
+      for (let i = 0; i < H1; i++) { adam(m.b1, sb1[0], sb1[1], i, dt1[i], lr, c1, c2); for (const x of idx) { const q = x * H1 + i; adam(m.W1, s1[0], s1[1], q, dt1[i] + WD * m.W1[q], lr, c1, c2); } }
     }
     losses.push(loss / data.length);
-    publish({ progress: from + (to - from) * ((e + 1) / EPOCHS), loss: [...losses] });
+    publish({ progress: from + (to - from) * ((e + 1) / epochs), loss: [...losses] });
     if (e % 2 === 1) await new Promise((r) => setTimeout(r, 0));
   }
 }
 
-async function run() {
+async function run(mode: "tune" | "full") {
   const started = performance.now();
   const taught = loadTaught();
   const texts = corpus(taught);
-  const vocab = new Map<string, number>();
-  for (const { text } of texts) { const t = terms(text); for (const k of [...t, ...t.slice(1).map((w, i) => `${t[i]}_${w}`)]) if (!vocab.has(k)) vocab.set(k, vocab.size); }
+  const full = mode === "full" || !model;
+  const vocab = full ? new Map<string, number>() : new Map(model!.vocab);
+  for (const { text } of texts) for (const k of tokensOf(text)) if (!vocab.has(k)) vocab.set(k, vocab.size);
+  const rnd = rng(full ? 7 : 11 + taught.length);
+  const m = full ? init(vocab, rnd) : grow(model!, vocab, rnd);
   const data: Sample[] = texts.map((s) => ({ idx: features(s.text, vocab), y: s.y, base: s.base }));
-  const held = data.filter((s, i) => s.base && i % 5 === 0);
-  const rest = data.filter((s, i) => !(s.base && i % 5 === 0));
-  publish({ phase: "training", label: "Validating on held-out examples", progress: 0, loss: [], examples: data.length, taught: taught.length });
-  const rnd = rng(7);
-  const trial = init(vocab, rnd);
-  await fit(trial, rest, 0, 0.5, rnd);
-  const valAcc = accuracy(trial, held);
-  publish({ label: "Training the final network", valAcc });
-  const final = init(vocab, rnd);
-  await fit(final, data, 0.5, 1, rnd);
-  model = final;
-  publish({ phase: "ready", label: "Ready", progress: 1, valAcc, trainAcc: accuracy(final, data), shape: `${final.n} inputs, ${H} hidden, ${C} intents`, trainMs: Math.round(performance.now() - started) });
+  const losses: number[] = [];
+  let valAcc = status.valAcc;
+  publish({ phase: "training", label: full ? "Training with a held-out check" : "Learning from your feedback", progress: 0, loss: [], examples: data.length, taught: taught.length });
+  if (full) {
+    const held = data.filter((s, i) => s.base && i % 5 === 0);
+    const rest = data.filter((s, i) => !(s.base && i % 5 === 0));
+    await fit(m, rest, EPOCHS, 0.02, 0, 0.75, rnd, losses);
+    valAcc = accuracy(m, held);
+    publish({ label: "Fine-tuning on all examples", valAcc });
+    await fit(m, data, TUNE_EPOCHS, 0.006, 0.75, 1, rnd, losses);
+  } else {
+    await fit(m, data, TUNE_EPOCHS, 0.008, 0, 1, rnd, losses);
+  }
+  model = m;
+  const params = m.n * H1 + H1 + H1 * H2 + H2 + H2 * C + C;
+  publish({ phase: "ready", label: "Ready", progress: 1, valAcc, trainAcc: accuracy(m, data), shape: `${m.n} inputs, ${H1} and ${H2} hidden neurons, ${C} intents`, params, trainMs: Math.round(performance.now() - started) });
   resolveReady();
 }
 
-export function startTraining(force = false): Promise<void> {
-  if (running) { if (force) again = true; return running; }
-  if (model && !force) return Promise.resolve();
-  running = run().finally(() => { running = null; if (again) { again = false; void startTraining(true); } });
+function kick(mode: "tune" | "full"): Promise<void> {
+  if (running) { if (mode === "full" || pending !== "full") pending = mode; return running; }
+  running = run(mode).finally(() => { running = null; const next = pending; pending = null; if (next) void kick(next); });
   return running;
+}
+
+export function startTraining(force = false): Promise<void> {
+  if (!model) return kick("full");
+  return force ? kick("full") : running ?? Promise.resolve();
 }
 
 export function teach(text: string, intent: Intent) {
   const list = loadTaught();
   if (!list.some((t) => t.text === text && t.intent === intent)) saveTaught([...list, { text, intent }]);
-  void startTraining(true);
+  return kick(model ? "tune" : "full");
 }
 
 export function classify(text: string): Array<{ intent: Intent | "unknown"; p: number }> {
   if (!model) return [{ intent: "unknown", p: 0 }];
   const idx = features(text, model.vocab);
   if (!idx.length) return [{ intent: "unknown", p: 0 }];
-  const a = new Float32Array(H), p = new Float32Array(C);
-  act(model, idx, a);
-  softmax(model, a, p);
-  return Array.from(p, (v, k) => ({ intent: intents[k] as Intent, p: v })).sort((x, y) => y.p - x.p).slice(0, 3);
+  const b = buffers();
+  forward(model, idx, b);
+  return Array.from(b.p, (v, k) => ({ intent: intents[k] as Intent, p: v })).sort((x, y) => y.p - x.p).slice(0, 3);
 }

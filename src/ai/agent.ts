@@ -90,7 +90,7 @@ export function respond(text: string, ctx: Ctx, mem: Memory): Reply {
   const follow = /\b(cheaper|less expensive|lower price)\b/.test(t) ? "cheaper" : /\b(pricier|more expensive|premium)\b/.test(t) ? "pricier" : /\b(another|something else|more options|other options|different|next)\b/.test(t) ? "more" : /\b(start over|reset|new search)\b/.test(t) ? "reset" : null;
   const orderId = text.match(/SH-\d{4,6}/i)?.[0].toUpperCase();
   const shopping = !!(e.category || e.maxPrice !== undefined || e.minPrice !== undefined || e.color || e.sale);
-  const nonShop = ["order_status", "returns", "shipping", "size_help", "human", "points", "membership", "payment", "care", "cart", "greeting", "thanks", "top_discount", "top_rated", "popular", "cheapest", "priciest", "new_arrivals", "stock", "product_info", "compare", "stores", "careers", "about", "stats"];
+  const nonShop = ["order_status", "returns", "shipping", "size_help", "human", "points", "membership", "payment", "care", "cart", "greeting", "thanks", "top_discount", "top_rated", "popular", "cheapest", "priciest", "new_arrivals", "stock", "product_info", "compare", "stores", "careers", "about", "stats", "off_topic"];
   if (confidence < 0.4) intent = "unknown";
   const mentioned = named(t);
   if (mentioned.length >= 2) intent = "compare";
@@ -140,7 +140,9 @@ export function respond(text: string, ctx: Ctx, mem: Memory): Reply {
       return out({ text: ctx.cartCount ? `Your bag has ${ctx.cartCount} item${ctx.cartCount > 1 ? "s" : ""}, subtotal ${money2(ctx.cartTotal)}.` : "Your bag is empty.", links: [{ label: "Checkout", to: "/checkout" }] });
     }
     case "top_discount": case "top_rated": case "popular": case "cheapest": case "priciest": case "new_arrivals": {
-      const r = ranks[intent]!;
+      const base0 = ranks[intent]!;
+      const worst = intent === "top_rated" && /\b(worst|bad|lowest|poor|negative|terrible|critical)\b/.test(t);
+      const r = worst ? { ...base0, title: "lowest rated", sort: (a: Product, b: Product) => -base0.sort(a, b) } : base0;
       tools.push(`rank_products(${intent})`);
       const m = t.match(/\b(?:top|best|first)\s+(\d{1,2})\b|\b(\d{1,2})\s+(?:products|items|shoes|sneakers|pairs|models)\b/);
       const n = Math.min(8, Math.max(1, Number(m?.[1] ?? m?.[2] ?? 4)));
@@ -173,6 +175,7 @@ export function respond(text: string, ctx: Ctx, mem: Memory): Reply {
       mem.last = [a.id, b.id]; mem.shown = [...new Set([...mem.shown, a.id, b.id])];
       return out({ text: `${row(a, sa)}\n${row(b, sb)}\n${sa.rating === sb.rating ? "They are rated equally" : `${sa.rating > sb.rating ? a.name : b.name} is rated higher`}, ${a.price === b.price ? "and they cost the same" : `and ${a.price < b.price ? a.name : b.name} is ${money(Math.abs(a.price - b.price))} cheaper`}.`, items: [a, b], suggest: ["Add the first one to my bag", "Show the best reviewed shoes"] });
     }
+    case "off_topic": return out({ text: "That is outside what I can help with. I know the Shovid catalogue, prices, reviews, discounts, stock, orders, stores and policies.", suggest: base });
     case "stores": {
       tools.push("get_stores");
       return out({ text: stores.map(([n, a, h, p]) => `${n}: ${a}, ${h}, ${p}`).join("\n"), links: [{ label: "Store locator", to: "/stores" }] });

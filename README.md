@@ -42,7 +42,7 @@ UX and accessibility notes, open items and a validation plan are in `docs/UX-AUD
 
 The chat assistant is not a hosted LLM. It combines:
 
-- an intent network (MLP with Adam, dropout, word dropout and character n-gram features) trained in the browser on a generated corpus built from the catalogue, plus examples taught by users through the thumbs up and down buttons (stored in localStorage and used on every retrain);
+- an intent network (two hidden layers of 96 and 32 neurons, about 130,000 trainable parameters, trained with Adam, dropout, word dropout and character n-gram features) built in the browser from a generated corpus of the catalogue plus examples taught by users through the thumbs up and down buttons (stored in localStorage). Feedback fine-tunes the existing weights instead of starting over, and a separate class catches off-topic questions;
 - BM25 retrieval over store knowledge (policies, plans, promotions, stores, careers, journal and every product);
 - tools that read the live catalogue, reviews, discounts, stock, cart, orders and plan, for example ranking by discount, reviews, likes or price, comparing models and looking up a product.
 
