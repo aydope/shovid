@@ -65,7 +65,7 @@ export function AdminProducts() {
     e.preventDefault();
     const price = Number(draft.price);
     if (!draft.name.trim() || !(price > 0)) { toast("Enter a name and a valid price", "error"); return; }
-    setRows((r) => [{ id: `p${100 + r.length}`, name: draft.name.trim(), price, category: draft.category, tone: "#6c4bff", stock: 10, note: "New product", live: false }, ...r]);
+    setRows((r) => [{ id: `p${Date.now()}`, name: draft.name.trim(), price, category: draft.category, tone: "#6c4bff", stock: 10, note: "New product", live: false }, ...r]);
     setDraft({ name: "", price: "", category: "Lifestyle" });
     toast("Product added as draft");
   };
@@ -112,7 +112,7 @@ export function AdminCoupons() {
   const { coupons: list, setCoupons: setList } = useApp();
   const [code, setCode] = useState("");
   const [off, setOff] = useState("10");
-  const add = (e: FormEvent) => { e.preventDefault(); const n = Number(off); if (!code.trim() || !(n > 0 && n <= 90)) { toast("Enter a code and a discount from 1 to 90", "error"); return; } setList((l) => [{ code: code.trim().toUpperCase(), off: n, on: true }, ...l]); setCode(""); toast("Coupon created"); };
+  const add = (e: FormEvent) => { e.preventDefault(); const n = Number(off); if (!code.trim() || !(n > 0 && n <= 90)) { toast("Enter a code and a discount from 1 to 90", "error"); return; } if (list.some((c) => c.code === code.trim().toUpperCase())) { toast("That coupon code already exists", "error"); return; } setList((l) => [{ code: code.trim().toUpperCase(), off: n, on: true }, ...l]); setCode(""); toast("Coupon created"); };
   return (
     <>
       <Title>Coupons</Title>

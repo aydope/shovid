@@ -46,12 +46,21 @@ const primary: Loader[] = [pexels("sneakers"), pexels("running shoes"), dummy("m
 const fallback: Loader[] = [commons("sneakers"), commons("running shoes")];
 const MIN_POOL = 12;
 let pool: Pool = [];
+let version = 0;
+const subscribers = new Set<() => void>();
+export const getImagesVersion = () => version;
+export const subscribeImages = (l: () => void) => { subscribers.add(l); return () => { subscribers.delete(l); }; };
+const unique = (p: Pool) => { const seen = new Set<string>(); return p.filter((i) => (seen.has(i[0]) ? false : (seen.add(i[0]), true))); };
+const update = (p: Pool) => { pool = unique(p); version++; subscribers.forEach((l) => l()); };
 
-const gather = async (loaders: Loader[]) => (await Promise.allSettled(loaders.map((load) => load()))).flatMap((r) => (r.status === "fulfilled" ? r.value : []));
+const gather = async (loaders: Loader[]) => {
+  const seen = new Set<string>();
+  return (await Promise.allSettled(loaders.map((load) => load()))).flatMap((r) => (r.status === "fulfilled" ? r.value : [])).filter((item) => !seen.has(item[0]) && !!seen.add(item[0]));
+};
 
 export async function loadImages(timeoutMs = 4000) {
-  const main = gather(primary).then((m) => { pool = m; return m; });
-  const work = Promise.all([main, gather(fallback)]).then(([m, extra]) => { if (m.length < MIN_POOL) pool = [...m, ...extra]; });
+  const main = gather(primary).then((m) => { update(m); return m; });
+  const work = Promise.all([main, gather(fallback)]).then(([m, extra]) => { if (m.length < MIN_POOL) update([...m, ...extra]); });
   await Promise.race([work, new Promise((resolve) => setTimeout(resolve, timeoutMs))]);
 }
 

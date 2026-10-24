@@ -18,7 +18,7 @@ export function Track() {
     e.preventDefault();
     const key = email.trim().toLowerCase();
     const digits = key.replace(/\D/g, "");
-    setFound(orders.find((o) => o.id.toLowerCase() === id.trim().toLowerCase() && (o.email === key || (digits.length >= 7 && (o.phone ?? "").replace(/\D/g, "") === digits))) ?? null);
+    setFound(orders.find((o) => o.id.toLowerCase() === id.trim().toLowerCase() && key !== "" && (o.email === key || (digits.length >= 7 && (o.phone ?? "").replace(/\D/g, "") === digits))) ?? null);
   };
   const at = found ? Math.max(0, steps.indexOf(found.status as (typeof steps)[number])) : 0;
 

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useRef, useState, type ComponentType } from "react";
+import { Suspense, lazy, useEffect, useRef, useState, useSyncExternalStore, type ComponentType } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { CartDrawer } from "@/components/CartDrawer";
@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Header } from "@/components/Header";
 import { titleFor } from "@/lib/titles";
+import { getImagesVersion, subscribeImages } from "@/images";
 import { SearchDialog } from "@/components/SearchDialog";
 import { PageSkeleton, ScrollProgress } from "@/components/Ui";
 import { Chatbot } from "@/components/Chatbot";
@@ -72,6 +73,7 @@ const routes: Array<[string, ComponentType]> = [
 
 export default function App() {
   const location = useLocation();
+  useSyncExternalStore(subscribeImages, getImagesVersion);
   const [searching, setSearching] = useState(false);
 
   useEffect(() => {

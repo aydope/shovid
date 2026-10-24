@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Drawer, Slider } from "@mui/material";
 import { LayoutGrid, Grid3x3, SlidersHorizontal, Star, X } from "lucide-react";
@@ -36,6 +36,18 @@ export default function Shop() {
   const [cols, setCols] = useState(4);
   const [shown, setShown] = useState(PAGE);
   const [sheet, setSheet] = useState(false);
+  const urlCategory = params.get("c");
+  useEffect(() => {
+    const next = categories.find((c) => c === urlCategory && c !== "All");
+    setF((cur) => ({ ...cur, cats: next ? [next] : [] }));
+    setShown(PAGE);
+  }, [urlCategory]);
+  const catParam = params.get("c");
+  useEffect(() => {
+    const c = categories.find((x) => x === catParam && x !== "All");
+    setF((s) => ({ ...s, cats: c ? [c] : [] }));
+    setShown(PAGE);
+  }, [catParam]);
 
   const list = useMemo(() => {
     const out = products.filter((p) => (!f.cats.length || f.cats.includes(p.category)) && p.price <= f.max && ratingOf(p) >= f.rating && (!f.stock || p.stock > 0) && (!f.sale || discountFor(p) > 0) && `${p.name} ${p.note}`.toLowerCase().includes(q));

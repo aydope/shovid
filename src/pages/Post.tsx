@@ -10,8 +10,7 @@ import { img, posts, products } from "@/data";
 import { useToast } from "@/toast";
 import { cn } from "@/lib/utils";
 
-export default function Post() {
-  const { slug } = useParams();
+function PostView({ slug }: { slug?: string }) {
   const toast = useToast();
   const [liked, setLiked] = useState(false);
   const { scrollYProgress } = useScroll();
@@ -52,4 +51,9 @@ export default function Post() {
       <Link to={`/journal/${next.slug}`} className="mt-8 block rounded-3xl bg-ink p-6 text-white"><p className="text-xs text-white/60">Next article</p><p className="mt-1 text-xl font-semibold">{next.title}</p></Link>
     </article>
   );
+}
+
+export default function Post() {
+  const { slug } = useParams();
+  return <PostView key={slug} slug={slug} />;
 }

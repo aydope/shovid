@@ -52,10 +52,11 @@ export function Section({ id, eyebrow, title, children, className }: { id: strin
 }
 
 export function Countdown() {
-  const [end] = useState(() => { const d = new Date(); d.setHours(24, 0, 0, 0); return d.getTime(); });
   const [now, setNow] = useState(() => Date.now());
   useEffect(() => { const t = setInterval(() => setNow(Date.now()), 1000); return () => clearInterval(t); }, []);
-  const s = Math.max(0, Math.floor((end - now) / 1000));
+  const midnight = new Date(now);
+  midnight.setHours(24, 0, 0, 0);
+  const s = Math.max(0, Math.floor((midnight.getTime() - now) / 1000));
   const parts: Array<[string, number]> = [["Days", Math.floor(s / 86400)], ["Hours", Math.floor((s % 86400) / 3600)], ["Min", Math.floor((s % 3600) / 60)], ["Sec", s % 60]];
   return (
     <div className="flex gap-3">

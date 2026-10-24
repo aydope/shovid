@@ -13,8 +13,7 @@ import { cn, money } from "@/lib/utils";
 
 const details = [["Details", "Made in Portugal and finished by hand. Includes a dust bag, spare laces and a care card."], ["Shipping", "Free insured delivery over $500. EU in 2 to 4 days, worldwide in 4 to 8."], ["Care", "Brush off dirt, clean with a damp cloth and air dry away from heat. Use shoe trees to hold the shape."]];
 
-export default function Product() {
-  const { id } = useParams();
+function ProductView({ id }: { id?: string }) {
   const { add, wish, toggleWish } = useCart();
   const [size, setSize] = useState<string | null>(null);
   const [sizeError, setSizeError] = useState(false);
@@ -42,7 +41,7 @@ export default function Product() {
   const reviews = [...added, ...reviewsFor(product)];
   const average = reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
   const related = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
-  const shots = [0, 1, 2, 3].map((n) => img(`${product.id}-${n}`, 800, 1000));
+  const shots = [...new Set([0, 1, 2, 3].map((n) => img(`${product.id}-${n}`, 800, 1000)))];
 
   const post = (e: FormEvent) => {
     e.preventDefault();
@@ -59,7 +58,7 @@ export default function Product() {
           <div className="group relative aspect-[4/5] cursor-zoom-in overflow-hidden rounded-3xl bg-linear-to-b from-[#f4f1ea] to-[#e4ddd0]" onMouseMove={(e) => { const r = e.currentTarget.getBoundingClientRect(); setOrigin(`${((e.clientX - r.left) / r.width) * 100}% ${((e.clientY - r.top) / r.height) * 100}%`); }}>
             <AnimatePresence mode="wait"><motion.img key={shot} src={shots[shot]} alt={product.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ transformOrigin: origin }} className="h-full w-full object-cover transition-transform duration-300 md:group-hover:scale-[1.8]" /></AnimatePresence>
           </div>
-          <div className="mt-4 grid grid-cols-4 gap-3">{shots.map((s, i) => <button key={s} onClick={() => setShot(i)} aria-label={`View photo ${i + 1}`} className={cn("cursor-pointer overflow-hidden rounded-2xl ring-2 transition", shot === i ? "ring-gold" : "ring-transparent")}><img src={s} alt="" loading="lazy" className="aspect-square w-full object-cover" /></button>)}</div>
+          <div className={cn("mt-4 grid grid-cols-4 gap-3", shots.length < 2 && "hidden")}>{shots.map((s, i) => <button key={`${i}-${s}`} onClick={() => setShot(i)} aria-label={`View photo ${i + 1}`} className={cn("cursor-pointer overflow-hidden rounded-2xl ring-2 transition", shot === i ? "ring-gold" : "ring-transparent")}><img src={s} alt="" loading="lazy" className="aspect-square w-full object-cover" /></button>)}</div>
         </div>
         <div className="lg:sticky lg:top-32 lg:h-fit">
           <p className="text-sm font-semibold text-gold">{product.category}</p>
@@ -109,4 +108,10 @@ export default function Product() {
       <StickyBar product={product} onAdd={addToBag} />
     </section>
   );
+}
+
+// A new instance per product so size, photo, comments and likes never leak between products.
+export default function Product() {
+  const { id } = useParams();
+  return <ProductView key={id} id={id} />;
 }
