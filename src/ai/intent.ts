@@ -40,8 +40,46 @@ const base: Record<Intent, string[]> = {
   stats: ["how many products do you have", "how many models are in the catalogue", "catalogue size", "how many categories", "what is the price range", "how many reviews are there", "how many shoes are on sale", "how many sneakers do you sell", "number of models"],
 };
 
-const H1 = 96, H2 = 32, HASH = 256, EPOCHS = 18, TUNE_EPOCHS = 6, WD = 1e-5, C = intents.length;
+export const intentLabelsFa: Record<Intent, string> = {
+  greeting: "سلام و احوالپرسی", thanks: "تشکر", order_status: "وضعیت سفارش", returns: "مرجوعی", shipping: "ارسال", size_help: "راهنمای سایز", recommend: "پیشنهاد محصول", discount: "تخفیف و کوپن", top_discount: "بیشترین تخفیف", top_rated: "بهترین نظرها", popular: "محبوب‌ترین‌ها", cheapest: "ارزان‌ترین", priciest: "گران‌ترین", new_arrivals: "تازه‌ها", stock: "موجودی", product_info: "جزئیات محصول", compare: "مقایسه محصولات", membership: "پلن‌های عضویت", points: "امتیاز و جایزه", human: "صحبت با انسان", cart: "سبد خرید", gift: "هدیه", care: "نگهداری کفش", payment: "پرداخت", stores: "فروشگاه‌ها", careers: "فرصت شغلی", about: "درباره شاوید", stats: "آمار کاتالوگ", off_topic: "نامربوط به فروشگاه",
+};
+
+const baseFa: Record<Intent, string[]> = {
+  greeting: ["سلام", "درود", "سلام وقت بخیر", "صبح بخیر", "عصر بخیر", "هی سلام", "حالت چطوره", "سلام خوبی", "salam"],
+  thanks: ["ممنون", "مرسی", "خیلی ممنون", "دستت درد نکنه", "سپاس", "عالی بود مرسی", "ممنونم از کمکت"],
+  order_status: ["سفارشم کجاست", "وضعیت سفارش من چیه", "کی سفارشم میرسه", "سفارشم ارسال شد", "پیگیری سفارش", "بسته من کجاست", "سفارش SH-10482 چی شد", "سفارش های من", "سفارشم رسید"],
+  returns: ["سیاست مرجوعی چیه", "میشه کفش رو برگردونم", "چطور پولم رو پس بگیرم", "تعویض کفش امکان داره", "مهلت مرجوع کردن چقدره", "مرجوعی رایگانه", "بازگشت وجه چقدر طول میکشه"],
+  shipping: ["ارسال بین المللی دارید", "هزینه ارسال چقدره", "ارسال چند روز طول میکشه", "ارسال رایگان از چند دلاره", "به آلمان ارسال میکنید", "زمان تحویل چقدره", "هزینه پست به اروپا"],
+  size_help: ["کمکم کن سایز انتخاب کنم", "چه سایزی بگیرم", "سایزش کوچیکه", "جدول سایز", "اندازه پا رو چطور اندازه بگیرم", "بین دو سایز موندم", "سایزبندی استاندارده"],
+  recommend: ["یه کفش دویدن پیشنهاد بده", "کفش اسپرت نشونم بده", "کفش مشکی میخوام", "زیر 200 دلار چه کفشی دارید", "یه کفش برای کوهنوردی میخوام", "کفش راحت برای شهر", "چه کفش هایی دارید", "برای باشگاه کفش میخوام", "یه جفت کفش خوب معرفی کن", "کفش سفید میخوام"],
+  discount: ["تخفیف دارید", "امروز حراج هست", "کد تخفیف دارید", "چه پروموشن هایی فعاله", "پیشنهاد ویژه دارید", "کد کوپن", "تخفیف جمعه"],
+  top_discount: ["کدوم محصولات بیشترین تخفیف رو دارن", "محصولات با تخفیف زیاد رو بهم بده", "بهترین تخفیف ها", "بیشترین درصد تخفیف", "کفش های حراج شده", "چندتا محصول با تخفیف بالا بده", "بیشترین تخفیف روی چه کفشیه"],
+  top_rated: ["محصولاتی که بیشترین نظر مثبت رو دارن", "بهترین امتیاز مال کدوم کفشه", "بالاترین امتیاز", "کفش هایی که مشتری ها دوست دارن", "بهترین نظرات مال کدومه", "کفش با ریویو خوب", "بیشترین ستاره", "کفش هایی با نظر مثبت بده", "بدترین نظرها مال کدوم کفشه"],
+  popular: ["پرفروش ترین کفش ها", "محبوب ترین مدل", "چی بیشتر فروش میره", "ترند الان چیه", "کفش های محبوب", "بیشترین لایک رو کدوم داره", "مردم چی میخرن", "پرفروش ترین مدل کدومه", "پرفروش ترین کفش کدومه", "محبوب ترین کفش کدومه", "چی زیاد فروش میره"],
+  cheapest: ["ارزان ترین کفش", "کم قیمت ترین مدل", "ارزونترین جفت", "گزینه های اقتصادی", "ارزون ترین کفش دویدن", "کمترین قیمت چنده"],
+  priciest: ["گران ترین کفش", "لوکس ترین مدل", "گرون ترین جفت", "بالاترین قیمت", "مدل های پریمیوم"],
+  new_arrivals: ["جدیدترین کفش ها", "تازه رسیده ها", "محصولات جدید", "چی جدید اومده", "آخرین مدل ها"],
+  stock: ["موجود هست", "کم موجود ها", "چی داره تموم میشه", "سایز 43 موجوده", "موجودی سایزها", "کدوم کفش ها کم مونده", "سایز من هست", "دوباره موجود میشه"],
+  product_info: ["درباره این کفش بگو", "مشخصات مدل", "جنسش چیه", "قیمتش چنده", "ویژگی های این کفش", "این مدل چطوره"],
+  compare: ["این دو مدل رو مقایسه کن", "فرقشون چیه", "کدوم بهتره", "مقایسه دو کفش", "تفاوت بین این دو", "کدومو انتخاب کنم بین این دوتا"],
+  membership: ["درباره عضویت بگو", "مزایای پلن گلد", "چطور ارتقا بدم", "نوآر شامل چیه", "پلن های اشتراک", "لغو اشتراک", "مزایای اعضا", "پلن من چیه"],
+  points: ["چند امتیاز دارم", "امتیازها چطور کار میکنه", "استفاده از امتیاز", "موجودی امتیاز", "چطور امتیاز بگیرم", "جوایز من"],
+  human: ["میخوام با یه نفر صحبت کنم", "با پشتیبانی حرف بزنم", "اپراتور", "مشاور فروش میخوام", "ارتباط با پشتیبان", "یه آدم واقعی", "با یه آدم واقعی حرف بزنم", "میخوام با پشتیبان حرف بزنم", "با کسی صحبت کنم", "با مشاور حرف بزنم"],
+  cart: ["تو سبدم چیه", "سبد خرید رو نشون بده", "اضافه کن به سبد", "اولی رو به سبد اضافه کن", "پرداخت", "جمع سبد چقدره"],
+  gift: ["کارت هدیه دارید", "ایده هدیه", "هدیه تولد", "کادو پیچی", "برای همسرم هدیه میخوام", "هدیه برای دوستم"],
+  care: ["چطور کفش رو بشورم", "نگهداری از کفش", "تمیز کردن کفش سفید", "کفش رو میشه تو ماشین لباسشویی شست", "بوی بد کفش", "کفش چرم رو چطور تمیز کنم", "نگهداری کفش اسپرت"],
+  payment: ["روش های پرداخت", "با کارت میشه پرداخت کرد", "انتقال بانکی", "پرداخت امنه", "میخوام با کارت پرداخت کنم", "پرداخت درب منزل"],
+  stores: ["فروشگاه هاتون کجاست", "آدرس شعبه ها", "ساعت کاری", "تو برلین فروشگاه دارید", "فروشگاه حضوری دارید", "شعبه پاریس", "کجا میتونم کفش رو امتحان کنم", "شعبه برلین کجاست", "فروشگاه لیسبون دارید", "آدرس فروشگاه پورتو", "فروشگاه تو لندن دارید"],
+  careers: ["استخدام میکنید", "فرصت شغلی دارید", "همکاری با شما", "موقعیت شغلی", "میتونم درخواست کار بدم"],
+  about: ["شما کی هستید", "درباره شاوید بگو", "داستان برند", "کفش ها کجا ساخته میشن", "شاوید چیه", "سازنده کفش ها کیه"],
+  stats: ["چند تا محصول دارید", "چند مدل کفش موجوده", "محدوده قیمت چقدره", "چند دسته بندی دارید", "چند نظر ثبت شده", "چند کفش تخفیف دارن", "چند تا مدل دارید", "چند مدل دارید", "تعداد مدل ها چقدره"],
+  off_topic: ["هوا امروز چطوره", "یه جوک بگو", "نتیجه بازی فوتبال", "یه شعر بنویس", "طرز تهیه قورمه سبزی", "پایتخت فرانسه کجاست", "فیلم پیشنهاد بده", "قیمت بیت کوین چنده", "رئیس جمهور کیه", "تکلیف ریاضی ام رو حل کن", "ساعت چنده", "هوا چطوره", "آب و هوای امروز", "هوا بارونیه", "درباره سیاست حرف بزنیم", "اخبار امروز چیه"],
+};
+
+const H1 = 96, H2 = 32, HASH = 256, EPOCHS = 30, TUNE_EPOCHS = 8, WD = 1e-5, C = intents.length;
 const fillers = ["please", "hey shovi", "quick question", "can you tell me", "i would like to know"];
+const fillersFa = ["لطفا", "ببخشید", "یه سوال دارم", "میشه بگی", "میخواستم بدونم"];
+const suffixesFa = ["زیر 200 دلار", "مشکی", "برای دویدن", "برای شهر", "مردانه", "زنانه"];
 const suffixes = ["under $200", "in black", "for running", "for the city", "for men", "for women", "right now", "this week"];
 const augmented: Intent[] = ["recommend", "top_discount", "top_rated", "popular", "cheapest", "priciest", "new_arrivals", "stock"];
 const KEY = "shovid-ai-taught";
@@ -72,7 +110,7 @@ const tokensOf = (text: string) => { const t = terms(text); return [...t, ...t.s
 function features(text: string, vocab: Map<string, number>) {
   const idx = new Set<number>();
   for (const k of tokensOf(text)) { const i = vocab.get(k); if (i !== undefined) idx.add(HASH + i); }
-  for (const w of tokenize(text)) if (w.length >= 4) for (let i = 0; i + 3 <= w.length; i++) { let h = 0; for (const ch of w.slice(i, i + 3)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; idx.add(h % HASH); }
+  for (const w of tokenize(text)) if (w.length >= 3) { const p = `#${w}#`; for (let i = 0; i + 3 <= p.length; i++) { let h = 0; for (const ch of p.slice(i, i + 3)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; idx.add(h % HASH); } }
   return [...idx];
 }
 
@@ -83,8 +121,13 @@ function corpus(taught: Taught[]) {
     out.push({ text, y, base: true }, { text: `${fillers[(i + y) % fillers.length]} ${text}`, y, base: true });
     if (augmented.includes(intent)) out.push({ text: `${text} ${suffixes[(i * 3 + y) % suffixes.length]}`, y, base: true });
   }));
+  intents.forEach((intent, y) => baseFa[intent].forEach((text, i) => {
+    out.push({ text, y, base: true }, { text: `${fillersFa[(i + y) % fillersFa.length]} ${text}`, y, base: true });
+    if (augmented.includes(intent)) out.push({ text: `${text} ${suffixesFa[(i * 3 + y) % suffixesFa.length]}`, y, base: true });
+  }));
   products.forEach((p, i) => {
     const q = products[(i + 5) % products.length];
+    out.push({ text: `درباره ${p.name} بگو`, y: at("product_info"), base: true }, { text: `قیمت ${p.name} چنده`, y: at("product_info"), base: true }, { text: `${p.name} موجوده`, y: at("stock"), base: true }, { text: `${p.name} و ${q.name} رو مقایسه کن`, y: at("compare"), base: true });
     out.push({ text: `tell me about the ${p.name}`, y: at("product_info"), base: true }, { text: `how much is the ${p.name}`, y: at("product_info"), base: true }, { text: `is the ${p.name} in stock`, y: at("stock"), base: true }, { text: `compare ${p.name} and ${q.name}`, y: at("compare"), base: true });
   });
   for (const t of taught) for (let r = 0; r < 3; r++) out.push({ text: t.text, y: at(t.intent), base: false });
@@ -147,10 +190,10 @@ async function fit(m: Model, data: Sample[], epochs: number, lr0: number, from: 
       const idx = s.idx.length > 2 && rnd() < 0.2 ? s.idx.filter((_, i) => i !== Math.floor(rnd() * s.idx.length)) : s.idx;
       t++;
       const c1 = 1 - 0.9 ** t, c2 = 1 - 0.999 ** t;
-      for (let j = 0; j < H1; j++) d1[j] = rnd() < 0.85 ? 1 / 0.85 : 0;
-      for (let j = 0; j < H2; j++) d2[j] = rnd() < 0.85 ? 1 / 0.85 : 0;
+      for (let j = 0; j < H1; j++) d1[j] = rnd() < 0.9 ? 1 / 0.9 : 0;
+      for (let j = 0; j < H2; j++) d2[j] = rnd() < 0.9 ? 1 / 0.9 : 0;
       forward(m, idx, b, d1, d2);
-      for (let k = 0; k < C; k++) { const target = k === s.y ? 0.95 : 0.05 / (C - 1); dz[k] = b.p[k] - target; loss -= target * Math.log(b.p[k] + 1e-9); }
+      for (let k = 0; k < C; k++) { const target = k === s.y ? 0.97 : 0.03 / (C - 1); dz[k] = b.p[k] - target; loss -= target * Math.log(b.p[k] + 1e-9); }
       for (let j = 0; j < H2; j++) { let g = 0; for (let k = 0; k < C; k++) g += m.W3[j * C + k] * dz[k]; dt2[j] = g * d2[j] * (1 - b.t2[j] * b.t2[j]); }
       for (let i = 0; i < H1; i++) { let g = 0; for (let j = 0; j < H2; j++) g += m.W2[i * H2 + j] * dt2[j]; dt1[i] = g * d1[i] * (1 - b.t1[i] * b.t1[i]); }
       for (let j = 0; j < H2; j++) for (let k = 0; k < C; k++) { const q = j * C + k; adam(m.W3, s3[0], s3[1], q, b.a2[j] * dz[k] + WD * m.W3[q], lr, c1, c2); }
@@ -181,10 +224,10 @@ async function run(mode: "tune" | "full") {
   if (full) {
     const held = data.filter((s, i) => s.base && i % 5 === 0);
     const rest = data.filter((s, i) => !(s.base && i % 5 === 0));
-    await fit(m, rest, EPOCHS, 0.02, 0, 0.75, rnd, losses);
+    await fit(m, rest, EPOCHS, 0.012, 0, 0.75, rnd, losses);
     valAcc = accuracy(m, held);
     publish({ label: "Fine-tuning on all examples", valAcc });
-    await fit(m, data, TUNE_EPOCHS, 0.006, 0.75, 1, rnd, losses);
+    await fit(m, data, TUNE_EPOCHS, 0.004, 0.75, 1, rnd, losses);
   } else {
     await fit(m, data, TUNE_EPOCHS, 0.008, 0, 1, rnd, losses);
   }

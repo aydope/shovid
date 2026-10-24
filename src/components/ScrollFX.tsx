@@ -30,7 +30,8 @@ function scan() {
   });
   fresh("[data-split]").forEach((el) => {
     el.dataset.fx = "1";
-    el.innerHTML = (el.textContent ?? "").split(" ").map((w) => `<span class="inline-block">${w}&nbsp;</span>`).join("");
+    const words = (el.textContent ?? "").split(" ").filter(Boolean);
+    el.replaceChildren(...words.map((w) => { const span = document.createElement("span"); span.className = "inline-block"; span.textContent = `${w}\u00a0`; return span; }));
     gsap.fromTo(el.children, { opacity: 0.12 }, { opacity: 1, stagger: 0.08, ease: "none", scrollTrigger: { trigger: el, start: "top 80%", end: "bottom 45%", scrub: true } });
   });
 }
